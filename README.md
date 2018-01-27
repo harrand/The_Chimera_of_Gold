@@ -13,6 +13,9 @@ The project consists of implementing the game, with good graphical interface and
 
 Supervisor/Sponsor: Venanzio Capretta
 
+## Prototype:
+* [Chimera of Gold Prototype](https://github.com/Harrand/The-Chimera-of-Gold) - Click here to visit the prototype repository.
+
 ## Trello Board:
 * [Trello](https://trello.com/invite/b/88T5exhN/3c102131fd8d316c66511a4cb36e6cde/group-project) - Click here to go to the Trello board.
 
@@ -25,6 +28,3 @@ Supervisor/Sponsor: Venanzio Capretta
 3. Navigate to The-Chimera-of-Gold and select the folder
 4. After loaded; go to file, open scene
 5. Double click on test.unity
-
-
-
