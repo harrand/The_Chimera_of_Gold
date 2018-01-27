@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestBase
 {
-    private bool success;
+    protected bool success;
 
     TestBase()
     {
