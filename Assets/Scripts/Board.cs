@@ -17,10 +17,15 @@ public class Board : MonoBehaviour
     private uint width, height, numberCamps, numberObstacles;
     private Tile[] tiles;
 
-	void Start()
+	void Awake()
     {
         gameObject.name = "Board";
     }
+
+	void Start()
+	{
+
+	}
 	
 	void Update()
     {

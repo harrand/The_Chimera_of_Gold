@@ -9,7 +9,10 @@ using UnityEngine;
 * default number of players per camp
 */
 
-public class Game
+public class Game : MonoBehaviour
 {
-    
+	void Start()
+	{
+		new TestBoard();
+	}
 }
