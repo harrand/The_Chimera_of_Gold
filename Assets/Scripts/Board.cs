@@ -19,7 +19,6 @@ public class Board : MonoBehaviour
 
 	void Awake()
     {
-        gameObject.name = "Board";
 		// Set width and height (in Tiles) to be equal to the length and depth of the GameObject respectively (in pixels).
 		this.width = Convert.ToUInt32(gameObject.transform.localScale.x);
 		this.height = Convert.ToUInt32(gameObject.transform.localScale.z);

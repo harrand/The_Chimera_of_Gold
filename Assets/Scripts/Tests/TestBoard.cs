@@ -12,18 +12,8 @@ public class TestBoard : TestBase
 	public TestBoard()
 	{
 		this.boardObject = new GameObject();
-		this.boardObject.name = "Test Object";
-		// A successful Board will be renamed to "Board" by its script.
 		this.boardScript = this.boardObject.AddComponent<Board>();
-		this.success = this.TestName() && this.TestDimensions() && this.TestTiles();
-	}
-
-	/**
-	 * Passes if the boardObject was renamed to "Board"
-	 */
-	public bool TestName()
-	{
-		return this.boardObject.name == "Board";
+		this.success = this.TestDimensions() && this.TestTiles();
 	}
 
 	/**
