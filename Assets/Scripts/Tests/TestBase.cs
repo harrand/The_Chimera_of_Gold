@@ -6,7 +6,7 @@ public class TestBase
 {
     protected bool success;
 
-    TestBase()
+    public TestBase()
     {
         Debug.Log("Constructing " + this.GetType().Name);
         success = false;
@@ -15,5 +15,10 @@ public class TestBase
     ~TestBase()
     {
         Debug.Log("Destructing " + this.GetType().Name + " (" + (success ? "success)" : "fail)"));
+    }
+
+    public bool IsSuccessful()
+    {
+        return this.success;
     }
 }
