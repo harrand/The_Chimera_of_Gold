@@ -15,8 +15,8 @@ public class Game : MonoBehaviour
 
 	void Start()
 	{
-		// Right now just run the Board Unit Test.
-		new TestBoard();
+		new TestBoard(); // Perform Board Unit Test
+		//gameObject.AddComponent<Board>(); // Create the real Board from the 'Root' gameobject.
 	}
 
 	void OnDestroy()

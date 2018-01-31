@@ -7,7 +7,7 @@ using UnityEngine;
 * The Board class acts like a flat 2D board in the 3D world.
 * Board.cs applies to a GameObject with the following effects:
 * Width (in number of tiles) = GameObject.Scale.X
-* Height (in number of tiles) = GameObject.Scale.Z
+* Height (in number of tiles) = GameObject.Scale.Y
 */
 public class Board : MonoBehaviour
 {
@@ -24,6 +24,17 @@ public class Board : MonoBehaviour
 		this.GetWidthInTiles = Convert.ToUInt32(gameObject.transform.localScale.x);
 		this.GetHeightInTiles = Convert.ToUInt32(gameObject.transform.localScale.z);
 		this.tiles = new Tile[this.GetWidthInTiles * this.GetHeightInTiles];
+		for(uint i = 0; i < this.tiles.Length; i++)
+		{
+			GameObject tileObject = Instantiate(Resources.Load("Prefabs/Tile")) as GameObject;
+			tileObject.transform.parent = gameObject.transform;
+			float xTile = i % this.GetWidthInTiles;
+			float zTile = i / this.GetWidthInTiles;
+			tileObject.transform.position = new Vector3(xTile, 0, zTile) * Game.TILE_SIZE;
+			tileObject.transform.localScale *= Game.TILE_SIZE;
+			tileObject.name = "Tile " + (i + 1);
+			this.tiles[i] = tileObject.AddComponent<Tile>();
+		}
     }
 
 	void Start()
@@ -41,8 +52,8 @@ public class Board : MonoBehaviour
 	 */
 	public uint GetWidthInTiles{get; private set;}
 	public uint GetHeightInTiles{get; private set;}
-	public uint GetWidthInPixels{get{return this.GetWidthInTiles * Game.TILE_SIZE;}}
-	public uint GetHeightInPixels{get{return this.GetHeightInTiles * Game.TILE_SIZE;}}
+	public float GetWidthInPixels{get{return this.GetWidthInTiles * Game.TILE_SIZE;}}
+	public float GetHeightInPixels{get{return this.GetHeightInTiles * Game.TILE_SIZE;}}
 
 	public Tile[] GetTiles{get{return this.tiles;}}
 }
