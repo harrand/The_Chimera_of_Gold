@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class TestBoard : TestBase
 {
+	private GameObject boardObject;
 	/**
 	 * Instantiates a new GameObject, attaches the Board script and ensures that the Board constructor modifies the name.
 	 */
 	public TestBoard()
 	{
-		GameObject boardObject = new GameObject();
-		boardObject.name = "Test Object";
-		boardObject.AddComponent<Board>();
-		this.success = boardObject.name == "Board";
+		this.boardObject = new GameObject();
+		this.boardObject.name = "Test Object";
+		// A successful Board will be renamed to "Board" by its script.
+		this.boardObject.AddComponent<Board>();
+		this.success = (this.boardObject.name == "Board");
 	}
 }

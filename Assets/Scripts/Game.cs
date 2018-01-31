@@ -13,6 +13,12 @@ public class Game : MonoBehaviour
 {
 	void Start()
 	{
+		// Right now just run the Board Unit Test.
 		new TestBoard();
+	}
+
+	void OnDestroy()
+	{
+
 	}
 }
