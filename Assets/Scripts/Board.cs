@@ -14,15 +14,16 @@ public class Board : MonoBehaviour
     /**
     * width and height use number of Tiles as units.
     */
-    private uint width, height, numberCamps, numberObstacles;
+    private uint numberCamps, numberObstacles;
     private Tile[] tiles;
 
 	void Awake()
     {
+		gameObject.name = "Board";
 		// Set width and height (in Tiles) to be equal to the length and depth of the GameObject respectively (in pixels).
-		this.width = Convert.ToUInt32(gameObject.transform.localScale.x);
-		this.height = Convert.ToUInt32(gameObject.transform.localScale.z);
-		this.tiles = new Tile[this.width * this.height];
+		this.GetWidthInTiles = Convert.ToUInt32(gameObject.transform.localScale.x);
+		this.GetHeightInTiles = Convert.ToUInt32(gameObject.transform.localScale.z);
+		this.tiles = new Tile[this.GetWidthInTiles * this.GetHeightInTiles];
     }
 
 	void Start()
@@ -38,10 +39,10 @@ public class Board : MonoBehaviour
 	/**
 	 * Getters for width and height (in units of Tiles and pixels respectively)
 	 */
-	public uint GetWidthInTiles{get{return this.width;}}
-	public uint GetHeightInTiles{get{return this.height;}}
-	public uint GetWidthInPixels{get{return this.width * Game.TILE_SIZE;}}
-	public uint GetHeightInPixels{get{return this.height * Game.TILE_SIZE;}}
+	public uint GetWidthInTiles{get; private set;}
+	public uint GetHeightInTiles{get; private set;}
+	public uint GetWidthInPixels{get{return this.GetWidthInTiles * Game.TILE_SIZE;}}
+	public uint GetHeightInPixels{get{return this.GetHeightInTiles * Game.TILE_SIZE;}}
 
 	public Tile[] GetTiles{get{return this.tiles;}}
 }
