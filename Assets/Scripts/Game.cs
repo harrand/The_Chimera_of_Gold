@@ -11,6 +11,8 @@ using UnityEngine;
 
 public class Game : MonoBehaviour
 {
+	public const uint TILE_SIZE = 5;
+
 	void Start()
 	{
 		// Right now just run the Board Unit Test.
