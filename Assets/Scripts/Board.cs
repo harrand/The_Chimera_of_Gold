@@ -16,6 +16,8 @@ public class Board : MonoBehaviour
     */
     private uint numberCamps, numberObstacles;
     private Tile[] tiles;
+	private Obstacle[] obstacles;
+	private Camp[] camps;
 
 	void Awake()
     {
@@ -35,6 +37,12 @@ public class Board : MonoBehaviour
 			tileObject.name = "Tile " + (i + 1);
 			this.tiles[i] = tileObject.AddComponent<Tile>();
 		}
+
+		this.numberCamps = 5;
+		this.numberObstacles = 13;
+
+		this.obstacles = new Obstacle[this.numberObstacles];
+		this.camps = new Camp[this.numberCamps];
     }
 
 	void Start()
@@ -56,5 +64,8 @@ public class Board : MonoBehaviour
 	public float GetHeightInPixels{get{return this.GetHeightInTiles * Game.TILE_SIZE;}}
 
 	public Tile[] GetTiles{get{return this.tiles;}}
+	public Camp[] GetCamps{get{return this.camps;}}
+	public Obstacle[] GetObstacles{get{return this.obstacles;}}
+
 }
 
