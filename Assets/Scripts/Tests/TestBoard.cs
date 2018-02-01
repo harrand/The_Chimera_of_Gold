@@ -12,6 +12,7 @@ public class TestBoard : TestBase
 	public TestBoard()
 	{
 		this.boardObject = new GameObject();
+		this.boardObject.transform.localScale = new Vector3(3, 3, 3);
 		this.boardScript = this.boardObject.AddComponent<Board>();
 		this.success = this.TestDimensions() && this.TestTiles();
 	}
@@ -26,15 +27,19 @@ public class TestBoard : TestBase
 
 	/**
 	 * Passes if the Board has the expected number of Tiles and none of them are null references.
+	 * The Tiles must all also be in the correct positions for a grid.
 	 */
 	public bool TestTiles()
 	{
 		if(this.boardScript.GetTiles.Length != (this.boardScript.GetWidthInTiles * this.boardScript.GetHeightInTiles))
 			return false;
-		foreach(Tile tile in this.boardScript.GetTiles)
+		for(uint x = 0; x < this.boardScript.GetWidthInTiles; x++)
 		{
-			if(tile == null)
-				return false;
+			for(uint z = 0; z < this.boardScript.GetHeightInTiles; z++)
+			{
+				if(this.boardScript.GetTiles[x + (z * this.boardScript.GetWidthInTiles)].gameObject.transform.position != (new Vector3(x, 0, z) * Game.TILE_SIZE))
+					return false;
+			}
 		}
 		return true;
 	}
