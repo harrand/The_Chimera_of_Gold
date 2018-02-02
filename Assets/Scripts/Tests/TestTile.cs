@@ -17,8 +17,19 @@ public class TestTile : TestBase
     */
     public TestTile()
     {
-        var pair = Tile.Create(null, 0, 0);
-        this.tileScript = pair.Key;
-        this.tileObject = pair.Value;
+        this.tileScript = Tile.Create(null, 0, 0);
+        this.tileObject = this.tileScript.gameObject;
 	}
+
+
+    // This cannot be implemented until we know both where the players are on the board and also where the obstacles are.
+    bool HasOccupant()
+    {
+        return false;
+    }
+
+    GameObject GetOccupant()
+    {
+        return null;
+    }
 }

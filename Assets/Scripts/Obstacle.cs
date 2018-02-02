@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour 
 {
-
 	private Board parent;
 
 	// Use this for initialization
@@ -18,7 +17,4 @@ public class Obstacle : MonoBehaviour
 	{
         return null;
 	}
-
-
-
 }

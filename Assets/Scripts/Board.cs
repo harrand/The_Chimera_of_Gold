@@ -30,9 +30,8 @@ public class Board : MonoBehaviour
 		{
             float xTile = i % this.GetWidthInTiles;
             float zTile = i / this.GetWidthInTiles;
-            KeyValuePair<Tile, GameObject> tilePair = Tile.Create(this, xTile, zTile);
-            this.Tiles[i] = tilePair.Key;
-            GameObject tileObject = tilePair.Value;
+            this.Tiles[i] = Tile.Create(this, xTile, zTile);
+            GameObject tileObject = this.Tiles[i].gameObject;
 			tileObject.transform.position = new Vector3(xTile, 0, zTile) * Game.TILE_SIZE;
 			tileObject.transform.localScale *= Game.TILE_SIZE;
 			tileObject.name = "Tile " + (i + 1);
