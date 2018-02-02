@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
+	private Board parent;
+
 	void Start ()
     {
 		

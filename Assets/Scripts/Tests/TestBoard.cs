@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * TestBoard - Completely tests the Board Functionalities.
+ */
+
 public class TestBoard : TestBase
 {
 	private GameObject boardObject;
 	private Board boardScript;
 	/**
+	 * TestBoard
+	 * @Author Harry Hollands
 	 * Instantiates a new GameObject, attaches the Board script and ensures that the Board constructor modifies the name.
 	 */
 	public TestBoard()
@@ -26,6 +32,8 @@ public class TestBoard : TestBase
 	}
 
 	/**
+	 * TestDimensions
+	 * @Author Harry Hollands
 	 * Passes if the boardObject has the same dimensions as the Board script expects.
 	 */
 	public bool TestDimensions()
@@ -34,6 +42,8 @@ public class TestBoard : TestBase
 	}
 
 	/**
+	 * TestTiles
+	 * @Author Harry Hollands
 	 * Passes if the Board has the expected number of Tiles and none of them are null references.
 	 * The Tiles must all also be in the correct positions for a grid.
 	 */
@@ -59,6 +69,12 @@ public class TestBoard : TestBase
 		return true;
 	}
 
+	/**
+	 * TestCamps
+	 * @Author Ciara O'Brien
+	 * Checks the validity of the camps on the board - ensuring the correct number of camps and none are NULL
+	 */
+
 	public bool TestCamps()
 	{
 		if (this.boardScript.GetCamps.Length != 5) 
@@ -76,6 +92,14 @@ public class TestBoard : TestBase
 
 		return true;	
 	}
+
+	/**
+	 * 
+	 * TestObstacles
+	 * @Author Ciara O'Brien
+	 * Checks the validity of the obstacles on the board - ensuring the correct number and none are NULL
+	 * 
+	 */
 
 	public bool TestObstacles()
 	{

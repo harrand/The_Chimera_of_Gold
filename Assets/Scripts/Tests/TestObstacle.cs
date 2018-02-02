@@ -2,18 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Test : MonoBehaviour 
+public class Test : TestBase 
 {
 
-	// Use this for initialization
-	void Start () 
+	public void TestObstacle()
 	{
-		
+
 	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
+
+
 		
-	}
 }

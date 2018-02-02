@@ -5,15 +5,21 @@ using UnityEngine;
 public class Player : MonoBehaviour 
 {
 
+	private Board parent;
+	private Tile occupiedTile;
+
 	// Use this for initialization
-	void Start () 
+	void Start (Board board) 
 	{
-		
+		parent = board;
 	}
 	
-	// Update is called once per frame
-	void Update () 
+	public Tile GetOccupiedTile()
 	{
-		
+		return occupiedTile;
+	}
+
+	public void SetOccupiedTile(Tile newLocation){
+		occupiedTile = newLocation;
 	}
 }
