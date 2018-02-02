@@ -21,7 +21,6 @@ public class TestBoard : TestBase
 		this.boardObject.transform.localScale = new Vector3(3, 3, 3);
 		this.boardScript = this.boardObject.AddComponent<Board>();
 
-
 		this.TestDimensions ();
 		this.TestTiles ();
 		this.TestCamps ();
@@ -50,7 +49,7 @@ public class TestBoard : TestBase
 	public bool TestTiles()
 	{
 		uint expectedLength = this.boardScript.GetWidthInTiles * this.boardScript.GetHeightInTiles;
-		if (this.boardScript.GetTiles.Length != expectedLength) 
+		if (this.boardScript.Tiles.Length != expectedLength) 
 		{
 			Debug.Log ("Test Failed -- Incorrect number of tiles (should be "+expectedLength+" )");
 			return false;
@@ -59,7 +58,7 @@ public class TestBoard : TestBase
 		{
 			for(uint z = 0; z < this.boardScript.GetHeightInTiles; z++)
 			{
-				if (this.boardScript.GetTiles [x + (z * this.boardScript.GetWidthInTiles)].gameObject.transform.position != (new Vector3 (x, 0, z) * Game.TILE_SIZE)) 
+				if (this.boardScript.Tiles [x + (z * this.boardScript.GetWidthInTiles)].gameObject.transform.position != (new Vector3 (x, 0, z) * Game.TILE_SIZE)) 
 				{
 					Debug.Log ("Test Failed -- Tiles do not represent a grid format");
 					return false;
@@ -77,13 +76,13 @@ public class TestBoard : TestBase
 
 	public bool TestCamps()
 	{
-		if (this.boardScript.GetCamps.Length != 5) 
+		if (this.boardScript.Camps.Length != 5) 
 		{
 			Debug.Log ("Test Failed -- Incorrect number of camps (should be 5)");
 			return false;
 		}
 
-		foreach (Camp camp in this.boardScript.GetCamps)
+		foreach (Camp camp in this.boardScript.Camps)
 			if (camp == null) 
 			{
 				Debug.Log ("Test Failed -- NULL Camp entry");
@@ -103,13 +102,13 @@ public class TestBoard : TestBase
 
 	public bool TestObstacles()
 	{
-		if (this.boardScript.GetObstacles.Length != 13) 
+		if (this.boardScript.Obstacles.Length != 13) 
 		{
 			Debug.Log ("Test Failed -- Incorrect number of obstacles (should be 13)");
 			return false;
 		}
 
-		foreach (Obstacle obstacle in this.boardScript.GetObstacles)
+		foreach (Obstacle obstacle in this.boardScript.Obstacles)
 			if (obstacle == null) 
 			{
 				Debug.Log ("Test Failed -- NULL obstacle entry");

@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class TestPlayer : MonoBehaviour 
 {
+    private Player playerScript;
+    private GameObject playerObject;
 
+    private Board parentBoard;
 	// Use this for initialization
 	void Start () 
 	{
-		
+        this.playerObject = new GameObject();
+
 	}
 	
 	// Update is called once per frame
@@ -16,4 +20,9 @@ public class TestPlayer : MonoBehaviour
 	{
 		
 	}
+
+    void TestOccupiedTile()
+    {
+        GameObject testObject = new GameObject();
+    }
 }

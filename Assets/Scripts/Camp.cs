@@ -9,18 +9,23 @@ public class Camp : MonoBehaviour
 	private uint numberPlayers;
 	private Player[] teamPlayers;
 
-	// Use this for initialization
+    // Use this for initialization
+    void Start()
+    {
+        
+    }
+    /*
 	void Start (Board board, uint noPlayers) 
 	{
 		parent = board;
 		numberPlayers = noPlayers;
 		teamPlayers = new Player[numberPlayers];
-
 	}
+    */
 
-	public Player SpawnPlayer()
+    public Player SpawnPlayer()
 	{
-
+        return null;
 	}
 
 	public uint GetNumberPlayers()
