@@ -76,16 +76,16 @@ public class TestBoard : TestBase
 
 	public bool TestCamps()
 	{
-		if (this.boardScript.Camps.Length != 5) 
+		if (this.boardScript.Camps.Length != Game.NUMBER_CAMPS) 
 		{
-			Debug.Log ("Test Failed -- Incorrect number of camps (should be 5)");
+			Debug.Log ("Test Failed -- Incorrect number of camps (should be " + Game.NUMBER_CAMPS + ")");
 			return false;
 		}
 
 		foreach (Camp camp in this.boardScript.Camps)
 			if (camp == null) 
 			{
-				Debug.Log ("Test Failed -- NULL Camp entry");
+				Debug.Log ("Test Failed -- One or more null Camp entry");
 				return false;
 			}
 
@@ -102,16 +102,16 @@ public class TestBoard : TestBase
 
 	public bool TestObstacles()
 	{
-		if (this.boardScript.Obstacles.Length != 13) 
+		if (this.boardScript.Obstacles.Length != Game.NUMBER_OBSTACLES) 
 		{
-			Debug.Log ("Test Failed -- Incorrect number of obstacles (should be 13)");
+			Debug.Log ("Test Failed -- Incorrect number of obstacles (should be " + Game.NUMBER_OBSTACLES + ")");
 			return false;
 		}
 
 		foreach (Obstacle obstacle in this.boardScript.Obstacles)
 			if (obstacle == null) 
 			{
-				Debug.Log ("Test Failed -- NULL obstacle entry");
+				Debug.Log ("Test Failed -- One or more null obstacle entry");
 				return false;
 			}
 
