@@ -7,7 +7,7 @@ public class Camp : MonoBehaviour
 
 	private Board parent;
 	private uint numberPlayers;
-	private Player[] teamPlayers;
+	public Player[] TeamPlayers{get; private set;}
 
     // Use this for initialization
     void Start()
