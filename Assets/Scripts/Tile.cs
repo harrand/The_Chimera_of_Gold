@@ -19,7 +19,8 @@ public class Tile : MonoBehaviour
 
 	void Start ()
     {
-        gameObject.transform.parent = this.parent.gameObject.transform;
+        if(this.parent != null)
+            gameObject.transform.parent = this.parent.gameObject.transform;
 	}
 	
 	void Update ()
