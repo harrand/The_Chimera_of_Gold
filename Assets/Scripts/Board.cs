@@ -28,11 +28,11 @@ public class Board : MonoBehaviour
 		this.Tiles = new Tile[this.GetWidthInTiles * this.GetHeightInTiles];
 		for(uint i = 0; i < this.Tiles.Length; i++)
 		{
-            KeyValuePair<Tile, GameObject> tilePair = Tile.Create(this);
+            float xTile = i % this.GetWidthInTiles;
+            float zTile = i / this.GetWidthInTiles;
+            KeyValuePair<Tile, GameObject> tilePair = Tile.Create(this, xTile, zTile);
             this.Tiles[i] = tilePair.Key;
             GameObject tileObject = tilePair.Value;
-			float xTile = i % this.GetWidthInTiles;
-			float zTile = i / this.GetWidthInTiles;
 			tileObject.transform.position = new Vector3(xTile, 0, zTile) * Game.TILE_SIZE;
 			tileObject.transform.localScale *= Game.TILE_SIZE;
 			tileObject.name = "Tile " + (i + 1);

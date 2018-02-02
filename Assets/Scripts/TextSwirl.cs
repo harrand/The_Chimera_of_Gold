@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TextSwirl : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 
-    string text; //GetComponentInChildren<Text>().text;
+    private string text; //GetComponentInChildren<Text>().text;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
