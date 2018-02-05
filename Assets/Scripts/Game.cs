@@ -21,15 +21,15 @@ public class Game : MonoBehaviour
 
 	void Start()
 	{
-        //new TestBoard(50, 50, 5, 5); // Perform Board Unit Test
+        new TestBoard(50, 50, 5, 5); // Perform Board Unit Test
         //new TestTile();
 		//new TestCamp();
 
-		///*
+		/*
 		// Create a normal board with Input attached.
 		Board board = Board.Create(this.gameObject, width, height, tileWidth, tileHeight);
 		board.gameObject.AddComponent<InputController>();
-		//*/
+		*/
     }
 
 	void OnDestroy()

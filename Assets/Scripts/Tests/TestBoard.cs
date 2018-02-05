@@ -41,8 +41,19 @@ public class TestBoard : TestBase
 	public bool TestDimensions()
 	{
 		Transform boardTransform = this.boardScript.gameObject.transform;
-		bool widthMatch = (boardTransform.localScale == new Vector3(this.width, 1, this.height));
-		return widthMatch;
+		bool geometricMatch = (boardTransform.localScale == new Vector3(this.width, 1, this.height));
+		if(!geometricMatch)
+		{
+			Debug.Log("Test Failed -- Geometric width and height of Board's GameObject does not match the parameters of the Board.");
+			return false;
+		}
+		bool tileMatch = this.boardScript.GetWidthInTiles == this.tileWidth && this.boardScript.GetHeightInTiles == this.tileHeight;
+		if(!tileMatch)
+		{
+			Debug.Log("Test Failed -- Width and height (in tile-space) variables of the Board do not match the inputs it was given.");
+			return false;
+		}
+		return true;
 	}
 
 	/**
