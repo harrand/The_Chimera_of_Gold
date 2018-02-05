@@ -75,17 +75,38 @@ public class Board : MonoBehaviour
     {
         this.PlayerTurn = this.Camps[0].TeamPlayers[0];
     }
-
+		
     public void NextTurn()
     {
-        for(uint campId = 0; campId < this.Camps.Length; campId++)
+		int campId = -1, playerId = -1;
+		// Set campId and playerId to the corresponding indices for the current Player
+        for(uint campCounter = 0; campCounter < this.Camps.Length; campCounter++)
         {
             // paired codang
-            for(uint playerId = 0; playerId < this.Camps[campId].TeamPlayers.Length; playerId++)
+            for(uint playerCounter = 0; playerCounter < this.Camps[campCounter].TeamPlayers.Length; playerCounter++)
             {
-
+				if(this.Camps[campCounter].TeamPlayers[playerCounter] == this.PlayerTurn)
+				{
+					campId = (int)campCounter;
+					playerId = (int)playerCounter;
+				}
             }
         }
+		// If neither campId or playerId have changed, then the current player wasnt even found and something is going to go very wrong.
+		if(campId == -1 || playerId == -1)
+		{
+			Debug.LogError("Board::PlayerTurn is not a member of any of its camp members.");
+		}
+		// Try to increment playerId. If it goes higher than the number of players per camp, increment the camp id and set player id to 0.
+		if(++playerId >= Game.PLAYERS_PER_CAMP)
+		{
+			campId++;
+			playerId = 0;
+		}
+		// If camp id is now greater than the actual number of camps, then we've gone past the final player of the final camp and need to go back to the beginning.
+		if(campId >= Game.NUMBER_CAMPS)
+			campId = 0;
+		this.PlayerTurn = this.Camps[campId].TeamPlayers[playerId];
     }
 
 	/**

@@ -20,6 +20,7 @@ public class Camp : MonoBehaviour
         campScript.parent = parent;
         campScript.tile = tile;
         campScript.PositionTileSpace = tile.PositionTileSpace;
+		campObject.transform.position = tile.gameObject.transform.position;
         return campScript;
     }
 
@@ -28,19 +29,15 @@ public class Camp : MonoBehaviour
     {
         this.numberPlayers = 5;
         this.TeamPlayers = new Player[this.numberPlayers];
-        for(uint i = 0; i < this.numberPlayers; i++)
-        {
-            this.TeamPlayers[i] = Player.Create(this.parent, this.tile);
-        }
     }
-    /*
-	void Start (Board board, uint noPlayers) 
+
+	void Start()
 	{
-		parent = board;
-		numberPlayers = noPlayers;
-		teamPlayers = new Player[numberPlayers];
+		for(uint i = 0; i < this.numberPlayers; i++)
+		{
+			this.TeamPlayers[i] = Player.Create(this.parent, this.tile);
+		}
 	}
-    */
 
     public Player SpawnPlayer()
 	{

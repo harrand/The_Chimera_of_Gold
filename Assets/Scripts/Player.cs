@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
         Player playerScript = playerObject.AddComponent<Player>();
         playerScript.parent = parent;
         playerScript.CurrentTile = tilePosition;
+		playerObject.transform.position = tilePosition.gameObject.transform.position;
         return playerScript;
     }
 
