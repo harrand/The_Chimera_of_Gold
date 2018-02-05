@@ -26,4 +26,14 @@ public class Player : MonoBehaviour
 
 	}
 
+	public Camp GetCamp()
+	{
+		foreach(Camp camp in this.parent.Camps)
+		{
+			foreach(Player player in camp.TeamPlayers)
+				if(player == this)
+					return camp;
+		}
+		return null;
+	}
 }

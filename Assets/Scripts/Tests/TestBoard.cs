@@ -9,27 +9,28 @@ using UnityEngine;
 
 public class TestBoard : TestBase
 {
-	private GameObject boardObject;
 	private Board boardScript;
+	private float width, height;
+	private uint tileWidth, tileHeight;
 	/**
 	 * TestBoard
 	 * @Author Harry Hollands
 	 * Instantiates a new GameObject, attaches the Board script and ensures that the Board constructor modifies the name.
 	 */
-	public TestBoard()
+	public TestBoard(float width, float height, uint tileWidth, uint tileHeight)
 	{
-		this.boardObject = new GameObject();
-		this.boardObject.transform.localScale = new Vector3(9, 9, 9);
-		this.boardScript = this.boardObject.AddComponent<Board>();
+		this.boardScript = Board.Create(new GameObject(), width, height, tileWidth, tileHeight);
+		this.width = width;
+		this.height = height;
+		this.tileWidth = tileWidth;
+		this.tileHeight = tileHeight;
 
-		this.TestDimensions ();
-		this.TestTiles ();
-		this.TestCamps ();
-		this.TestObstacles ();
-        this.TestTurns();
-
-		this.success = this.TestDimensions() && this.TestTiles() && this.TestCamps() && this.TestObstacles() && this.TestTurns();
-
+		// Chain it like this to ensure that compiler does not optimise away any of the checks.
+		this.success = this.TestDimensions();
+		this.success &= this.TestTiles();
+		this.success &= this.TestCamps();
+		this.success &= this.TestObstacles();
+		this.success &= this.TestTurns();
 	}
 
 	/**
@@ -39,7 +40,9 @@ public class TestBoard : TestBase
 	 */
 	public bool TestDimensions()
 	{
-		return (this.boardObject.transform.localScale.x == this.boardScript.GetWidthInTiles) && (this.boardObject.transform.localScale.z == this.boardScript.GetHeightInTiles);
+		Transform boardTransform = this.boardScript.gameObject.transform;
+		bool widthMatch = (boardTransform.localScale == new Vector3(this.width, 1, this.height));
+		return widthMatch;
 	}
 
 	/**

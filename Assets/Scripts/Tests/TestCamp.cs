@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class TestCamp : TestBase
 {
+	private GameObject campObject;
+	private Camp campScript;
 
-
+	public TestCamp()
+	{
+		
+	}
 }

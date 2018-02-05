@@ -23,6 +23,6 @@ public class TestPlayer : MonoBehaviour
 
     void TestOccupiedTile()
     {
-        GameObject testObject = new GameObject();
+        
     }
 }

@@ -24,21 +24,23 @@ public class Camp : MonoBehaviour
         return campScript;
     }
 
-    // Use this for initialization
     void Awake()
     {
+		// Define Player array size.
         this.numberPlayers = 5;
         this.TeamPlayers = new Player[this.numberPlayers];
     }
 
 	void Start()
 	{
+		// Instantiate all Players in the camp.
 		for(uint i = 0; i < this.numberPlayers; i++)
 		{
 			this.TeamPlayers[i] = Player.Create(this.parent, this.tile);
 		}
 	}
 
+	// Do not implement until test is written.
     public Player SpawnPlayer()
 	{
         return null;

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
-	public const float MAX_CLICK_DISTANCE = 1000.0f;
     private Board boardScript;
     /**
      * LastClickedX represents the object that was last clicked in 3D space. 
@@ -34,27 +33,31 @@ public class InputController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
 		{
-			Tile currentTile = this.GetMousedTile();
-			if(currentTile != null)
-				this.LastClickedTile = currentTile;
-			/* This code is ready for use.
-			 * However, it should not be used until Player, Camp and Obstacle have been sufficiently unit tested.
-			 * As of today (02/02/2018), Camp has a fault where TeamPlayers does not contain valid elements so would fail unit testing and break this.
-			Player currentPlayer = this.GetMousedPlayer();
-			if(currentPlayer != null)
-				this.LastClickedPlayer = currentPlayer;
-			Obstacle currentObstacle = this.GetMousedObstacle();
-			if(currentObstacle != null)
-				this.LastClickedObstacle = currentObstacle;
-			*/
+			this.UpdateLastClickedObjects();
 		}
+	}
+
+	/**
+	* Update selected Player, Camp etc...
+	*/
+	private void UpdateLastClickedObjects()
+	{
+		Tile currentTile = this.GetMousedTile();
+		if(currentTile != null)
+			this.LastClickedTile = currentTile;
+		Player currentPlayer = this.GetMousedPlayer();
+		if(currentPlayer != null)
+			this.LastClickedPlayer = currentPlayer;
+		Obstacle currentObstacle = this.GetMousedObstacle();
+		if(currentObstacle != null)
+			this.LastClickedObstacle = currentObstacle;
 	}
 
 	private GameObject GetMousedGameObject()
 	{
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit target = new RaycastHit();
-		if (Physics.Raycast(ray, out target, InputController.MAX_CLICK_DISTANCE))
+		if (Physics.Raycast(ray, out target))
 			return target.transform.gameObject;
 		else
 			return null;
