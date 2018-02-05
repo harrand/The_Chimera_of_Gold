@@ -54,6 +54,10 @@ public class Board : MonoBehaviour
 		
 	}
 
+    public void ResetTurns() { }
+
+    public void NextTurn() { }
+
 	/**
 	 * Getters for width and height (in units of Tiles and pixels respectively)
 	 */
@@ -61,6 +65,7 @@ public class Board : MonoBehaviour
 	public uint GetHeightInTiles{get; private set;}
 	public float GetWidthInPixels{get{return this.GetWidthInTiles * Game.TILE_SIZE;}}
 	public float GetHeightInPixels{get{return this.GetHeightInTiles * Game.TILE_SIZE;}}
+    public Player PlayerTurn { get; private set; }
 
 }
 

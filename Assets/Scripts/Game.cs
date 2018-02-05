@@ -18,10 +18,10 @@ public class Game : MonoBehaviour
 
 	void Start()
 	{
-        //new TestBoard(); // Perform Board Unit Test
+        new TestBoard(); // Perform Board Unit Test
         //new TestTile();
-		gameObject.AddComponent<Board>(); // Create the real Board from the 'Root' gameobject.
-        gameObject.AddComponent<InputController>();
+		//gameObject.AddComponent<Board>(); // Create the real Board from the 'Root' gameobject.
+        //gameObject.AddComponent<InputController>();
     }
 
 	void OnDestroy()

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,8 +26,9 @@ public class TestBoard : TestBase
 		this.TestTiles ();
 		this.TestCamps ();
 		this.TestObstacles ();
+        this.TestTurns();
 
-		this.success = this.TestDimensions() && this.TestTiles() && this.TestCamps() && this.TestObstacles();
+		this.success = this.TestDimensions() && this.TestTiles() && this.TestCamps() && this.TestObstacles() && this.TestTurns();
 
 	}
 
@@ -117,4 +119,24 @@ public class TestBoard : TestBase
 
 		return true;	
 	}
+
+    public bool TestTurns()
+    {
+        this.boardScript.ResetTurns();
+        int numberCamps = this.boardScript.Camps.Length;
+        int numberPlayersPerCamp = this.boardScript.Camps[0].TeamPlayers.Length;
+        for(uint i = 0; i < (numberCamps * numberPlayersPerCamp); i++)
+        {
+            uint currentCamp = (uint)Math.Ceiling((double)i / numberPlayersPerCamp);
+            int currentPlayerInCamp = (int) i % numberPlayersPerCamp;
+            Player expectedPlayer = this.boardScript.Camps[currentCamp].TeamPlayers[currentPlayerInCamp];
+            if(expectedPlayer != this.boardScript.PlayerTurn)
+            {
+                Debug.Log("Test Failed -- Player turn selection invalid.");
+                return false;
+            }
+            this.boardScript.NextTurn();
+        }
+        return true;
+    }
 }
