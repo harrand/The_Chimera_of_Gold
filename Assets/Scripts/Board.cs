@@ -71,9 +71,22 @@ public class Board : MonoBehaviour
         return false;
     }
 
-    public void ResetTurns() { }
+    public void ResetTurns()
+    {
+        this.PlayerTurn = this.Camps[0].TeamPlayers[0];
+    }
 
-    public void NextTurn() { }
+    public void NextTurn()
+    {
+        for(uint campId = 0; campId < this.Camps.Length; campId++)
+        {
+            // paired codang
+            for(uint playerId = 0; playerId < this.Camps[campId].TeamPlayers.Length; playerId++)
+            {
+
+            }
+        }
+    }
 
 	/**
 	 * Getters for width and height (in units of Tiles and pixels respectively)
