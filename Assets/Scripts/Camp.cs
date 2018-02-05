@@ -4,15 +4,34 @@ using UnityEngine;
 
 public class Camp : MonoBehaviour
 {
-
-	private Board parent;
-	private uint numberPlayers;
+    private Board parent;
+    private Tile tile;
+    public Vector2 PositionTileSpace { get; private set; }
+    private uint numberPlayers;
 	public Player[] TeamPlayers{get; private set;}
 
-    // Use this for initialization
-    void Start()
+    /**
+     * Pseudo-constructor which uses the Prefabs/Camp prefab in the project tree.
+     */
+    public static Camp Create(Board parent, Tile tile)
     {
-        
+        GameObject campObject = Instantiate(Resources.Load("Prefabs/Camp")) as GameObject;
+        Camp campScript = campObject.AddComponent<Camp>();
+        campScript.parent = parent;
+        campScript.tile = tile;
+        campScript.PositionTileSpace = tile.PositionTileSpace;
+        return campScript;
+    }
+
+    // Use this for initialization
+    void Awake()
+    {
+        this.numberPlayers = 5;
+        this.TeamPlayers = new Player[this.numberPlayers];
+        for(uint i = 0; i < this.numberPlayers; i++)
+        {
+            this.TeamPlayers[i] = Player.Create(this.parent, this.tile);
+        }
     }
     /*
 	void Start (Board board, uint noPlayers) 

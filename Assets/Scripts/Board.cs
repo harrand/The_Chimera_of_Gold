@@ -40,8 +40,10 @@ public class Board : MonoBehaviour
 		this.numberCamps = 5;
 		this.numberObstacles = 13;
 
-		this.Obstacles = new Obstacle[this.numberObstacles];
 		this.Camps = new Camp[this.numberCamps];
+        for (uint i = 0; i < numberCamps; i++)
+            this.Camps[i] = Camp.Create(this, this.Tiles[i]);
+        this.Obstacles = new Obstacle[this.numberObstacles];
     }
 
 	void Start()
@@ -53,6 +55,19 @@ public class Board : MonoBehaviour
     {
 		
 	}
+
+    public bool TileOccupiedByObstacle(Tile t)
+    {
+        return this.TileOccupiedByObstacle(t.PositionTileSpace);
+    }
+
+    public bool TileOccupiedByObstacle(Vector2 tilePosition)
+    {
+        foreach (Obstacle obstacle in this.Obstacles)
+            if (obstacle.CurrentTile.PositionTileSpace == tilePosition)
+                return true;
+        return false;
+    }
 
     public void ResetTurns() { }
 
@@ -68,4 +83,3 @@ public class Board : MonoBehaviour
     public Player PlayerTurn { get; private set; }
 
 }
-

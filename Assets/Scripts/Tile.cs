@@ -7,13 +7,15 @@ public class Tile : MonoBehaviour
 	private Board parent;
     public Vector2 PositionTileSpace { get; private set; }
 
+    /**
+     * Pseudo-constructor which uses the Prefabs/Tile prefab in the project tree.
+     */
     public static Tile Create(Board parent, float xTile, float zTile)
     {
         GameObject tileObject = Instantiate(Resources.Load("Prefabs/Tile")) as GameObject;
         Tile tileScript = tileObject.AddComponent<Tile>();
         tileScript.parent = parent;
         tileScript.PositionTileSpace = new Vector2(xTile, zTile);
-        Debug.Log("Tile = [" + xTile + ", " + zTile + "]");
         return tileScript;
     }
 

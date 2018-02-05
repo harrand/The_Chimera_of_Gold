@@ -5,14 +5,17 @@ using UnityEngine;
 public class Player : MonoBehaviour 
 {
 	private Board parent;
-    private Tile currentTile;
+    public Tile CurrentTile { get; private set; }
 
+    /**
+     * Pseudo-constructor which uses the Prefabs/Player prefab in the project tree.
+     */
     public static Player Create(Board parent, Tile tilePosition)
     {
         GameObject playerObject = Instantiate(Resources.Load("Prefabs/Player")) as GameObject;
         Player playerScript = playerObject.AddComponent<Player>();
         playerScript.parent = parent;
-        playerScript.currentTile = tilePosition;
+        playerScript.CurrentTile = tilePosition;
         return playerScript;
     }
 
@@ -20,11 +23,6 @@ public class Player : MonoBehaviour
     void Start () 
 	{
 
-	}
-	
-	public Tile GetOccupiedTile()
-	{
-        return null;
 	}
 
 }

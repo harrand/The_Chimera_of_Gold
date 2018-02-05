@@ -5,16 +5,23 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour 
 {
 	private Board parent;
+    public Tile CurrentTile { get; private set; }
 
-	// Use this for initialization
-	void Start () 
+    /**
+     * Pseudo-constructor which uses the Prefabs/Player prefab in the project tree.
+     */
+    public static Obstacle Create(Board parent, Tile tilePosition)
+    {
+        GameObject obstacleObject = Instantiate(Resources.Load("Prefabs/Obstacle")) as GameObject;
+        Obstacle obstacleScript = obstacleObject.AddComponent<Obstacle>();
+        obstacleScript.parent = parent;
+        obstacleScript.CurrentTile = tilePosition;
+        return obstacleScript;
+    }
+
+    // Use this for initialization
+    void Start () 
 	{
 
-	}
-	
-	// Update is called once per frame
-	public Tile GetOccupiedTile()
-	{
-        return null;
 	}
 }

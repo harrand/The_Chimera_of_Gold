@@ -120,6 +120,11 @@ public class TestBoard : TestBase
 		return true;	
 	}
 
+    /**
+	 * TestObstacles
+	 * @Author Harry Hollands, Lawrence Howes-Yarlett (https://www.facebook.com/lawrence.howesyarlett) & Ciara O'Brien
+     * Ensures that the turn system of the Board is implemented correctly for every single turn state.
+     */
     public bool TestTurns()
     {
         this.boardScript.ResetTurns();
