@@ -19,7 +19,7 @@ public class TestBoard : TestBase
 	public TestBoard()
 	{
 		this.boardObject = new GameObject();
-		this.boardObject.transform.localScale = new Vector3(3, 3, 3);
+		this.boardObject.transform.localScale = new Vector3(9, 9, 9);
 		this.boardScript = this.boardObject.AddComponent<Board>();
 
 		this.TestDimensions ();

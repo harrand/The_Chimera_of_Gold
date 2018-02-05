@@ -16,6 +16,8 @@ public class Obstacle : MonoBehaviour
         Obstacle obstacleScript = obstacleObject.AddComponent<Obstacle>();
         obstacleScript.parent = parent;
         obstacleScript.CurrentTile = tilePosition;
+        // Unity transform parent system does not deliver the desired result. Therefore manually assigning the position to be equal to the parent.
+        obstacleObject.transform.position = tilePosition.gameObject.transform.position;
         return obstacleScript;
     }
 

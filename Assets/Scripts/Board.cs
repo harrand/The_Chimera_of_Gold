@@ -44,6 +44,8 @@ public class Board : MonoBehaviour
         for (uint i = 0; i < numberCamps; i++)
             this.Camps[i] = Camp.Create(this, this.Tiles[i]);
         this.Obstacles = new Obstacle[this.numberObstacles];
+        for (uint i = 0; i < numberObstacles; i++)
+            this.Obstacles[i] = Obstacle.Create(this, this.Tiles[i]);
     }
 
 	void Start()
@@ -81,5 +83,4 @@ public class Board : MonoBehaviour
 	public float GetWidthInPixels{get{return this.GetWidthInTiles * Game.TILE_SIZE;}}
 	public float GetHeightInPixels{get{return this.GetHeightInTiles * Game.TILE_SIZE;}}
     public Player PlayerTurn { get; private set; }
-
 }
