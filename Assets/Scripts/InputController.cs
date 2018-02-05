@@ -6,10 +6,19 @@ public class InputController : MonoBehaviour
 {
 	public const float MAX_CLICK_DISTANCE = 1000.0f;
     private Board boardScript;
+    /**
+     * LastClickedX represents the object that was last clicked in 3D space. 
+     */
 	public Tile LastClickedTile{get; private set;}
 	public Player LastClickedPlayer{get; private set;}
 	public Obstacle LastClickedObstacle{get; private set;}
 	//public Camp LastClickedCamp{get; private set;}
+
+    /**
+    * SelectedX represents the Player/Obstacle which should be able to move.
+    */
+    public Player SelectedPlayer{get; set;}
+    public Obstacle SelectedObstacle{get; set;}
 
 	void Start ()
     {
@@ -17,6 +26,8 @@ public class InputController : MonoBehaviour
 		this.LastClickedTile = null;
 		this.LastClickedPlayer = null;
 		this.LastClickedObstacle = null;
+        this.SelectedPlayer = null;
+        this.SelectedObstacle = null;
 	}
 	
 	void Update ()
