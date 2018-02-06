@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - CurrentTile
+  - CurrentPlayer
+  - CurrentObstacle
+  - Players
+  - Tiles
+  - Obstacles
+  - GameBoard
   layers:
   - Default
   - TransparentFX

@@ -30,8 +30,7 @@ public class Game : MonoBehaviour
 		// Create a normal board with Input attached.
 		Board board = Board.Create(this.gameObject, width, height, tileWidth, tileHeight);
 		board.gameObject.AddComponent<InputController>();
-
-        board.gameObject.AddComponent<CameraControl>();
+        
     }
 
 	void OnDestroy()

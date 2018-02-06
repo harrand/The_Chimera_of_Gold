@@ -4,73 +4,93 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
-
-    public Tile tile;
-    public Player player;
-    public Obstacle obstacle;
     public Transform current = null;
+    public GameObject Ethan;
 
-    public Transform startPos;
-    public Transform endPos;
-    public Transform defaultPos;
+    //Speed multiplier for camera movement
+    public float speed = 5.0f;
+    //Default distance and Distance limits. So you can't zoom out forever...
+    public float distance = 10.0f;
+    public float minDist = 5.0f, maxDist = 20.0f;
 
-    public float speed = 1.0f;
-    public float startT;
-    public float distance;
+    //Needed to Limit rotation
+    public float minY = -20, maxY = 80;
+
+    //Used for angles
+    float x, y;
+    
     // Use this for initialization
 	void Start ()
     {
-        defaultPos = Camera.main.transform;
-        Debug.Log("Pos: "+ defaultPos.position);
+        Ethan = GameObject.FindGameObjectWithTag("Player");             //The test dummy
 
-        startT = Time.time;
-        distance = Vector3.Distance(startPos.position, endPos.position);
-
+        Vector3 angles = transform.eulerAngles;
+        x = angles.y;
+        y = angles.x;
     }
 
-    private Transform getLastClickedPosition()
+    /**
+     * getLastClicked
+     * @author Aswin
+     * Returns the object that was last clicked if it can be focused on. Otherwise returns null
+     */
+    private Transform getLastClicked()
     {
-        if (GetComponent<InputController>().CurrentSelected == 1)
+        
+        if (GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 1)
         {
-            current = this.GetComponent<InputController>().LastClickedTile.transform;
-            Debug.Log("Tile");
+            current = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().LastClickedTile.transform;
+            //Debug.Log("Tile");
         }
-        else if (GetComponent<InputController>().CurrentSelected == 2)
+        else if (GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 2)
         {
-            current = this.GetComponent<InputController>().LastClickedObstacle.transform;
-            Debug.Log("obs");
+            current = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().LastClickedPlayer.transform;
+            //Debug.Log("obs");
         }
-        else if (GetComponent<InputController>().CurrentSelected == 3)
+        else if (GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 3)
         {
-            current = this.GetComponent<InputController>().LastClickedPlayer.transform;
-            Debug.Log("player");
+            current = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().LastClickedObstacle.transform;
+            //Debug.Log("player");
         }
         else
         {
             current = null;
-            Debug.Log("Other/back");
+            //Debug.Log("Other/back");
         }
+        
         return current;
+        
+        
     }
-	private void setCameraPosition(GameObject current)
-    {
-        transform.LookAt(current.transform);
 
+    /**
+     * setCameraPostion
+     * @author Aswin
+     * rotates the camera around the currently selected object
+     */
+	private void setCameraPosition(Transform currentTarget)
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            //  transform.LookAt(currentTarget);
+            //transform.RotateAround(currentTarget.position, Vector3.up, Input.GetAxis("Mouse X") * speed);
+
+        }
     }
     // Update is called once per frame
-    void Update ()
+    void LateUpdate ()
     {
-        current = getLastClickedPosition();
+        current = getLastClicked();
         if (current != null)
         {
-            //setCameraPosition(current);
-            Debug.Log("Hello : " + current.position);
+
+            setCameraPosition(current);
+            Debug.Log("Hello : ");
         }
         else
         {
-            current = defaultPos;
-            Debug.Log("Else " + current.position);
-            //transform.TransformVector(0, 13, -9);
+            setCameraPosition(Ethan.transform);
+            Debug.Log("Else ");
         }
 	}
 }

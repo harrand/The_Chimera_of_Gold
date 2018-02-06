@@ -13,6 +13,9 @@ public class InputController : MonoBehaviour
 	public Obstacle LastClickedObstacle{get; private set;}
 	//public Camp LastClickedCamp{get; private set;}
 
+    /**
+     * Decides what to focus the camera on. Basically last clicked object
+     */
     public int CurrentSelected { get; private set; }
     /**
     * SelectedX represents the Player/Obstacle which should be able to move.
@@ -36,34 +39,41 @@ public class InputController : MonoBehaviour
 		{
 			this.UpdateLastClickedObjects();
 		}
-        else if (Input.GetMouseButtonDown(1))
-        {
-            this.CurrentSelected = 0;                       //For testing purposes will be set to point to Ethan
-        }
 	}
 
     /**
 	* Update selected Player, Camp etc...
+    * Aswin: Also updates the tags on the objects. Useful for controlling camera
+    *        Remember to update getLastClicked() in cameraControl.cs if anything new is added here. e.g: Camps...
 	*/
     private void UpdateLastClickedObjects()
     {
         Tile currentTile = this.GetMousedTile();
         if (currentTile != null)
         {
+            if (this.LastClickedTile != null)
+                this.LastClickedTile.tag = "Tiles";
             this.LastClickedTile = currentTile;
+            currentTile.tag = "CurrentTile";
             this.CurrentSelected = 1;
         }
         Player currentPlayer = this.GetMousedPlayer();
         if (currentPlayer != null)
         {
+            if (this.LastClickedPlayer != null)
+                this.LastClickedPlayer.tag = "Players";
             this.LastClickedPlayer = currentPlayer;
+            currentPlayer.tag = "CurrentPlayer";
             this.CurrentSelected = 2;
         }
 
         Obstacle currentObstacle = this.GetMousedObstacle();
         if (currentObstacle != null)
         {
+            if (this.LastClickedObstacle != null)
+                this.LastClickedObstacle.tag = "Obstacles";
             this.LastClickedObstacle = currentObstacle;
+            currentObstacle.tag = "CurrentObstacle";
             this.CurrentSelected = 3;
         }
     }

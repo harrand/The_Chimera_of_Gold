@@ -26,6 +26,7 @@ public class Board : MonoBehaviour
 			Debug.LogError("Board has invalid width/height. One of width or height must be at least 5 AND width * height MUST be greater than 13.");
 		}
 		Board board = root.AddComponent<Board>();
+        root.tag = "GameBoard";
 		root.name = "Board";
 		root.transform.localScale = new Vector3(width, 1, height);
 		board.GetWidthInTiles = Convert.ToUInt32(tilesWidth);
