@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
-    public Transform current = null;
-    public GameObject Ethan;
+    private Transform current = null;   //Currently selected will be held here
+    public GameObject Ethan;            //Test Doll
 
     //Speed multiplier for camera movement
-    public float speed = 5.0f;
+    private float speed = 15.0f;
     //Default distance and Distance limits. So you can't zoom out forever...
-    public float distance = 10.0f;
-    public float minDist = 5.0f, maxDist = 20.0f;
+    private float distance = 5.0f;
+    private float minDist = 1.0f, maxDist = 15.0f;
 
     //Needed to Limit rotation
-    public float minY = -20, maxY = 80;
+    public float minY = -20f, maxY = 80f;
 
     //Used for angles
-    float x, y;
+    float x=0, y=0;
     
     // Use this for initialization
 	void Start ()
@@ -25,8 +25,8 @@ public class CameraControl : MonoBehaviour
         Ethan = GameObject.FindGameObjectWithTag("Player");             //The test dummy
 
         Vector3 angles = transform.eulerAngles;
-        x = angles.y;
-        y = angles.x;
+        y = angles.y;
+        x = angles.x;
     }
 
     /**
@@ -64,33 +64,62 @@ public class CameraControl : MonoBehaviour
     }
 
     /**
+     *@author Aswin
+     * Clamps the angle at 360.
+     */
+    private float ClampAngle(float angle, float min, float max)
+    {
+        if (angle < -360f)
+            angle += 360f;
+        if (angle > 360f)
+            angle -= 360f;
+        return Mathf.Clamp(angle, min, max);
+    }
+    /**
      * setCameraPostion
      * @author Aswin
-     * rotates the camera around the currently selected object
+     * rotates the camera around the currently selected object. 
      */
-	private void setCameraPosition(Transform currentTarget)
-    {
-        if (Input.GetMouseButtonDown(1))
+    private void setCameraPosition(Transform currentTarget)
+    {   
+        //Only allows rotation if right mouse is held down. (It was difficult to click on other objects when the camera kept moving)
+        if (Input.GetMouseButton(1))
         {
-            //  transform.LookAt(currentTarget);
-            //transform.RotateAround(currentTarget.position, Vector3.up, Input.GetAxis("Mouse X") * speed);
+            //Debug.Log("DOWN");
 
+            x += Input.GetAxis("Mouse X") * speed;
+            y -= Input.GetAxis("Mouse Y") * speed;
         }
+            y = ClampAngle(y, minY, maxY);              //y rotation limit
+
+            Quaternion rotation = Quaternion.Euler(y, x, 0);
+            
+            //Travel distance from object. Scroll in and out to move the camera back and forth. (Also clamped between limits)
+            distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel")*5, minDist,maxDist);
+
+            //Keeps camera behind the object it follows. Useful for the test doll.
+            Vector3 negativeDist = new Vector3(0f, 0f, -distance);
+            Vector3 position = currentTarget.position + (rotation * negativeDist);
+            
+            transform.rotation = rotation;
+            transform.position = position;
+        
     }
     // Update is called once per frame
     void LateUpdate ()
     {
         current = getLastClicked();
+       
         if (current != null)
-        {
-
+        { 
             setCameraPosition(current);
-            Debug.Log("Hello : ");
+            //Debug.Log("Should rotate around selected");
         }
         else
         {
             setCameraPosition(Ethan.transform);
-            Debug.Log("Else ");
+            //Debug.Log("Should Follow Ethan ");
         }
+        
 	}
 }
