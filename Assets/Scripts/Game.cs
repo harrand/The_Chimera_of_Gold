@@ -16,20 +16,22 @@ public class Game : MonoBehaviour
     public const uint NUMBER_CAMPS = 5;
     public const uint PLAYERS_PER_CAMP = 5;
 
-	public float width, height;
-	public uint tileWidth, tileHeight;
+	public float width = 50, height = 50;
+	public uint tileWidth = 5, tileHeight = 5;
+
 
 	void Start()
 	{
-        new TestBoard(50, 50, 5, 5); // Perform Board Unit Test
+        //new TestBoard(50, 50, 5, 5); // Perform Board Unit Test
         //new TestTile();
 		//new TestCamp();
 
-		/*
+		
 		// Create a normal board with Input attached.
 		Board board = Board.Create(this.gameObject, width, height, tileWidth, tileHeight);
 		board.gameObject.AddComponent<InputController>();
-		*/
+
+        board.gameObject.AddComponent<CameraControl>();
     }
 
 	void OnDestroy()

@@ -13,6 +13,7 @@ public class InputController : MonoBehaviour
 	public Obstacle LastClickedObstacle{get; private set;}
 	//public Camp LastClickedCamp{get; private set;}
 
+    public int CurrentSelected { get; private set; }
     /**
     * SelectedX represents the Player/Obstacle which should be able to move.
     */
@@ -35,24 +36,37 @@ public class InputController : MonoBehaviour
 		{
 			this.UpdateLastClickedObjects();
 		}
+        else if (Input.GetMouseButtonDown(1))
+        {
+            this.CurrentSelected = 0;                       //For testing purposes will be set to point to Ethan
+        }
 	}
 
-	/**
+    /**
 	* Update selected Player, Camp etc...
 	*/
-	private void UpdateLastClickedObjects()
-	{
-		Tile currentTile = this.GetMousedTile();
-		if(currentTile != null)
-			this.LastClickedTile = currentTile;
-		Player currentPlayer = this.GetMousedPlayer();
-		if(currentPlayer != null)
-			this.LastClickedPlayer = currentPlayer;
-		Obstacle currentObstacle = this.GetMousedObstacle();
-		if(currentObstacle != null)
-			this.LastClickedObstacle = currentObstacle;
-	}
+    private void UpdateLastClickedObjects()
+    {
+        Tile currentTile = this.GetMousedTile();
+        if (currentTile != null)
+        {
+            this.LastClickedTile = currentTile;
+            this.CurrentSelected = 1;
+        }
+        Player currentPlayer = this.GetMousedPlayer();
+        if (currentPlayer != null)
+        {
+            this.LastClickedPlayer = currentPlayer;
+            this.CurrentSelected = 2;
+        }
 
+        Obstacle currentObstacle = this.GetMousedObstacle();
+        if (currentObstacle != null)
+        {
+            this.LastClickedObstacle = currentObstacle;
+            this.CurrentSelected = 3;
+        }
+    }
 	private GameObject GetMousedGameObject()
 	{
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -89,4 +103,6 @@ public class InputController : MonoBehaviour
 				return obstacle;
 		return null;
 	}
+
+
 }
