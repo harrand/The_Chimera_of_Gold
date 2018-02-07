@@ -13,17 +13,18 @@ public class CameraControl : MonoBehaviour
     private float distance = 5.0f;
     private float minDist = 1.0f, maxDist = 15.0f;
 
-    //Needed to Limit rotation
-    public float minY = -20f, maxY = 80f;
+    //Needed to Limit rotation. Limits clipping with terrain somewhat. 
+    private float minY = 20.0f, maxY = 80.0f;
+    //!(minY doesn't do anything. I don't know why. I've temporarily hardcoded the value in setCameraPosition and commented out the variable line.)!
 
     //Used for angles
-    float x=0, y=0;
+    private float x =0, y=0;
     
     // Use this for initialization
 	void Start ()
     {
         Ethan = GameObject.FindGameObjectWithTag("Player");             //The test dummy
-
+        //angles to be used for the rotation
         Vector3 angles = transform.eulerAngles;
         y = angles.y;
         x = angles.x;
@@ -36,7 +37,7 @@ public class CameraControl : MonoBehaviour
      */
     private Transform getLastClicked()
     {
-        
+        //Searchs for the board, and checks what was clicked last. Then puts it into current
         if (GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 1)
         {
             current = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().LastClickedTile.transform;
@@ -57,15 +58,13 @@ public class CameraControl : MonoBehaviour
             current = null;
             //Debug.Log("Other/back");
         }
-        
+
         return current;
-        
-        
     }
 
     /**
-     *@author Aswin
-     * Clamps the angle at 360.
+     * ClampAngle
+     * Clamps the angle at between the limits (20 is high enough to stop ground clip).
      */
     private float ClampAngle(float angle, float min, float max)
     {
@@ -86,23 +85,22 @@ public class CameraControl : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             //Debug.Log("DOWN");
-
             x += Input.GetAxis("Mouse X") * speed;
             y -= Input.GetAxis("Mouse Y") * speed;
         }
-            y = ClampAngle(y, minY, maxY);              //y rotation limit
-
-            Quaternion rotation = Quaternion.Euler(y, x, 0);
+        //y = ClampAngle(y, minY, maxY);              //y rotation limit
+        y = ClampAngle(y, 20, maxY);                    //Exact same as the line above but hardcoded 20 because that variable doesn't want to play with us anymore because it hates me and wants to hurt me.
+        Quaternion rotation = Quaternion.Euler(y, x, 0);
             
-            //Travel distance from object. Scroll in and out to move the camera back and forth. (Also clamped between limits)
-            distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel")*5, minDist,maxDist);
-
-            //Keeps camera behind the object it follows. Useful for the test doll.
-            Vector3 negativeDist = new Vector3(0f, 0f, -distance);
-            Vector3 position = currentTarget.position + (rotation * negativeDist);
+        //Travel distance from object. Scroll in and out to move the camera back and forth. (Also clamped between limits)
+        distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel")*5, minDist,maxDist);
+                        
+        //Keeps camera behind the object it follows. Useful for the test doll.
+        Vector3 negativeDist = new Vector3(0f, 0f, -distance);
+        Vector3 position = currentTarget.position + (rotation * negativeDist);
             
-            transform.rotation = rotation;
-            transform.position = position;
+        transform.rotation = rotation;
+        transform.position = position;
         
     }
     // Update is called once per frame
