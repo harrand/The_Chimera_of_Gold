@@ -43,10 +43,51 @@ public class Board : MonoBehaviour
 			float zTile = i / board.GetWidthInTiles;
 			board.Tiles[i] = Tile.Create(board, xTile, zTile);
 			GameObject tileObject = board.Tiles[i].gameObject;
-			Debug.Log("Terrain min world space = " + Game.MinWorldSpace(root));
 			Vector2 tileSize = Board.ExpectedTileSize(root, board.GetWidthInTiles, board.GetHeightInTiles);
 			tileObject.transform.position = Game.MinWorldSpace(root) + (new Vector3(xTile * tileSize.x, 0, zTile * tileSize.y));
+			tileObject.transform.position = new Vector3(tileObject.transform.position.x, Game.InterpolateYWorldSpace(root, tileObject.transform.position), tileObject.transform.position.z);
 			tileObject.transform.localScale = new Vector3(tileSize.x, 1, tileSize.y);
+			tileObject.name = "Tile " + (i + 1);
+		}
+		board.numberCamps = 5;
+		board.numberObstacles = 13;
+
+		board.Camps = new Camp[board.numberCamps];
+		for (uint i = 0; i < board.numberCamps; i++)
+			board.Camps[i] = Camp.Create(board, board.Tiles[i]);
+		board.Obstacles = new Obstacle[board.numberObstacles];
+		for (uint i = 0; i < board.numberObstacles; i++)
+			board.Obstacles[i] = Obstacle.Create(board, board.Tiles[i]);
+		return board;
+	}
+
+	public static Board CreateNoTerrain(GameObject root, float width, float height, uint tilesWidth, uint tilesHeight)
+	{
+		if(width < 5 && height < 5 && (width * height) < 13)
+		{
+			Debug.LogError("Board has invalid width/height. One of width or height must be at least 5 AND width * height MUST be greater than 13.");
+		}
+		Board board = root.AddComponent<Board>();
+		//root.tag = "GameBoard";
+		root.name = "Board";
+		root.transform.localScale = new Vector3(width, 1, height);
+		board.GetWidthInTiles = Convert.ToUInt32(tilesWidth);
+		board.GetHeightInTiles = Convert.ToUInt32(tilesHeight);
+
+		// The following code block should probably belong in Board::Start() or Board::Awake...
+		// The reason is cannot be in Board::Start() is because Board::Start() is ran once the script is initialised and ready to execute, by the time multiple other scripts would have needed references to these camps etc...
+		// The reason Board::Awake() cannot have this code block is because that will execute directly after "root.AddComponent<Board>()" which means before board.GetWidthInTiles is assigned.
+		// Thus, the initialisation code MUST happen right here, despite being ugly.
+
+		board.Tiles = new Tile[board.GetWidthInTiles * board.GetHeightInTiles];
+		for(uint i = 0; i < board.Tiles.Length; i++)
+		{
+			float xTile = i % board.GetWidthInTiles;
+			float zTile = i / board.GetWidthInTiles;
+			board.Tiles[i] = Tile.Create(board, xTile, zTile);
+			GameObject tileObject = board.Tiles[i].gameObject;
+			tileObject.transform.position = new Vector3(xTile, 0, zTile) * Game.TILE_SIZE;
+			tileObject.transform.localScale *= Game.TILE_SIZE;
 			tileObject.name = "Tile " + (i + 1);
 		}
 		board.numberCamps = 5;

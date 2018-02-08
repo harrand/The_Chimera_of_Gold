@@ -16,7 +16,6 @@ public class Game : MonoBehaviour
     public const uint NUMBER_CAMPS = 5;
     public const uint PLAYERS_PER_CAMP = 5;
 
-	public float width = 50, height = 50;
 	public uint tileWidth = 5, tileHeight = 5;
 
 
@@ -26,7 +25,6 @@ public class Game : MonoBehaviour
         //new TestTile();
 		//new TestCamp();
 
-		
 		// Create a normal board with Input attached.
 		Board board = Board.Create(this.gameObject, tileWidth, tileHeight);
 		board.gameObject.AddComponent<InputController>();   
@@ -48,6 +46,12 @@ public class Game : MonoBehaviour
 		Vector3 boundMax = gameObject.GetComponent<Terrain>().terrainData.bounds.min;
 		return boundMax + gameObject.transform.position;
 	}
+
+	public static float InterpolateYWorldSpace(GameObject gameObject, Vector3 positionWorldSpace)
+	{
+		return gameObject.GetComponent<Terrain>().SampleHeight(positionWorldSpace);
+	}
+
 	/*
 	private static Vector3[] VerticesWorldSpace(GameObject gameObject)
 	{

@@ -5,6 +5,7 @@ using UnityEngine;
 
 /**
  * TestBoard - Completely tests the Board Functionalities.
+ * Note: TestBoard does NOT have clickable Tiles.
  */
 
 public class TestBoard : TestBase
@@ -19,7 +20,7 @@ public class TestBoard : TestBase
 	 */
 	public TestBoard(float width, float height, uint tileWidth, uint tileHeight)
 	{
-		this.boardScript = Board.Create(new GameObject(), /*width, height,*/ tileWidth, tileHeight);
+		this.boardScript = Board.CreateNoTerrain(new GameObject(), width, height, tileWidth, tileHeight);
 		this.width = width;
 		this.height = height;
 		this.tileWidth = tileWidth;

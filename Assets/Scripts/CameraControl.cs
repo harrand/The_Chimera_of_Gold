@@ -37,6 +37,11 @@ public class CameraControl : MonoBehaviour
      */
     private Transform getLastClicked()
     {
+		// If no GameObjects with the tag exists, return null.
+		if(GameObject.FindGameObjectWithTag("GameBoard") == null)
+		{
+			return null;
+		}
         //Searchs for the board, and checks what was clicked last. Then puts it into current
         if (GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 1)
         {
