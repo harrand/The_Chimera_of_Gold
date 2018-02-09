@@ -14,7 +14,7 @@ public class CameraControl : MonoBehaviour
     private float minDist = 1.0f, maxDist = 15.0f;
 
     //Needed to Limit rotation. Limits clipping with terrain somewhat. 
-    private float minY = 20.0f, maxY = 80.0f;
+    private float minY = 10.0f, maxY = 80.0f;
     //!(minY doesn't do anything. I don't know why. I've temporarily hardcoded the value in setCameraPosition and commented out the variable line.)!
 
     //Used for angles
@@ -93,8 +93,8 @@ public class CameraControl : MonoBehaviour
             x += Input.GetAxis("Mouse X") * speed;
             y -= Input.GetAxis("Mouse Y") * speed;
         }
-        //y = ClampAngle(y, minY, maxY);              //y rotation limit
-        y = ClampAngle(y, 20, maxY);                    //Exact same as the line above but hardcoded 20 because that variable doesn't want to play with us anymore because it hates me and wants to hurt me.
+        y = ClampAngle(y, minY, maxY);              //y rotation limit
+       
         Quaternion rotation = Quaternion.Euler(y, x, 0);
             
         //Travel distance from object. Scroll in and out to move the camera back and forth. (Also clamped between limits)
