@@ -37,7 +37,7 @@ public class CameraControl : MonoBehaviour
      */
     private Transform getLastClicked()
     {
-		// If no GameObjects with the tag exists, return null.
+		// If no GameObjects with the tag exists, return null or this will throw during unit-tests where there is nothing tagged "GameBoard". - Harry
 		if(GameObject.FindGameObjectWithTag("GameBoard") == null)
 		{
 			return null;

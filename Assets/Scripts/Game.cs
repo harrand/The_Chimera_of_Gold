@@ -8,16 +8,14 @@ using UnityEngine;
 * default number of camps per board
 * default number of players per camp
 */
-
 public class Game : MonoBehaviour
 {
-	public const uint TILE_SIZE = 15;
     public const uint NUMBER_OBSTACLES = 13;
     public const uint NUMBER_CAMPS = 5;
     public const uint PLAYERS_PER_CAMP = 5;
 
+    // These are edited in Unity Component settings; 5 is just the default.
 	public uint tileWidth = 5, tileHeight = 5;
-
 
 	void Start()
 	{
@@ -25,7 +23,7 @@ public class Game : MonoBehaviour
         //new TestTile();
 		//new TestCamp();
 
-		// Create a normal board with Input attached.
+		// Create a normal Board with Input attached. Both Board and InputController are attached to the root GameObject (this).
 		Board board = Board.Create(this.gameObject, tileWidth, tileHeight);
 		board.gameObject.AddComponent<InputController>();   
     }
@@ -35,59 +33,29 @@ public class Game : MonoBehaviour
 
 	}
 
+    /**
+    * Returns the vertex of the GameObject parameter terrain (in world-space) positively furthest away from the origin (in model-space)
+    */
 	public static Vector3 MaxWorldSpace(GameObject gameObject)
 	{
 		Vector3 boundMax = gameObject.GetComponent<Terrain>().terrainData.bounds.max;
 		return boundMax + gameObject.transform.position;
 	}
 
+    /**
+    * Returns the vertex of the GameObject parameter terrain (in world-space) negatively furthest away from the origin (in model-space)
+    */
 	public static Vector3 MinWorldSpace(GameObject gameObject)
 	{
 		Vector3 boundMax = gameObject.GetComponent<Terrain>().terrainData.bounds.min;
 		return boundMax + gameObject.transform.position;
 	}
 
+    /**
+    * Returns the actual y-coordinate of the terrain-data in world-space.
+    */
 	public static float InterpolateYWorldSpace(GameObject gameObject, Vector3 positionWorldSpace)
 	{
 		return gameObject.GetComponent<Terrain>().SampleHeight(positionWorldSpace);
 	}
-
-	/*
-	private static Vector3[] VerticesWorldSpace(GameObject gameObject)
-	{
-		Mesh mesh = gameObject.GetComponent<MeshFilter>().mesh;
-		Vector3[] verticesWorldSpace = new Vector3[mesh.vertices.Length];
-		for(uint i = 0; i < mesh.vertices.Length; i++)
-		{
-			verticesWorldSpace[i] = gameObject.transform.localToWorldMatrix.MultiplyPoint3x4(mesh.vertices[i]);
-		}
-		return verticesWorldSpace;
-	}
-
-	private static Vector3 MinWorldSpace(GameObject gameObject)
-	{
-		Vector3[] verticesWorldSpace = Game.VerticesWorldSpace(gameObject);
-		float x = verticesWorldSpace[0].x, y = verticesWorldSpace[0].y, z = verticesWorldSpace[0].z;
-		foreach(Vector3 vertex in verticesWorldSpace)
-		{
-			x = Mathf.Min(x, vertex.x);
-			y = Mathf.Min(y, vertex.y);
-			z = Mathf.Min(z, vertex.z);
-		}
-		return new Vector3(x, y, z);
-	}
-
-	private static Vector3 MaxWorldSpace(GameObject gameObject)
-	{
-		Vector3[] verticesWorldSpace = Game.VerticesWorldSpace(gameObject);
-		float x = verticesWorldSpace[0].x, y = verticesWorldSpace[0].y, z = verticesWorldSpace[0].z;
-		foreach(Vector3 vertex in verticesWorldSpace)
-		{
-			x = Mathf.Max(x, vertex.x);
-			y = Mathf.Max(y, vertex.y);
-			z = Mathf.Max(z, vertex.z);
-		}
-		return new Vector3(x, y, z);
-	}
-	*/
 }

@@ -15,18 +15,24 @@ public class Board : MonoBehaviour
     * width and height use number of Tiles as units.
     */
     private uint numberCamps, numberObstacles;
+    private float width, height;
     public Tile[] Tiles { get; private set; }
 	public Obstacle[] Obstacles { get; private set; }
 	public Camp[] Camps { get; private set; }
 
-	public static Board Create(GameObject root, uint tilesWidth, uint tilesHeight)
+    /**
+    * This is to be used to create a new Board when the root GameObject does have a terrain component (interpolating instead of taking dimensions as parameters).
+    * This is currently used for the main game board.
+    */
+    public static Board Create(GameObject root, uint tilesWidth, uint tilesHeight)
 	{
 		if(tilesWidth < 5 && tilesHeight < 5 && (tilesWidth * tilesHeight) < 13)
 		{
-			Debug.LogError("Board has invalid width/height. One of width or height must be at least 5 AND width * height MUST be greater than 13.");
+			Debug.LogError("Board has invalid width/height (tile-space). One of width or height must be at least 5 AND width * height MUST be greater than 13.");
 		}
 		Board board = root.AddComponent<Board>();
         root.tag = "GameBoard";
+        root.name += " (Board)";
 		//root.transform.localScale = new Vector3(width, 1, height);
 		board.GetWidthInTiles = Convert.ToUInt32(tilesWidth);
 		board.GetHeightInTiles = Convert.ToUInt32(tilesHeight);
@@ -61,14 +67,17 @@ public class Board : MonoBehaviour
 		return board;
 	}
 
+    /**
+    * This is to be used to create a new Board when the root GameObject has no terrain component (taking dimensions as parameters instead of interpolating).
+    * This is currently used for TestBoard.
+    */
 	public static Board CreateNoTerrain(GameObject root, float width, float height, uint tilesWidth, uint tilesHeight)
 	{
-		if(width < 5 && height < 5 && (width * height) < 13)
+		if(tilesWidth < 5 && tilesHeight < 5 && (tilesWidth * tilesHeight) < 13)
 		{
-			Debug.LogError("Board has invalid width/height. One of width or height must be at least 5 AND width * height MUST be greater than 13.");
+			Debug.LogError("Board has invalid width/height (tile-space). One of width or height must be at least 5 AND width * height MUST be greater than 13.");
 		}
 		Board board = root.AddComponent<Board>();
-		//root.tag = "GameBoard";
 		root.name = "Board";
 		root.transform.localScale = new Vector3(width, 1, height);
 		board.GetWidthInTiles = Convert.ToUInt32(tilesWidth);
@@ -80,14 +89,15 @@ public class Board : MonoBehaviour
 		// Thus, the initialisation code MUST happen right here, despite being ugly.
 
 		board.Tiles = new Tile[board.GetWidthInTiles * board.GetHeightInTiles];
+        Vector2 tileSize = new Vector2(width / tilesWidth, height / tilesHeight);
 		for(uint i = 0; i < board.Tiles.Length; i++)
 		{
 			float xTile = i % board.GetWidthInTiles;
 			float zTile = i / board.GetWidthInTiles;
 			board.Tiles[i] = Tile.Create(board, xTile, zTile);
 			GameObject tileObject = board.Tiles[i].gameObject;
-			tileObject.transform.position = new Vector3(xTile, 0, zTile) * Game.TILE_SIZE;
-			tileObject.transform.localScale *= Game.TILE_SIZE;
+            tileObject.transform.position = new Vector3(xTile * tileSize.x, 0, zTile * tileSize.y);
+            tileObject.transform.localScale = new Vector3(tileSize.x, 1, tileSize.y);
 			tileObject.name = "Tile " + (i + 1);
 		}
 		board.numberCamps = 5;
@@ -104,7 +114,7 @@ public class Board : MonoBehaviour
 
 	void Start()
     {
-
+        this.ResetTurns();
     }
 	
 	void Update()
@@ -130,13 +140,16 @@ public class Board : MonoBehaviour
         this.PlayerTurn = this.Camps[0].TeamPlayers[0];
     }
 		
+    /**
+     * Simulates the end of the current turn and sets Board::PlayerTurn to the "next" player accordingly.
+     */
     public void NextTurn()
     {
 		int campId = -1, playerId = -1;
 		// Set campId and playerId to the corresponding indices for the current Player
         for(uint campCounter = 0; campCounter < this.Camps.Length; campCounter++)
         {
-            // paired codang
+            // Iterate through all players in all camps, trying to find a match. If a match is found, then set campId and playerId correspondingly.
             for(uint playerCounter = 0; playerCounter < this.Camps[campCounter].TeamPlayers.Length; playerCounter++)
             {
 				if(this.Camps[campCounter].TeamPlayers[playerCounter] == this.PlayerTurn)
@@ -168,10 +181,14 @@ public class Board : MonoBehaviour
 	 */
 	public uint GetWidthInTiles{get; private set;}
 	public uint GetHeightInTiles{get; private set;}
-	public float GetWidthInPixels{get{return this.GetWidthInTiles * Game.TILE_SIZE;}}
-	public float GetHeightInPixels{get{return this.GetHeightInTiles * Game.TILE_SIZE;}}
-    public Player PlayerTurn { get; private set; }
+	public float GetWidthInPixels{get{return this.GetWidthInTiles * Board.ExpectedTileSize(this.gameObject, this.GetWidthInTiles, this.GetHeightInTiles).x;}}
+	public float GetHeightInPixels{get{return this.GetHeightInTiles * Board.ExpectedTileSize(this.gameObject, this.GetWidthInTiles, this.GetHeightInTiles).y;}}
+    public Player PlayerTurn {get; private set;}
 
+    /**
+    * Uses the dimensions of the GameObject root parameter and the number of tiles to discern the size that each tile should be.
+    * Note: Game.MinWorldSpace and Game.MaxWorldSpace require a Terrain component. Thus, invoking ExpectedTileSize with a root GameObject with no Terrain component WILL throw.
+    */
 	public static Vector2 ExpectedTileSize(GameObject root, float widthTiles, float heightTiles)
 	{
 		Vector3 min = Game.MinWorldSpace(root), max = Game.MaxWorldSpace(root);

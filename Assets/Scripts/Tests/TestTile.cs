@@ -9,7 +9,6 @@ using UnityEngine;
 public class TestTile : TestBase
 {
     private Tile tileScript;
-    private GameObject tileObject;
     /**
     * TestBoard
     * @Author Harry Hollands
@@ -18,18 +17,20 @@ public class TestTile : TestBase
     public TestTile()
     {
         this.tileScript = Tile.Create(null, 0, 0);
-        this.tileObject = this.tileScript.gameObject;
+
+        this.success = this.TestHasOccupant();
+        this.success &= this.TestGetOccupant();
 	}
 
 
     // This cannot be implemented until we know both where the players are on the board and also where the obstacles are.
-    bool HasOccupant()
+    bool TestHasOccupant()
     {
         return false;
     }
 
-    GameObject GetOccupant()
+    bool TestGetOccupant()
     {
-        return null;
+        return false;
     }
 }

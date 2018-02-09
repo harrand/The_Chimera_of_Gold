@@ -13,21 +13,36 @@ public class Tile : MonoBehaviour
     public static Tile Create(Board parent, float xTile, float zTile)
     {
         GameObject tileObject = Instantiate(Resources.Load("Prefabs/Tile")) as GameObject;
-		tileObject.transform.parent = parent.gameObject.transform;
         Tile tileScript = tileObject.AddComponent<Tile>();
-        tileScript.parent = parent;
+        if (parent != null)
+        {
+            tileObject.transform.parent = parent.gameObject.transform;
+            tileScript.parent = parent;
+        }
         tileScript.PositionTileSpace = new Vector2(xTile, zTile);
         return tileScript;
     }
 
-	void Start ()
+	void Start()
     {
         if(this.parent != null)
             gameObject.transform.parent = this.parent.gameObject.transform;
 	}
 	
-	void Update ()
+	void Update()
     {
 
 	}
+
+    bool HasOccupant()
+    {
+        return this.GetOccupant() != null;
+    }
+
+    GameObject GetOccupant()
+    {
+        if (this.parent == null)
+            return null;
+        return null;
+    }
 }

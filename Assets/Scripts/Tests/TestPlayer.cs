@@ -2,27 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestPlayer : MonoBehaviour 
+public class TestPlayer : TestBase
 {
     private Player playerScript;
-    private GameObject playerObject;
 
-    private Board parentBoard;
-	// Use this for initialization
-	void Start () 
+	public TestPlayer() 
 	{
-        this.playerObject = new GameObject();
-
-	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		
+        this.success = this.TestOccupiedTile();
 	}
 
-    void TestOccupiedTile()
+    bool TestOccupiedTile()
     {
-        
+        return false;
     }
 }

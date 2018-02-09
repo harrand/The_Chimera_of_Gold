@@ -7,7 +7,6 @@ using UnityEngine;
  * TestBoard - Completely tests the Board Functionalities.
  * Note: TestBoard does NOT have clickable Tiles.
  */
-
 public class TestBoard : TestBase
 {
 	private Board boardScript;
@@ -20,7 +19,9 @@ public class TestBoard : TestBase
 	 */
 	public TestBoard(float width, float height, uint tileWidth, uint tileHeight)
 	{
-		this.boardScript = Board.CreateNoTerrain(new GameObject(), width, height, tileWidth, tileHeight);
+        TerrainData data = new TerrainData();
+        data.size = new Vector3(width, 1, height);
+		this.boardScript = Board.CreateNoTerrain(Terrain.CreateTerrainGameObject(data), width, height, tileWidth, tileHeight);
 		this.width = width;
 		this.height = height;
 		this.tileWidth = tileWidth;
@@ -68,14 +69,16 @@ public class TestBoard : TestBase
 		uint expectedLength = this.boardScript.GetWidthInTiles * this.boardScript.GetHeightInTiles;
 		if (this.boardScript.Tiles.Length != expectedLength) 
 		{
-			Debug.Log ("Test Failed -- Incorrect number of tiles (should be "+expectedLength+" )");
+			Debug.Log ("Test Failed -- Incorrect number of tiles (should be " + expectedLength + " )");
 			return false;
 		}
 		for(uint x = 0; x < this.boardScript.GetWidthInTiles; x++)
 		{
 			for(uint z = 0; z < this.boardScript.GetHeightInTiles; z++)
 			{
-				if (this.boardScript.Tiles [x + (z * this.boardScript.GetWidthInTiles)].gameObject.transform.position != (new Vector3 (x, 0, z) * Game.TILE_SIZE)) 
+                Tile currentTile = this.boardScript.Tiles[x + (z * this.boardScript.GetWidthInTiles)];
+                Vector2 currentExpectedTileSize = Board.ExpectedTileSize(this.boardScript.gameObject, this.boardScript.GetWidthInTiles, this.boardScript.GetHeightInTiles);
+                if (currentTile.gameObject.transform.position != (new Vector3 (x * currentExpectedTileSize.x, 0, z * currentExpectedTileSize.y))) 
 				{
 					Debug.Log ("Test Failed -- Tiles do not represent a grid format");
 					return false;
@@ -90,7 +93,6 @@ public class TestBoard : TestBase
 	 * @Author Ciara O'Brien
 	 * Checks the validity of the camps on the board - ensuring the correct number of camps and none are NULL
 	 */
-
 	public bool TestCamps()
 	{
 		if (this.boardScript.Camps.Length != Game.NUMBER_CAMPS) 
@@ -116,7 +118,6 @@ public class TestBoard : TestBase
 	 * Checks the validity of the obstacles on the board - ensuring the correct number and none are NULL
 	 * 
 	 */
-
 	public bool TestObstacles()
 	{
 		if (this.boardScript.Obstacles.Length != Game.NUMBER_OBSTACLES) 
