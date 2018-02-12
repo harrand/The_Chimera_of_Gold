@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TextSwirl : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -17,5 +18,10 @@ public class TextSwirl : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public void OnPointerExit(PointerEventData eventData)
     {
         this.GetComponentInChildren<Text>().text = text;
+    }
+
+    public void PlayGame()
+    {
+        SceneManager.LoadScene(1);
     }
 }
