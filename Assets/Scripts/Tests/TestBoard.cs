@@ -148,17 +148,14 @@ public class TestBoard : TestBase
         int numberPlayersPerCamp = this.boardScript.Camps[0].TeamPlayers.Length;
 		for(uint i = 0; i < numberCamps; i++)
 		{
-			for(uint j = 0; j < numberPlayersPerCamp; j++)
-			{
-				Player expectedCurrentPlayer = this.boardScript.Camps[i].TeamPlayers[j];
-				if(expectedCurrentPlayer != this.boardScript.PlayerTurn)
-				{
-					Debug.Log("Test Failed -- Player turn selection invalid.");
-					return false;
-				}
-				this.boardScript.NextTurn();
-			}
-		}
+            Camp expectedCurrentCamp = this.boardScript.Camps[i];
+            if(expectedCurrentCamp != this.boardScript.CampTurn)
+            {
+                Debug.Log("Test Failed -- Camp turn selection invalid.");
+                return false;
+            }
+            this.boardScript.NextTurn();
+        }
         return true;
     }
 }

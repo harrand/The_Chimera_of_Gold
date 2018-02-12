@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 /**
 * The Board class acts like a flat 2D board in the 3D world.
@@ -19,6 +20,8 @@ public class Board : MonoBehaviour
     public Tile[] Tiles { get; private set; }
 	public Obstacle[] Obstacles { get; private set; }
 	public Camp[] Camps { get; private set; }
+    public Canvas UICanvas { get; private set; }
+    public Button EndTurnButton { get; private set; }
 
     /**
     * This is to be used to create a new Board when the root GameObject does have a terrain component (interpolating instead of taking dimensions as parameters).
@@ -114,13 +117,23 @@ public class Board : MonoBehaviour
 
 	void Start()
     {
+        this.UICanvas = (Instantiate(Resources.Load("Prefabs/ButtonCanvas")) as GameObject).GetComponent<Canvas>();
+        this.EndTurnButton = this.UICanvas.GetComponentInChildren<Button>();
+        this.EndTurnButton.GetComponentInChildren<Text>().text = "End Turn";
+        Vector3 buttonPosition = this.EndTurnButton.transform.position;
+        // Offset y-position of the button by a fourth of the screen width, so the button is 3/4 down the screen.
+        buttonPosition.y -= Screen.height / 4.0f;
+        this.EndTurnButton.transform.position = buttonPosition;
+        this.EndTurnButton.onClick.AddListener(NextTurn);
         this.ResetTurns();
     }
-	
-	void Update()
+
+    void Update()
     {
-		
-	}
+        if (this.CampTurn == null)
+            this.ResetTurns();
+        Debug.Log(this.CampTurn.transform.position);
+    }
 
     public bool TileOccupiedByObstacle(Tile t)
     {
@@ -137,7 +150,7 @@ public class Board : MonoBehaviour
 
     public void ResetTurns()
     {
-        this.PlayerTurn = this.Camps[0].TeamPlayers[0];
+        this.CampTurn = this.Camps[0];
     }
 		
     /**
@@ -145,35 +158,19 @@ public class Board : MonoBehaviour
      */
     public void NextTurn()
     {
-		int campId = -1, playerId = -1;
-		// Set campId and playerId to the corresponding indices for the current Player
-        for(uint campCounter = 0; campCounter < this.Camps.Length; campCounter++)
+        int campId = -1;
+        for (int campCounter = 0; campCounter < this.Camps.Length; campCounter++)
+            if (this.Camps[campCounter] == this.CampTurn)
+                campId = campCounter;
+        if(campId == -1)
         {
-            // Iterate through all players in all camps, trying to find a match. If a match is found, then set campId and playerId correspondingly.
-            for(uint playerCounter = 0; playerCounter < this.Camps[campCounter].TeamPlayers.Length; playerCounter++)
-            {
-				if(this.Camps[campCounter].TeamPlayers[playerCounter] == this.PlayerTurn)
-				{
-					campId = (int)campCounter;
-					playerId = (int)playerCounter;
-				}
-            }
+            Debug.Log("NextTurn failed -- CampTurn is not a valid reference to a Board camp.");
+            return;
         }
-		// If neither campId or playerId have changed, then the current player wasnt even found and something is going to go very wrong.
-		if(campId == -1 || playerId == -1)
-		{
-			Debug.LogError("Board::PlayerTurn is not a member of any of its camp members.");
-		}
-		// Try to increment playerId. If it goes higher than the number of players per camp, increment the camp id and set player id to 0.
-		if(++playerId >= Game.PLAYERS_PER_CAMP)
-		{
-			campId++;
-			playerId = 0;
-		}
-		// If camp id is now greater than the actual number of camps, then we've gone past the final player of the final camp and need to go back to the beginning.
-		if(campId >= Game.NUMBER_CAMPS)
-			campId = 0;
-		this.PlayerTurn = this.Camps[campId].TeamPlayers[playerId];
+        if (++campId >= this.Camps.Length)
+            campId = 0;
+        this.CampTurn = this.Camps[campId];
+
     }
 
 	/**
@@ -183,7 +180,7 @@ public class Board : MonoBehaviour
 	public uint GetHeightInTiles{get; private set;}
 	public float GetWidthInPixels{get{return this.GetWidthInTiles * Board.ExpectedTileSize(this.gameObject, this.GetWidthInTiles, this.GetHeightInTiles).x;}}
 	public float GetHeightInPixels{get{return this.GetHeightInTiles * Board.ExpectedTileSize(this.gameObject, this.GetWidthInTiles, this.GetHeightInTiles).y;}}
-    public Player PlayerTurn {get; private set;}
+    public Camp CampTurn {get; private set;}
 
     /**
     * Uses the dimensions of the GameObject root parameter and the number of tiles to discern the size that each tile should be.
