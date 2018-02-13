@@ -21,8 +21,8 @@ public class Game : MonoBehaviour
 	{
         //new TestBoard(50, 50, 5, 5); // Perform Board Unit Test
         //new TestTile();
-		//new TestCamp();
-
+        //new TestCamp();
+        Dice testDice = Dice.Create(new Vector3(10, 50, 10), new Vector3(1,1,1));
 		// Create a normal Board with Input attached. Both Board and InputController are attached to the root GameObject (this).
 		Board board = Board.Create(this.gameObject, tileWidth, tileHeight);
 		board.gameObject.AddComponent<InputController>();   
