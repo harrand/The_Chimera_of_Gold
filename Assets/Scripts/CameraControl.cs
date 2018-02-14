@@ -118,7 +118,7 @@ public class CameraControl : MonoBehaviour
     {
         current = getLastClicked();
 
-        if (current != null && Input.GetKey(KeyCode.LeftShift) && playerSel)// && tileSel)
+        if (current != null && Input.GetKey(KeyCode.LeftShift) && playerSel && tileSel)
         {
             setCameraPosition(current);
             //offset from tile
