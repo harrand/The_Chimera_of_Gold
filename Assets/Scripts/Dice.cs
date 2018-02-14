@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 public class Dice : MonoBehaviour
 {
@@ -22,19 +23,20 @@ public class Dice : MonoBehaviour
         Vector3 up = this.gameObject.transform.up;
         const float e = Vector3.kEpsilon;
         Debug.Log("up = " + up);
-        if (up == new Vector3(0, 1, 0))
+        if (Math.Round(up.y) == 1)
             return 3;
-        else if (up == new Vector3(0, -1, 0))
+        else if (Math.Round(up.y) == -1)
             return 4;
-        else if (up == new Vector3(0, 0, 1))
+        else if (Math.Round(up.z) == 1)
             return 6;
-        else if (up == new Vector3(0, 0, -1))
+        else if (Math.Round(up.z) == -1)
             return 1;
-        else if (up == new Vector3(1, 0, 0))
+        else if (Math.Round(up.x) == 1)
             return 5;
-        else if (up == new Vector3(-1, 0, 0))
+        else if (Math.Round(up.x) == -1)
             return 2;
-        return 0;
+        else
+            return 0;
         /*
         if (rot.eulerAngles.z < 45 && rot.eulerAngles.x < 45)
             return 3;
