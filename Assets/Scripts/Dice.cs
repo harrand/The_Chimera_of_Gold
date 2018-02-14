@@ -17,33 +17,35 @@ public class Dice : MonoBehaviour
         return dice;
     }
 
+    public void Roll()
+    {
+        Vector3 cameraPosition = Camera.main.gameObject.transform.position;
+        this.gameObject.transform.position = cameraPosition + new Vector3(0, 20, 0);
+        this.gameObject.transform.rotation = Quaternion.Euler(new Vector3(new System.Random().Next(-180, 180), new System.Random().Next(-180, 180), new System.Random().Next(-180, 180)));
+    }
+
     public int NumberFaceUp()
     {
         // TODO: Finish this by not checking whole values and checking between ranges.
         Vector3 up = this.gameObject.transform.up;
-        const float e = Vector3.kEpsilon;
+        Vector3 right = this.gameObject.transform.right;
+        Vector3 forward = this.gameObject.transform.forward;
         Debug.Log("up = " + up);
-        if (Math.Round(up.y) == 1)
+        Debug.Log("right = " + right);
+        Debug.Log("forward = " + forward);
+        if (Math.Round(up.y) > 0.75)
             return 3;
-        else if (Math.Round(up.y) == -1)
+        if (Math.Round(up.y) < -0.75)
             return 4;
-        else if (Math.Round(up.z) == 1)
-            return 6;
-        else if (Math.Round(up.z) == -1)
-            return 1;
-        else if (Math.Round(up.x) == 1)
+        if (Math.Round(right.y) < -0.75)
             return 5;
-        else if (Math.Round(up.x) == -1)
+        if (Math.Round(right.y) > 0.75)
             return 2;
+        if (Math.Round(forward.y) < -0.75)
+            return 6;
+        if (Math.Round(forward.y) > 0.75)
+            return 1;
         else
             return 0;
-        /*
-        if (rot.eulerAngles.z < 45 && rot.eulerAngles.x < 45)
-            return 3;
-       else if()
-        {
-
-        }
-        */
     }
 }

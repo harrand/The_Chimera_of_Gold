@@ -55,7 +55,8 @@ public class Board : MonoBehaviour
 			tileObject.transform.localScale = new Vector3(tileSize.x, 1, tileSize.y);
 			tileObject.name = "Tile " + (i + 1);
 		}
-		board.numberCamps = 5;
+        board.Cull();
+        board.numberCamps = 5;
 		board.numberObstacles = 13;
 
 		board.Camps = new Camp[board.numberCamps];
@@ -121,6 +122,51 @@ public class Board : MonoBehaviour
     {
 		
 	}
+
+    /**
+    * Returns the Goal Tile, which will be the tile with the greatest y-coordinate (as it is at the top of the mountain).
+    */
+    private Tile GetGoalTile()
+    {
+        Tile max = this.Tiles[0];
+        foreach(Tile t in this.Tiles)
+        {
+            if (max.gameObject.transform.position.y < t.gameObject.transform.position.y)
+                max = t;
+        }
+        return max;
+    }
+
+    /**
+     * This removes all of the Tiles that do not actually belong to the game board. 
+     */
+    public void Cull()
+    {
+        Tile[] gameTiles = new Tile[138];
+        gameTiles[0] = this.GetGoalTile();
+        Vector2 goalTileSpace = gameTiles[0].PositionTileSpace;
+        // start going left from goal node.
+        for (uint i = 1; i < 7; i++)
+            gameTiles[i] = this.GetTileByTileSpace(new Vector2(goalTileSpace.x - i, goalTileSpace.y));
+        // now start going right
+        for(uint i = 7; i < 14; i++)
+            gameTiles[i] = this.GetTileByTileSpace(new Vector2(goalTileSpace.x + (i - 6), goalTileSpace.y));
+
+        gameTiles[14] = this.GetTileByTileSpace(new Vector2(gameTiles[6].PositionTileSpace.x, gameTiles[6].PositionTileSpace.y - 1));
+        for (uint i = 15; i < 18; i++)
+            gameTiles[i] = this.GetTileByTileSpace(new Vector2(gameTiles[i - 1].PositionTileSpace.x, gameTiles[i - 1].PositionTileSpace.y - 1));
+        //foreach (Tile t in gameTiles)
+        //    t.GetComponent<Renderer>().material.color = new Color(0, 1, 0);
+
+    }
+
+    private Tile GetTileByTileSpace(Vector2 positionTileSpace)
+    {
+        foreach (Tile t in this.Tiles)
+            if (t.PositionTileSpace == positionTileSpace)
+                return t;
+        return null;
+    }
 
     public bool TileOccupiedByObstacle(Tile t)
     {
