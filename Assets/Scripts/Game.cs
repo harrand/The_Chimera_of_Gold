@@ -31,7 +31,10 @@ public class Game : MonoBehaviour
 
     private void Update()
     {
-        if(testDice.gameObject.GetComponent<Rigidbody>().velocity == new Vector3(0, 0, 0))
+        if(Input.GetKeyDown("r"))
+        {
+            testDice.Roll();
+        }
         Debug.Log(testDice.NumberFaceUp());
     }
 
