@@ -6,7 +6,7 @@ public class CameraControl : MonoBehaviour
 {
     private Transform current = null;   //Currently selected will be held here
     public GameObject Ethan;            //Test Doll
-
+    private bool playerSel = false, tileSel = false; //Helps movement of players. playerSel set when first player is selected. tileSel true if current is a tile;   
     //Speed multiplier for camera movement
     private float speed = 15.0f;
     //Default distance and Distance limits. So you can't zoom out forever...
@@ -46,21 +46,26 @@ public class CameraControl : MonoBehaviour
         if (GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 1)
         {
             current = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().LastClickedTile.transform;
+            tileSel = true;
             //Debug.Log("Tile");
         }
         else if (GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 2)
         {
             current = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().LastClickedPlayer.transform;
-            //Debug.Log("obs");
+            playerSel = true;
+            tileSel = false;
+            //Debug.Log("player");
         }
         else if (GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 3)
         {
             current = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().LastClickedObstacle.transform;
-            //Debug.Log("player");
+            tileSel = false;
+            //Debug.Log("obs");
         }
         else
         {
             current = null;
+            tileSel = false;
             //Debug.Log("Other/back");
         }
 
@@ -112,8 +117,17 @@ public class CameraControl : MonoBehaviour
     void LateUpdate ()
     {
         current = getLastClicked();
-       
-        if (current != null)
+
+        if (current != null && Input.GetKey(KeyCode.LeftShift) && playerSel)// && tileSel)
+        {
+            setCameraPosition(current);
+            //offset from tile
+            Vector3 offset = new Vector3(0, 3, 0);
+            GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().LastClickedPlayer.gameObject.transform.position = current.position + offset;
+            
+            //Debug.Log(tileSel);
+        }
+        else if (current != null)
         { 
             setCameraPosition(current);
             //Debug.Log("Should rotate around selected");
