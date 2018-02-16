@@ -19,12 +19,9 @@ public class Player : MonoBehaviour
         return playerScript;
     }
 
-    // Use this for initialization
-    void Start () 
-	{
-
-	}
-
+    /**
+    * Returns a reference to the Camp which holds this Player.
+    */
     public Camp GetCamp()
 	{
 		foreach(Camp camp in this.parent.Camps)
@@ -36,6 +33,9 @@ public class Player : MonoBehaviour
 		return null;
 	}
 
+    /**
+    * Returns the Tile that the player is sitting upon.
+    */
     public Tile GetOccupiedTile()
     {
         Vector3 noOffset = this.gameObject.transform.position - new Vector3(0, 3, 0);

@@ -37,6 +37,9 @@ public class Tile : MonoBehaviour
         return this.GetOccupant() != null;
     }
 
+    /**
+     * R
+     */
     public GameObject GetOccupant()
     {
         if (this.parent == null)
@@ -44,6 +47,9 @@ public class Tile : MonoBehaviour
         return null;
     }
 
+    /**
+     * Returns an array of all Tiles which are directly adjacent to this one.
+     */
     public List<Tile> AdjacentTiles()
     {
         Vector2 pos = this.PositionTileSpace;

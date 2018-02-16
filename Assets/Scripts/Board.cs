@@ -140,6 +140,7 @@ public class Board : MonoBehaviour
 
     /**
      * This removes all of the Tiles that do not actually belong to the game board. 
+     * This transforms a grid of Tiles to the actual Chimera of Gold game board. Well, it will when it is fully implemented. -Harry
      */
     public void Cull()
     {
@@ -162,6 +163,9 @@ public class Board : MonoBehaviour
 
     }
 
+    /**
+     * Given a Vector2 representing tile-space, returns a Tile if it shares the exact position, or null if no tiles share such position.
+     */
     public Tile GetTileByTileSpace(Vector2 positionTileSpace)
     {
         foreach (Tile t in this.Tiles)
@@ -170,11 +174,17 @@ public class Board : MonoBehaviour
         return null;
     }
 
+    /**
+    * Returns true if the tile has an obstacle ontop of it.
+    */
     public bool TileOccupiedByObstacle(Tile t)
     {
         return this.TileOccupiedByObstacle(t.PositionTileSpace);
     }
 
+    /**
+     * Returns true if the tilePosition contains an obstacle.
+     */
     public bool TileOccupiedByObstacle(Vector2 tilePosition)
     {
         foreach (Obstacle obstacle in this.Obstacles)
@@ -183,6 +193,9 @@ public class Board : MonoBehaviour
         return false;
     }
 
+    /**
+     * Resets the... well... turns.
+     */
     public void ResetTurns()
     {
         this.PlayerTurn = this.Camps[0].TeamPlayers[0];

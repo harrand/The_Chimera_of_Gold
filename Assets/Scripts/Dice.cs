@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System;
 
+// Harry and Ciara 12/02/2018
 public class Dice : MonoBehaviour
 {
-    // Harry and Ciara 12/02/2018
-    //diceix??
     public GameObject diceFace;
 
     public static Dice Create(Vector3 position, Vector3 rotation, Vector3 scale)
@@ -17,6 +16,9 @@ public class Dice : MonoBehaviour
         return dice;
     }
 
+    /**
+     * Teleports the dice object to the main camera position and applies a random rotation, essentially simulating a literal throw of the die.
+     */
     public void Roll()
     {
         Vector3 cameraPosition = Camera.main.gameObject.transform.position;
@@ -24,6 +26,9 @@ public class Dice : MonoBehaviour
         this.gameObject.transform.rotation = Quaternion.Euler(new Vector3(new System.Random().Next(-180, 180), new System.Random().Next(-180, 180), new System.Random().Next(-180, 180)));
     }
 
+    /**
+    * Returns the face which is geometrically deemed to be face up on the dice 3D model.
+    */
     public uint NumberFaceUp()
     {
         // TODO: Finish this by not checking whole values and checking between ranges.

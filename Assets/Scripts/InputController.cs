@@ -84,6 +84,10 @@ public class InputController : MonoBehaviour
             this.CurrentSelected = 3;
         }
     }
+
+    /**
+     * Returns the gameobject hit by a ray-cast from the camera transform.
+     */
 	private GameObject GetMousedGameObject()
 	{
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -94,6 +98,9 @@ public class InputController : MonoBehaviour
 			return null;
 	}
 
+    /**
+     * Returns the tile that is GetMousedGameObject. If that is not a tile, returns null.
+     */
     private Tile GetMousedTile()
     {
 		foreach(Tile tile in this.boardScript.Tiles)
@@ -102,7 +109,10 @@ public class InputController : MonoBehaviour
 		return null;
     }
 
-	private Player GetMousedPlayer()
+    /**
+     * Returns the player that is GetMousedGameObject. If that is not a player, returns null.
+     */
+    private Player GetMousedPlayer()
 	{
 		foreach(Camp camp in this.boardScript.Camps)
 		{
@@ -113,13 +123,14 @@ public class InputController : MonoBehaviour
 		return null;
 	}
 
-	private Obstacle GetMousedObstacle()
+    /**
+     * Returns the obstacle that is GetMousedGameObject. If that is not a obstacle, returns null.
+     */
+    private Obstacle GetMousedObstacle()
 	{
 		foreach(Obstacle obstacle in this.boardScript.Obstacles)
 			if(obstacle.gameObject == this.GetMousedGameObject())
 				return obstacle;
 		return null;
 	}
-
-
 }

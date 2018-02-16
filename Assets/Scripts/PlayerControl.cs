@@ -11,6 +11,9 @@ public class PlayerControl
         this.GetPlayer = player;
     }
 
+    /**
+    * Given a rolled dice value, produces an array of all the Tiles that the game-logic would deem legal to move to.
+    */
     public Tile[] PossibleMoves(uint diceRoll)
     {
         // uint diceRoll = this.GetPlayer.parent.parent.GetDice.NumberFaceUp()
@@ -33,6 +36,10 @@ public class PlayerControl
         return possibleMoves.ToArray();
     }
 
+    /**
+     * Paints every Tile from this.PossibleMoves(uint) the colour of highlightColour.
+     * Use this to signify to the player which tiles can be moved to.
+     */
     public void HighlightPossibleMoves(uint diceRoll, Color highlightColour)
     {
         foreach (Tile tile in this.PossibleMoves(diceRoll))
