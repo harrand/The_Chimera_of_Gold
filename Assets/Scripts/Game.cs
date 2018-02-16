@@ -26,7 +26,6 @@ public class Game : MonoBehaviour
         new TestTile();
         new TestCamp();
         new TestPlayer();
-        new TestObstacle();
         */
 
         

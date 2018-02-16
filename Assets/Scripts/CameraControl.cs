@@ -121,7 +121,6 @@ public class CameraControl : MonoBehaviour
         if (current != null && Input.GetKey(KeyCode.LeftShift) && playerSel && tileSel)
         {
             //offset from tile
-            Vector3 offset = new Vector3(0, 3, 0);
             GameObject boardObject = GameObject.FindGameObjectWithTag("GameBoard");
             setCameraPosition(current);
             // after moving the player, remove all board highlights.

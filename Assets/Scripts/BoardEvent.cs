@@ -16,6 +16,8 @@ public class BoardEvent
 	 */
 	public void OnPlayerMove(Player player, Vector3 moveTarget)
 	{
+		if(player.transform.position == moveTarget)
+			return;
 		uint diceRoll = this.parent.GetDice.NumberFaceUp();
 		// stop if the last clicked player is trying to move to a tile that it should not be able to move to.
 		bool validMove = false;
@@ -33,6 +35,8 @@ public class BoardEvent
 		player.gameObject.transform.position = moveTarget + Player.POSITION_OFFSET;
 		this.parent.RemoveTileHighlights();
 		this.HandleTakeovers(player);
+		// Disable the dice so the same roll cannot be used twice.
+		this.parent.GetDice.gameObject.SetActive(false);
 	}
 
 	/**
@@ -48,13 +52,16 @@ public class BoardEvent
 			foreach(Player enemy in camp.TeamPlayers)
 				if(enemy.GetOccupiedTile() == player.GetOccupiedTile())
 				{
-					Debug.Log("enemy camp is: " + camp.GetOccupiedTile());
 					enemy.transform.position = camp.GetOccupiedTile().gameObject.transform.position + new Vector3(0, 3, 0);
-					Debug.Log("You have sent an enemy player back their camp!");
+					Debug.Log("A player has been sent back to their camp!");
 				}
 		}
 	}
 
+	/**
+	 * Same as BoardEvent::OnPlayerMove(Player, Vector3)
+	 * See above.
+	 */
 	public void OnPlayerMove(Player player, Tile desiredTile)
 	{
 		this.OnPlayerMove(player, desiredTile.gameObject.transform.position);

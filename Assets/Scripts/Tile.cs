@@ -53,35 +53,84 @@ public class Tile : MonoBehaviour
 		return null;
     }
 
+	private bool BlockedByObstacle()
+	{
+		foreach(Obstacle obst in this.parent.Obstacles)
+			if(obst.GetOccupiedTile() == this)
+				return true;
+		return false;
+	}
+
 	/**
      * Returns an array of all Tiles which are directly adjacent to this one.
      */
-	private Tile[] AdjacentTiles()
+	private Tile[] AdjacentTiles(bool ignoreObstacles)
 	{
 		Vector2 pos = this.PositionTileSpace;
 		Board board = this.parent;
 		List<Tile> tiles = new List<Tile>();
+		Tile tile = null;
 		if (pos.x > 0)
-			tiles.Add(board.GetTileByTileSpace(new Vector2(pos.x - 1, pos.y)));
+		{
+			tile = board.GetTileByTileSpace(new Vector2(pos.x - 1, pos.y));
+			if(ignoreObstacles || !tile.BlockedByObstacle())
+				tiles.Add(tile);
+		}
 		if (pos.x < (board.GetWidthInTiles - 1))
-			tiles.Add(board.GetTileByTileSpace(new Vector2(pos.x + 1, pos.y)));
+		{
+			tile = board.GetTileByTileSpace(new Vector2(pos.x + 1, pos.y));
+			if(ignoreObstacles || !tile.BlockedByObstacle())
+				tiles.Add(tile);
+		}
 		if (pos.y > 0)
-			tiles.Add(board.GetTileByTileSpace(new Vector2(pos.x, pos.y - 1)));
+		{
+			tile = board.GetTileByTileSpace(new Vector2(pos.x, pos.y - 1));
+			if(ignoreObstacles || !tile.BlockedByObstacle())
+				tiles.Add(tile);
+		}
 		if (pos.y < (board.GetHeightInTiles - 1))
-			tiles.Add(board.GetTileByTileSpace(new Vector2(pos.x, pos.y + 1)));
+		{
+			tile = board.GetTileByTileSpace(new Vector2(pos.x, pos.y + 1));
+			if(ignoreObstacles || !tile.BlockedByObstacle())
+				tiles.Add(tile);
+		}
 		return tiles.ToArray();
 	}
 
 	/**
 	 * Returns an array of all Tiles which are adjacent to all Tiles which are also adjacent to this one (within the range).
+	 * Does not take obstacles into account.
+	 */
+	public Tile[] AdjacentTilesSimple(uint range)
+	{
+		if(range == 0)
+			return new Tile[0];
+		Tile[] total = this.AdjacentTiles(true);
+		for(uint i = 1; i < range; i++)
+			foreach(Tile tile in total)
+				total = total.Union(tile.AdjacentTiles(true)).ToArray();
+		return total.ToArray();
+	}
+
+	/**
+	 * Returns an array of all Tiles which are adjacent to all Tiles which are also adjacent to this one (within the range).
+	 * DOES take obstacles into account.
 	 */
 	public Tile[] AdjacentTiles(uint range)
 	{
-		Tile[] total = this.AdjacentTiles();
+		if(range == 0)
+			return new Tile[0];
+		Tile[] total = this.AdjacentTiles(false);
 		for(uint i = 1; i < range; i++)
 			foreach(Tile tile in total)
-				if(total.Contains(tile))
-					total = total.Union(tile.AdjacentTiles()).ToArray();
+			{
+				bool blockedByObstacle = false;
+				foreach(Obstacle obstacle in this.parent.Obstacles)
+					if(obstacle.GetOccupiedTile() == tile)
+						blockedByObstacle = true;
+				if(!blockedByObstacle)
+					total = total.Union(tile.AdjacentTiles(false)).ToArray();
+			}
 		return total.ToArray();
 	}
 }

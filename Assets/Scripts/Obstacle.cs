@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * This class does not have its own unit-test because of the fact that all methods that Obstacle contains are already tested in Player due to identical code.
+ * The purpose of this class, despite having no unique code, is to provide an explicit label to GameObjects which are Obstacles.
+ */
 public class Obstacle : MonoBehaviour 
 {
 	private Board parent;

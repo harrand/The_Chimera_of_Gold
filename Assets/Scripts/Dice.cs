@@ -4,8 +4,6 @@ using System;
 // Harry and Ciara 12/02/2018
 public class Dice : MonoBehaviour
 {
-    public GameObject diceFace;
-
     public static Dice Create(Vector3 position, Vector3 rotation, Vector3 scale)
     {
         GameObject diceObject = Instantiate(Resources.Load("Prefabs/Dice") as GameObject);
@@ -21,6 +19,7 @@ public class Dice : MonoBehaviour
      */
     public void Roll()
     {
+		this.gameObject.SetActive(true);
         Vector3 cameraPosition = Camera.main.gameObject.transform.position;
         this.gameObject.transform.position = cameraPosition + new Vector3(0, 20, 0);
         this.gameObject.transform.rotation = Quaternion.Euler(new Vector3(new System.Random().Next(-180, 180), new System.Random().Next(-180, 180), new System.Random().Next(-180, 180)));
@@ -31,7 +30,8 @@ public class Dice : MonoBehaviour
     */
     public uint NumberFaceUp()
     {
-        // TODO: Finish this by not checking whole values and checking between ranges.
+		if(!this.gameObject.activeSelf)
+			return 0;
         Vector3 up = this.gameObject.transform.up;
         Vector3 right = this.gameObject.transform.right;
         Vector3 forward = this.gameObject.transform.forward;
