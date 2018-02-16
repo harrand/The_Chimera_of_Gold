@@ -28,21 +28,14 @@ public class Camp : MonoBehaviour
         // Instantiate all Players in the camp.
         for (uint i = 0; i < campScript.numberPlayers; i++)
         {
-            campScript.TeamPlayers[i] = Player.Create(campScript.parent, campScript.tile);
+			campScript.SpawnPlayer();
         }
         return campScript;
     }
 
-    void Awake()
-    {
-		
-    }
-
-	void Start()
-	{
-		
-	}
-
+	/**
+	 * Returns number of active players belonging to the camp.
+	 */
     public uint GetNumberOfPlayers()
     {
         uint counter = 0;
@@ -65,12 +58,10 @@ public class Camp : MonoBehaviour
 
     public Tile GetOccupiedTile()
     {
-        foreach(Tile tile in this.parent.Tiles)
-        {
-            if (this.gameObject == tile.GetOccupant())
-                return tile;
-        }
-        return null;
+		foreach(Tile tile in this.parent.Tiles)
+			if(tile.gameObject.transform.position == this.gameObject.transform.position)
+				return tile;
+		return null;
     }
 
     public Board GetParent()

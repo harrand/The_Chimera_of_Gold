@@ -16,10 +16,12 @@ public class Board : MonoBehaviour
     */
     private uint numberCamps, numberObstacles;
     private float width, height;
+	public Material TileMaterial{ get; private set; }
     public Tile[] Tiles { get; private set; }
 	public Obstacle[] Obstacles { get; private set; }
 	public Camp[] Camps { get; private set; }
     public Dice GetDice { get; private set; }
+	public BoardEvent Event{ get; private set; }
     /**
     * This is to be used to create a new Board when the root GameObject does have a terrain component (interpolating instead of taking dimensions as parameters).
     * This is currently used for the main game board.
@@ -34,6 +36,7 @@ public class Board : MonoBehaviour
         root.tag = "GameBoard";
         root.name += " (Board)";
         board.GetDice = Dice.Create(board.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1));
+		board.Event = new BoardEvent(board);
 		//root.transform.localScale = new Vector3(width, 1, height);
 		board.GetWidthInTiles = Convert.ToUInt32(tilesWidth);
 		board.GetHeightInTiles = Convert.ToUInt32(tilesHeight);
@@ -56,6 +59,7 @@ public class Board : MonoBehaviour
 			tileObject.transform.localScale = new Vector3(tileSize.x, 1, tileSize.y);
 			tileObject.name = "Tile " + (i + 1);
 		}
+		board.TileMaterial = board.Tiles[0].GetComponent<Renderer>().material;
         board.Cull();
         board.numberCamps = 5;
 		board.numberObstacles = 13;
@@ -240,7 +244,7 @@ public class Board : MonoBehaviour
     public void RemoveTileHighlights()
     {
         foreach (Tile tile in this.Tiles)
-            tile.GetComponent<Renderer>().material.color = Color.white;
+			tile.GetComponent<Renderer>().material = this.TileMaterial;
     }
 
 	/**

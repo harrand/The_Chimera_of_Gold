@@ -123,25 +123,9 @@ public class CameraControl : MonoBehaviour
             //offset from tile
             Vector3 offset = new Vector3(0, 3, 0);
             GameObject boardObject = GameObject.FindGameObjectWithTag("GameBoard");
-            uint diceRoll = boardObject.GetComponent<Board>().GetDice.NumberFaceUp();
-            // stop if the last clicked player is trying to move to a tile that it should not be able to move to.
-            bool validMove = false;
-            foreach (Tile allowedDestination in new PlayerControl(boardObject.GetComponent<InputController>().LastClickedPlayer).PossibleMoves(diceRoll))
-            {
-                if (allowedDestination.transform.position == current.position)
-                    validMove = true;
-            }
-            if (!validMove)
-            {
-                // Would normally log this but it spams it due to the nature of Input.GetKeyDown being really spammy.
-                //Debug.Log("You cannot move here!");
-                return;
-            }
-
             setCameraPosition(current);
-            boardObject.GetComponent<InputController>().LastClickedPlayer.gameObject.transform.position = current.position + offset;
             // after moving the player, remove all board highlights.
-            boardObject.GetComponent<Board>().RemoveTileHighlights();
+			boardObject.GetComponent<Board>().Event.OnPlayerMove(boardObject.GetComponent<InputController>().LastClickedPlayer, current.position);
             //Debug.Log(tileSel);
         }
         else if (current != null)

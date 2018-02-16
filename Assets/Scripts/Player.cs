@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour 
 {
+	public static Vector3 POSITION_OFFSET = new Vector3(0, 3, 0);
 	private Board parent;
     
     /**

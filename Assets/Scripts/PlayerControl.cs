@@ -21,7 +21,7 @@ public class PlayerControl
         Board parentBoard = this.GetPlayer.GetCamp().GetParent();
         Obstacle[] obstacles = parentBoard.Obstacles;
         List<Tile> possibleMoves = new List<Tile>();
-        foreach(Tile adjacentTile in previousTile.AdjacentTiles())
+        foreach(Tile adjacentTile in previousTile.AdjacentTiles(diceRoll))
         {
             bool available = true;
             Vector2 aPos = adjacentTile.PositionTileSpace;
@@ -43,6 +43,6 @@ public class PlayerControl
     public void HighlightPossibleMoves(uint diceRoll, Color highlightColour)
     {
         foreach (Tile tile in this.PossibleMoves(diceRoll))
-            tile.GetComponent<Renderer>().material.color = highlightColour;
+			tile.GetComponent<Renderer>().material.color = new Color(highlightColour.r, highlightColour.g, highlightColour.b, this.GetPlayer.GetCamp().GetParent().TileMaterial.color.a);
     }
 }
