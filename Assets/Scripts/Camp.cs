@@ -62,4 +62,14 @@ public class Camp : MonoBehaviour
         Debug.Log("Camp tried to spawn Player but already has the maximum number of spawned players active.");
         return null;
 	}
+
+    public Tile GetOccupiedTile()
+    {
+        foreach(Tile tile in this.parent.Tiles)
+        {
+            if (this.gameObject == tile.GetOccupant())
+                return tile;
+        }
+        return null;
+    }
 }

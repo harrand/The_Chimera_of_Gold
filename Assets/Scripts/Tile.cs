@@ -28,12 +28,10 @@ public class Tile : MonoBehaviour
         if(this.parent != null)
             gameObject.transform.parent = this.parent.gameObject.transform;
 	}
-	
-	void Update()
-    {
 
-	}
-
+    /**
+    * If any Player, Obstacle or Camp is on this Tile, returns true.
+    */
     public bool HasOccupant()
     {
         return this.GetOccupant() != null;

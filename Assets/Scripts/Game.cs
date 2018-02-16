@@ -21,14 +21,19 @@ public class Game : MonoBehaviour
 
 	void Start()
 	{
-        //new TestBoard(50, 50, 5, 5); // Perform Board Unit Test
-        //new TestTile();
-        //new TestCamp();
-        //new TestPlayer();
+        /*
+        new TestBoard(50, 50, 5, 5); // Perform Board Unit Test
+        new TestTile();
+        new TestCamp();
+        new TestPlayer();
+        new TestObstacle();
+        */
 
+        
 		// Create a normal Board with Input attached. Both Board and InputController are attached to the root GameObject (this).
 		this.board = Board.Create(this.gameObject, tileWidth, tileHeight);
 		this.board.gameObject.AddComponent<InputController>();   
+        
     }
 
     private void Update()

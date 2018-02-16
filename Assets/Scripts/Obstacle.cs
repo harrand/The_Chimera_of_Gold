@@ -26,4 +26,14 @@ public class Obstacle : MonoBehaviour
 	{
 
 	}
+
+    public Tile GetOccupiedTile()
+    {
+        foreach (Tile tile in this.parent.Tiles)
+        {
+            if (this.gameObject == tile.GetOccupant())
+                return tile;
+        }
+        return null;
+    }
 }
