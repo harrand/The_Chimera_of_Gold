@@ -21,34 +21,45 @@ public class Camp : MonoBehaviour
         campScript.tile = tile;
         campScript.PositionTileSpace = tile.PositionTileSpace;
 		campObject.transform.position = tile.gameObject.transform.position;
+
+        // Define Player array size.
+        campScript.numberPlayers = 5;
+        campScript.TeamPlayers = new Player[campScript.numberPlayers];
+        // Instantiate all Players in the camp.
+        for (uint i = 0; i < campScript.numberPlayers; i++)
+        {
+            campScript.TeamPlayers[i] = Player.Create(campScript.parent, campScript.tile);
+        }
         return campScript;
     }
 
     void Awake()
     {
-		// Define Player array size.
-        this.numberPlayers = 5;
-        this.TeamPlayers = new Player[this.numberPlayers];
+		
     }
 
 	void Start()
 	{
-		// Instantiate all Players in the camp.
-		for(uint i = 0; i < this.numberPlayers; i++)
-		{
-			this.TeamPlayers[i] = Player.Create(this.parent, this.tile);
-		}
+		
 	}
+
+    public uint GetNumberOfPlayers()
+    {
+        uint counter = 0;
+        foreach (Player p in this.TeamPlayers)
+            if (p != null)
+                counter++;
+        return counter;
+    }
 
 	// Do not implement until test is written.
     public Player SpawnPlayer()
 	{
+        if(this.GetNumberOfPlayers() < this.numberPlayers)
+        {
+            this.TeamPlayers[this.GetNumberOfPlayers()] = Player.Create(this.parent, this.tile);
+        }
+        Debug.Log("Camp tried to spawn Player but already has the maximum number of spawned players active.");
         return null;
 	}
-
-	public uint GetNumberPlayers()
-	{
-		return numberPlayers;
-	}
-
 }

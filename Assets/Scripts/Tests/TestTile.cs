@@ -16,21 +16,29 @@ public class TestTile : TestBase
     */
     public TestTile()
     {
-        this.tileScript = Tile.Create(null, 0, 0);
+        GameObject boardObject = new GameObject();
+        Board testBoard = Board.CreateNoTerrain(boardObject, 800, 800, 10, 10);
+        this.tileScript = testBoard.Tiles[0];
 
-        this.success = this.TestHasOccupant();
-        this.success &= this.TestGetOccupant();
+        this.success = this.TestHasOccupant(false);
+        this.success &= this.TestGetOccupant(null);
 	}
 
 
     // This cannot be implemented until we know both where the players are on the board and also where the obstacles are.
-    bool TestHasOccupant()
+    bool TestHasOccupant(bool expected)
     {
+        if (this.tileScript.HasOccupant() == expected)
+            return true;
+        Debug.Log("Test failed -- Tile::HasOccupant() did not return " + expected + " as expected; it returned " + this.tileScript.HasOccupant());
         return false;
     }
 
-    bool TestGetOccupant()
+    bool TestGetOccupant(GameObject expected)
     {
+        if (this.tileScript.GetOccupant() == expected)
+            return true;
+        Debug.Log("Test failed -- Tile::GetOccupant() did not return " + expected + " as expected; it returned " + this.tileScript.GetOccupant());
         return false;
     }
 }

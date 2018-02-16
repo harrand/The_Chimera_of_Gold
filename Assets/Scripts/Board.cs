@@ -155,8 +155,9 @@ public class Board : MonoBehaviour
         gameTiles[14] = this.GetTileByTileSpace(new Vector2(gameTiles[6].PositionTileSpace.x, gameTiles[6].PositionTileSpace.y - 1));
         for (uint i = 15; i < 18; i++)
             gameTiles[i] = this.GetTileByTileSpace(new Vector2(gameTiles[i - 1].PositionTileSpace.x, gameTiles[i - 1].PositionTileSpace.y - 1));
-        //foreach (Tile t in gameTiles)
-        //    t.GetComponent<Renderer>().material.color = new Color(0, 1, 0);
+        foreach (Tile t in gameTiles)
+            if(t != null)
+                t.GetComponent<Renderer>().material.color = new Color(0, 1, 0);
 
     }
 

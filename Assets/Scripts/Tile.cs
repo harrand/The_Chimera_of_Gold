@@ -34,12 +34,12 @@ public class Tile : MonoBehaviour
 
 	}
 
-    bool HasOccupant()
+    public bool HasOccupant()
     {
         return this.GetOccupant() != null;
     }
 
-    GameObject GetOccupant()
+    public GameObject GetOccupant()
     {
         if (this.parent == null)
             return null;

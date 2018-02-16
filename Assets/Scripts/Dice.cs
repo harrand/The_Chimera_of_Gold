@@ -30,9 +30,6 @@ public class Dice : MonoBehaviour
         Vector3 up = this.gameObject.transform.up;
         Vector3 right = this.gameObject.transform.right;
         Vector3 forward = this.gameObject.transform.forward;
-        Debug.Log("up = " + up);
-        Debug.Log("right = " + right);
-        Debug.Log("forward = " + forward);
         if (Math.Round(up.y) > 0.75)
             return 3;
         if (Math.Round(up.y) < -0.75)

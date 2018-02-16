@@ -8,19 +8,22 @@ public class TestCamp : TestBase
 
 	public TestCamp()
 	{
-        //this.campScript = Camp.Create(null, null);
+        GameObject boardObject = new GameObject();
+        Board testBoard = Board.CreateNoTerrain(boardObject, 800, 800, 10, 10);
+        this.campScript = testBoard.Camps[0];
 
-        this.success = this.TestSpawnPlayer();
-        this.success &= this.TestGetNumberPlayers();
+        // spawnplayer should be null first
+        this.success = this.TestSpawnPlayer(null);
+        this.success &= this.TestGetNumberPlayers(5);
 	}
 
-    public bool TestSpawnPlayer()
+    public bool TestSpawnPlayer(Player expected)
     {
-        return false;
+        return this.campScript.SpawnPlayer() == expected;
     }
 
-    public bool TestGetNumberPlayers()
+    public bool TestGetNumberPlayers(uint expected)
     {
-        return false;
+        return this.campScript.GetNumberOfPlayers() == expected;
     }
 }
