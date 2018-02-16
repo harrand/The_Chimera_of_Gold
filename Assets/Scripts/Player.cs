@@ -5,7 +5,6 @@ using UnityEngine;
 public class Player : MonoBehaviour 
 {
 	private Board parent;
-    public Tile CurrentTile { get; set; }
     
     /**
      * Pseudo-constructor which uses the Prefabs/Player prefab in the project tree.
@@ -16,7 +15,6 @@ public class Player : MonoBehaviour
         GameObject playerObject = Instantiate(Resources.Load("Prefabs/Player")) as GameObject;
         Player playerScript = playerObject.AddComponent<Player>();
         playerScript.parent = parent;
-        playerScript.CurrentTile = tilePosition;
 		playerObject.transform.position = tilePosition.gameObject.transform.position + offset;
         return playerScript;
     }
@@ -27,7 +25,7 @@ public class Player : MonoBehaviour
 
 	}
 
-	public Camp GetCamp()
+    public Camp GetCamp()
 	{
 		foreach(Camp camp in this.parent.Camps)
 		{
@@ -40,11 +38,10 @@ public class Player : MonoBehaviour
 
     public Tile GetOccupiedTile()
     {
+        Vector3 noOffset = this.gameObject.transform.position - new Vector3(0, 3, 0);
         foreach (Tile tile in this.parent.Tiles)
-        {
-            if (this.gameObject == tile.GetOccupant())
+            if (tile.gameObject.transform.position == noOffset)
                 return tile;
-        }
         return null;
     }
 }

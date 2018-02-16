@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraControl : MonoBehaviour
-{
+{    private bool playerSel = false, tileSel = false; //Helps movement of players. playerSel set when first player is selected. tileSel true if current is a tile;   
+
     private Transform current = null;   //Currently selected will be held here
     public GameObject Ethan;            //Test Doll
-    private bool playerSel = false, tileSel = false; //Helps movement of players. playerSel set when first player is selected. tileSel true if current is a tile;   
     //Speed multiplier for camera movement
     private float speed = 15.0f;
     //Default distance and Distance limits. So you can't zoom out forever...
@@ -120,11 +120,28 @@ public class CameraControl : MonoBehaviour
 
         if (current != null && Input.GetKey(KeyCode.LeftShift) && playerSel && tileSel)
         {
-            setCameraPosition(current);
             //offset from tile
             Vector3 offset = new Vector3(0, 3, 0);
-            GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().LastClickedPlayer.gameObject.transform.position = current.position + offset;
-            
+            GameObject boardObject = GameObject.FindGameObjectWithTag("GameBoard");
+            uint diceRoll = boardObject.GetComponent<Board>().GetDice.NumberFaceUp();
+            // stop if the last clicked player is trying to move to a tile that it should not be able to move to.
+            bool validMove = false;
+            foreach (Tile allowedDestination in new PlayerControl(boardObject.GetComponent<InputController>().LastClickedPlayer).PossibleMoves(diceRoll))
+            {
+                if (allowedDestination.transform.position == current.position)
+                    validMove = true;
+            }
+            if (!validMove)
+            {
+                // Would normally log this but it spams it due to the nature of Input.GetKeyDown being really spammy.
+                //Debug.Log("You cannot move here!");
+                return;
+            }
+
+            setCameraPosition(current);
+            boardObject.GetComponent<InputController>().LastClickedPlayer.gameObject.transform.position = current.position + offset;
+            // after moving the player, remove all board highlights.
+            boardObject.GetComponent<Board>().RemoveTileHighlights();
             //Debug.Log(tileSel);
         }
         else if (current != null)

@@ -43,4 +43,20 @@ public class Tile : MonoBehaviour
             return null;
         return null;
     }
+
+    public List<Tile> AdjacentTiles()
+    {
+        Vector2 pos = this.PositionTileSpace;
+        Board board = this.parent;
+        List<Tile> tiles = new List<Tile>();
+        if (pos.x > 0)
+            tiles.Add(board.GetTileByTileSpace(new Vector2(pos.x - 1, pos.y)));
+        if (pos.x < (board.GetWidthInTiles - 1))
+            tiles.Add(board.GetTileByTileSpace(new Vector2(pos.x + 1, pos.y)));
+        if (pos.y > 0)
+            tiles.Add(board.GetTileByTileSpace(new Vector2(pos.x, pos.y - 1)));
+        if (pos.y < (board.GetHeightInTiles - 1))
+            tiles.Add(board.GetTileByTileSpace(new Vector2(pos.x, pos.y + 1)));
+        return tiles;
+    }
 }

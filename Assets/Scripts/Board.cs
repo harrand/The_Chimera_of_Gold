@@ -162,7 +162,7 @@ public class Board : MonoBehaviour
 
     }
 
-    private Tile GetTileByTileSpace(Vector2 positionTileSpace)
+    public Tile GetTileByTileSpace(Vector2 positionTileSpace)
     {
         foreach (Tile t in this.Tiles)
             if (t.PositionTileSpace == positionTileSpace)
@@ -222,6 +222,12 @@ public class Board : MonoBehaviour
 		if(campId >= Game.NUMBER_CAMPS)
 			campId = 0;
 		this.PlayerTurn = this.Camps[campId].TeamPlayers[playerId];
+    }
+
+    public void RemoveTileHighlights()
+    {
+        foreach (Tile tile in this.Tiles)
+            tile.GetComponent<Renderer>().material.color = Color.white;
     }
 
 	/**

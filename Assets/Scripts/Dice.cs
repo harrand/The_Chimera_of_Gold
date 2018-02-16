@@ -24,7 +24,7 @@ public class Dice : MonoBehaviour
         this.gameObject.transform.rotation = Quaternion.Euler(new Vector3(new System.Random().Next(-180, 180), new System.Random().Next(-180, 180), new System.Random().Next(-180, 180)));
     }
 
-    public int NumberFaceUp()
+    public uint NumberFaceUp()
     {
         // TODO: Finish this by not checking whole values and checking between ranges.
         Vector3 up = this.gameObject.transform.up;

@@ -72,4 +72,9 @@ public class Camp : MonoBehaviour
         }
         return null;
     }
+
+    public Board GetParent()
+    {
+        return this.parent;
+    }
 }

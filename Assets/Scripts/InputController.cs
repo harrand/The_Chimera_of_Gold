@@ -39,7 +39,14 @@ public class InputController : MonoBehaviour
 		{
 			this.UpdateLastClickedObjects();
 		}
-	}
+        if (Input.GetKeyDown("m") && this.LastClickedPlayer != null)
+        {
+            // highlight possible moves
+            Board board = this.LastClickedPlayer.GetCamp().GetParent();
+            board.RemoveTileHighlights();
+            new PlayerControl(this.LastClickedPlayer).HighlightPossibleMoves(board.GetDice.NumberFaceUp(), Color.red);
+        }
+    }
 
     /**
 	* Update selected Player, Camp etc...
