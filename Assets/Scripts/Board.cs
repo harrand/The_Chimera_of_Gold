@@ -163,7 +163,7 @@ public class Board : MonoBehaviour
             gameTiles[i] = this.GetTileByTileSpace(new Vector2(gameTiles[i - 1].PositionTileSpace.x, gameTiles[i - 1].PositionTileSpace.y - 1));
         foreach (Tile t in gameTiles)
             if(t != null)
-                t.GetComponent<Renderer>().material.color = new Color(0, 1, 0);
+				t.GetComponent<Renderer>().material.color = new Color(0, 1, 0, this.TileMaterial.color.a);
 
     }
 

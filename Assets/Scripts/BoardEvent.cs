@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoardEvent : MonoBehaviour
+public class BoardEvent
 {
 	private Board parent;
 
