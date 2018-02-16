@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
+    private Canvas menu;
+
     private Transform current = null;   //Currently selected will be held here
     public GameObject Ethan;            //Test Doll
 
@@ -28,6 +30,10 @@ public class CameraControl : MonoBehaviour
         Vector3 angles = transform.eulerAngles;
         y = angles.y;
         x = angles.x;
+
+
+        menu = GameObject.FindGameObjectWithTag("Menu").GetComponent<Canvas>();
+        menu.enabled = false;
     }
 
     /**
@@ -123,8 +129,9 @@ public class CameraControl : MonoBehaviour
             setCameraPosition(Ethan.transform);
             //Debug.Log("Should Follow Ethan ");
         }
-        
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+            menu.enabled = !menu.enabled;
         
 
 
