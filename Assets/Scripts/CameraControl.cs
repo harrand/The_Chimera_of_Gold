@@ -124,5 +124,9 @@ public class CameraControl : MonoBehaviour
             //Debug.Log("Should Follow Ethan ");
         }
         
+
+        
+
+
 	}
 }
