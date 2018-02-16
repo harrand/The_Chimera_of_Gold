@@ -16,25 +16,26 @@ public class Game : MonoBehaviour
 
     // These are edited in Unity Component settings; 5 is just the default.
 	public uint tileWidth = 5, tileHeight = 5;
-    Dice testDice;
+
+    private Board board;
 
 	void Start()
 	{
-        new TestBoard(50, 50, 5, 5); // Perform Board Unit Test
-        new TestTile();
-        new TestCamp();
-        new TestPlayer();
-        //testDice = Dice.Create(new Vector3(10, 50, 10), new Vector3(0, 0, 0), new Vector3(1,1,1));
+        //new TestBoard(50, 50, 5, 5); // Perform Board Unit Test
+        //new TestTile();
+        //new TestCamp();
+        //new TestPlayer();
+
 		// Create a normal Board with Input attached. Both Board and InputController are attached to the root GameObject (this).
-		//Board board = Board.Create(this.gameObject, tileWidth, tileHeight);
-		//board.gameObject.AddComponent<InputController>();   
+		this.board = Board.Create(this.gameObject, tileWidth, tileHeight);
+		this.board.gameObject.AddComponent<InputController>();   
     }
 
     private void Update()
     {
         if(Input.GetKeyDown("r"))
         {
-            testDice.Roll();
+            this.board.GetDice.Roll();
         }
     }
 

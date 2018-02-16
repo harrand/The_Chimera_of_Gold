@@ -19,7 +19,7 @@ public class Board : MonoBehaviour
     public Tile[] Tiles { get; private set; }
 	public Obstacle[] Obstacles { get; private set; }
 	public Camp[] Camps { get; private set; }
-
+    public Dice GetDice { get; private set; }
     /**
     * This is to be used to create a new Board when the root GameObject does have a terrain component (interpolating instead of taking dimensions as parameters).
     * This is currently used for the main game board.
@@ -33,6 +33,7 @@ public class Board : MonoBehaviour
 		Board board = root.AddComponent<Board>();
         root.tag = "GameBoard";
         root.name += " (Board)";
+        board.GetDice = Dice.Create(board.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1));
 		//root.transform.localScale = new Vector3(width, 1, height);
 		board.GetWidthInTiles = Convert.ToUInt32(tilesWidth);
 		board.GetHeightInTiles = Convert.ToUInt32(tilesHeight);
