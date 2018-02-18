@@ -44,7 +44,10 @@ public class InputController : MonoBehaviour
             // highlight possible moves
             Board board = this.LastClickedPlayer.GetCamp().GetParent();
             board.RemoveTileHighlights();
-            new PlayerControl(this.LastClickedPlayer).HighlightPossibleMoves(board.GetDice.NumberFaceUp(), Color.green);
+            if (this.LastClickedPlayer.HasControlledObstacle())
+                board.HighlightTiles(Color.green);
+            else
+                new PlayerControl(this.LastClickedPlayer).HighlightPossibleMoves(board.GetDice.NumberFaceUp(), Color.green);
         }
     }
 

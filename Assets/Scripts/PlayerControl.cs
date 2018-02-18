@@ -25,7 +25,11 @@ public class PlayerControl
         List<Tile> possibleMoves = new List<Tile>();
         foreach(Tile adjacentTile in previousTile.AdjacentTiles(diceRoll))
         {
-            if (adjacentTile.DistanceFrom(previousTile) == diceRoll)
+            bool isOnCamp = false;
+            foreach (Camp camp in parentBoard.Camps)
+                if (camp.GetOccupiedTile() == adjacentTile)
+                    isOnCamp = true;
+            if (adjacentTile.DistanceFrom(previousTile) == diceRoll && !isOnCamp)
             {
                 possibleMoves.Add(adjacentTile);
             }

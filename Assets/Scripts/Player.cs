@@ -45,4 +45,21 @@ public class Player : MonoBehaviour
                 return tile;
         return null;
     }
+
+    public bool HasControlledObstacle()
+    {
+        return this.GetControlledObstacle() != null;
+    }
+
+    /**
+    * Returns the obstacle that this player is standing on and therefore would be controlling.
+    * Returns null if there is no such obstacle.
+    */
+    public Obstacle GetControlledObstacle()
+    {
+        foreach (Obstacle obst in this.parent.Obstacles)
+            if (obst.GetOccupiedTile() == this.GetOccupiedTile() && this.parent.obstacleControlFlag)
+                return obst;
+        return null;
+    }
 }

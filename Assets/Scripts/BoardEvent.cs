@@ -18,6 +18,11 @@ public class BoardEvent
 	{
 		if(player.transform.position == moveTarget)
 			return;
+        if(player.HasControlledObstacle())
+        {
+            this.OnObstacleMove(player.GetControlledObstacle(), player, moveTarget);
+            return;
+        }
 		uint diceRoll = this.parent.GetDice.NumberFaceUp();
 		// stop if the last clicked player is trying to move to a tile that it should not be able to move to.
 		bool validMove = false;
@@ -33,11 +38,17 @@ public class BoardEvent
 			return;
 		}
 		player.gameObject.transform.position = moveTarget + Player.POSITION_OFFSET;
+        player.GetCamp().GetParent().obstacleControlFlag = true;
 		this.parent.RemoveTileHighlights();
 		this.HandleTakeovers(player);
 		// Disable the dice so the same roll cannot be used twice.
 		this.parent.GetDice.gameObject.SetActive(false);
 	}
+
+    public void OnObstacleMove(Obstacle obstacle, Player controller, Vector3 moveTarget)
+    {
+        obstacle.gameObject.transform.position = moveTarget;
+    }
 
 	/**
 	 * Called by OnPlayerMove. Ensures that if a player has landed on any others, it sets that player back to the camp spawn.

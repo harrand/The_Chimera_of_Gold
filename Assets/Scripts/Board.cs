@@ -16,6 +16,7 @@ public class Board : MonoBehaviour
     */
     private uint numberCamps, numberObstacles;
     private float width, height;
+    public bool obstacleControlFlag;
     public Tile[] Tiles { get; private set; }
 	public Obstacle[] Obstacles { get; private set; }
 	public Camp[] Camps { get; private set; }
@@ -216,6 +217,7 @@ public class Board : MonoBehaviour
      */
     public void NextTurn()
     {
+        this.obstacleControlFlag = false;
 		int campId = -1, playerId = -1;
 		// Set campId and playerId to the corresponding indices for the current Player
         for(uint campCounter = 0; campCounter < this.Camps.Length; campCounter++)
@@ -245,6 +247,12 @@ public class Board : MonoBehaviour
 		if(campId >= Game.NUMBER_CAMPS)
 			campId = 0;
 		this.PlayerTurn = this.Camps[campId].TeamPlayers[playerId];
+    }
+
+    public void HighlightTiles(Color color)
+    {
+        foreach (Tile tile in this.Tiles)
+            tile.GetComponent<Renderer>().material.color = color;
     }
 
     public void RemoveTileHighlights()
