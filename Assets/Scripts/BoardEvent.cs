@@ -48,12 +48,13 @@ public class BoardEvent
     public void OnObstacleMove(Obstacle obstacle, Player controller, Vector3 moveTarget)
     {
         obstacle.gameObject.transform.position = moveTarget;
+        this.parent.RemoveTileHighlights();
     }
 
-	/**
+    /**
 	 * Called by OnPlayerMove. Ensures that if a player has landed on any others, it sets that player back to the camp spawn.
 	 */
-	private void HandleTakeovers(Player player)
+    private void HandleTakeovers(Player player)
 	{
 		Camp friendlyCamp = player.GetCamp();
 		foreach(Camp camp in this.parent.Camps)

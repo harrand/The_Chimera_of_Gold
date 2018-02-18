@@ -54,6 +54,9 @@ public class Tile : MonoBehaviour
 		return null;
     }
 
+    /**
+    * Returns true if there is an occupant and it is an Obstacle.
+    */
 	private bool BlockedByObstacle()
 	{
 		foreach(Obstacle obst in this.parent.Obstacles)
@@ -62,11 +65,18 @@ public class Tile : MonoBehaviour
 		return false;
 	}
 
+    /**
+    * Returns displacement between two Tiles in tile-space.
+    */
     public Vector2 DisplacementFrom(Tile otherTile)
     {
         return this.PositionTileSpace - otherTile.PositionTileSpace;
     }
 
+    /**
+    * Returns geometric distance between two Tiles in tile-space.
+    * Does not take diagonal displacement into account.
+    */
     public uint DistanceFrom(Tile otherTile)
     {
         return Convert.ToUInt32(Mathf.Abs(this.DisplacementFrom(otherTile).x) + Mathf.Abs(this.DisplacementFrom(otherTile).y));
@@ -85,88 +95,60 @@ public class Tile : MonoBehaviour
 		{
 			tile = board.GetTileByTileSpace(new Vector2(pos.x - 1, pos.y));
             if (ignoreObstacles || !tile.BlockedByObstacle())
-            {
                 tiles.Add(tile);
-            }
             else
             {
                 Obstacle blockedBy = null;
                 foreach (Obstacle obst in board.Obstacles)
                     if (obst.GetOccupiedTile() == tile)
                         blockedBy = obst;
-                Debug.Log("blocked by = " + blockedBy + " on tile " + blockedBy.GetOccupiedTile());
-                Debug.Log("original = " + original);
                 if (blockedBy.GetOccupiedTile().DistanceFrom(original) == range)
-                {
-                    Debug.Log("you can move an obstacle if you go ontop of it!");
                     tiles.Add(tile);
-                }
             }
 		}
 		if (pos.x < (board.GetWidthInTiles - 1))
 		{
 			tile = board.GetTileByTileSpace(new Vector2(pos.x + 1, pos.y));
             if (ignoreObstacles || !tile.BlockedByObstacle())
-            {
                 tiles.Add(tile);
-            }
             else
             {
                 Obstacle blockedBy = null;
                 foreach (Obstacle obst in board.Obstacles)
                     if (obst.GetOccupiedTile() == tile)
                         blockedBy = obst;
-                Debug.Log("blocked by = " + blockedBy + " on tile " + blockedBy.GetOccupiedTile());
-                Debug.Log("original = " + original);
                 if (blockedBy.GetOccupiedTile().DistanceFrom(original) == range)
-                {
-                    Debug.Log("you can move an obstacle if you go ontop of it!");
                     tiles.Add(tile);
-                }
             }
         }
 		if (pos.y > 0)
 		{
 			tile = board.GetTileByTileSpace(new Vector2(pos.x, pos.y - 1));
             if (ignoreObstacles || !tile.BlockedByObstacle())
-            {
                 tiles.Add(tile);
-            }
             else
             {
                 Obstacle blockedBy = null;
                 foreach (Obstacle obst in board.Obstacles)
                     if (obst.GetOccupiedTile() == tile)
                         blockedBy = obst;
-                Debug.Log("blocked by = " + blockedBy + " on tile " + blockedBy.GetOccupiedTile());
-                Debug.Log("original = " + original);
                 if (blockedBy.GetOccupiedTile().DistanceFrom(original) == range)
-                {
-                    Debug.Log("you can move an obstacle if you go ontop of it!");
                     tiles.Add(tile);
-                }
             }
         }
 		if (pos.y < (board.GetHeightInTiles - 1))
 		{
 			tile = board.GetTileByTileSpace(new Vector2(pos.x, pos.y + 1));
             if (ignoreObstacles || !tile.BlockedByObstacle())
-            {
                 tiles.Add(tile);
-            }
             else
             {
                 Obstacle blockedBy = null;
                 foreach (Obstacle obst in board.Obstacles)
                     if (obst.GetOccupiedTile() == tile)
                         blockedBy = obst;
-                Debug.Log("blocked by = " + blockedBy + " on tile " + blockedBy.GetOccupiedTile());
-                Debug.Log("original = " + original);
                 if (blockedBy.GetOccupiedTile().DistanceFrom(original) == range)
-                {
-                    Debug.Log("you can move an obstacle if you go ontop of it!");
                     tiles.Add(tile);
-                }
             }
         }
 		return tiles.ToArray();
@@ -198,9 +180,7 @@ public class Tile : MonoBehaviour
 		Tile[] total = this.AdjacentTiles(this, range, false);
 		for(uint i = 1; i < range; i++)
 			foreach(Tile tile in total)
-			{
 				total = total.Union(tile.AdjacentTiles(this, range, false)).ToArray();
-			}
 		return total.ToArray();
 	}
 }
