@@ -16,7 +16,6 @@ public class Board : MonoBehaviour
     */
     private uint numberCamps, numberObstacles;
     private float width, height;
-	public Material TileMaterial{ get; private set; }
     public Tile[] Tiles { get; private set; }
 	public Obstacle[] Obstacles { get; private set; }
 	public Camp[] Camps { get; private set; }
@@ -59,7 +58,6 @@ public class Board : MonoBehaviour
 			tileObject.transform.localScale = new Vector3(tileSize.x, 1, tileSize.y);
 			tileObject.name = "Tile " + (i + 1);
 		}
-		board.TileMaterial = board.Tiles[0].GetComponent<Renderer>().material;
         board.Cull();
         board.numberCamps = 5;
 		board.numberObstacles = 13;
@@ -69,7 +67,7 @@ public class Board : MonoBehaviour
 			board.Camps[i] = Camp.Create(board, board.Tiles[i]);
 		board.Obstacles = new Obstacle[board.numberObstacles];
 		for (uint i = 0; i < board.numberObstacles; i++)
-			board.Obstacles[i] = Obstacle.Create(board, board.Tiles[i]);
+			board.Obstacles[i] = Obstacle.Create(board, board.Tiles[i + 30]);
 		return board;
 	}
 
@@ -118,6 +116,14 @@ public class Board : MonoBehaviour
 		return board;
 	}
 
+    public Material TileMaterial()
+    {
+        GameObject temp = Instantiate(Resources.Load("Prefabs/Tile")) as GameObject;
+        Material defaultMaterial = temp.GetComponent<Renderer>().material;
+        Destroy(temp);
+        return defaultMaterial;
+    }
+
 	void Start()
     {
         this.ResetTurns();
@@ -163,7 +169,7 @@ public class Board : MonoBehaviour
             gameTiles[i] = this.GetTileByTileSpace(new Vector2(gameTiles[i - 1].PositionTileSpace.x, gameTiles[i - 1].PositionTileSpace.y - 1));
         foreach (Tile t in gameTiles)
             if(t != null)
-				t.GetComponent<Renderer>().material.color = new Color(0, 1, 0, this.TileMaterial.color.a);
+				t.GetComponent<Renderer>().material.color = new Color(0, 1, 0, this.TileMaterial().color.a);
 
     }
 
@@ -244,7 +250,7 @@ public class Board : MonoBehaviour
     public void RemoveTileHighlights()
     {
         foreach (Tile tile in this.Tiles)
-			tile.GetComponent<Renderer>().material = this.TileMaterial;
+			tile.GetComponent<Renderer>().material = this.TileMaterial();
     }
 
 	/**

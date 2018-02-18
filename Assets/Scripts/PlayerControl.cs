@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class PlayerControl 
@@ -17,21 +18,17 @@ public class PlayerControl
     public Tile[] PossibleMoves(uint diceRoll)
     {
         // uint diceRoll = this.GetPlayer.parent.parent.GetDice.NumberFaceUp()
+        Debug.Log(diceRoll);
         Tile previousTile = this.GetPlayer.GetOccupiedTile();
         Board parentBoard = this.GetPlayer.GetCamp().GetParent();
         Obstacle[] obstacles = parentBoard.Obstacles;
         List<Tile> possibleMoves = new List<Tile>();
         foreach(Tile adjacentTile in previousTile.AdjacentTiles(diceRoll))
         {
-            bool available = true;
-            Vector2 aPos = adjacentTile.PositionTileSpace;
-            Vector2 pPos = previousTile.PositionTileSpace;
-            foreach (Obstacle obstacle in obstacles)
-                if (obstacle.GetOccupiedTile() == adjacentTile) // adjacent tile has an obstacle on it
-                    available = false;
-            if (!available)
-                continue;
-            possibleMoves.Add(adjacentTile);
+            if (adjacentTile.DistanceFrom(previousTile) == diceRoll)
+            {
+                possibleMoves.Add(adjacentTile);
+            }
         }
         return possibleMoves.ToArray();
     }
@@ -43,6 +40,6 @@ public class PlayerControl
     public void HighlightPossibleMoves(uint diceRoll, Color highlightColour)
     {
         foreach (Tile tile in this.PossibleMoves(diceRoll))
-			tile.GetComponent<Renderer>().material.color = new Color(highlightColour.r, highlightColour.g, highlightColour.b, this.GetPlayer.GetCamp().GetParent().TileMaterial.color.a);
+            tile.GetComponent<Renderer>().material.color = new Color(highlightColour.r, highlightColour.g, highlightColour.b, highlightColour.a);
     }
 }

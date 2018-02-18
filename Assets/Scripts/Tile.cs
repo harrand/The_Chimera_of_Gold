@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 using UnityEngine;
 
 public class Tile : MonoBehaviour
@@ -61,10 +62,20 @@ public class Tile : MonoBehaviour
 		return false;
 	}
 
+    public Vector2 DisplacementFrom(Tile otherTile)
+    {
+        return this.PositionTileSpace - otherTile.PositionTileSpace;
+    }
+
+    public uint DistanceFrom(Tile otherTile)
+    {
+        return Convert.ToUInt32(Mathf.Abs(this.DisplacementFrom(otherTile).x) + Mathf.Abs(this.DisplacementFrom(otherTile).y));
+    }
+
 	/**
      * Returns an array of all Tiles which are directly adjacent to this one.
      */
-	private Tile[] AdjacentTiles(bool ignoreObstacles)
+	private Tile[] AdjacentTiles(Tile original, uint range, bool ignoreObstacles)
 	{
 		Vector2 pos = this.PositionTileSpace;
 		Board board = this.parent;
@@ -73,27 +84,91 @@ public class Tile : MonoBehaviour
 		if (pos.x > 0)
 		{
 			tile = board.GetTileByTileSpace(new Vector2(pos.x - 1, pos.y));
-			if(ignoreObstacles || !tile.BlockedByObstacle())
-				tiles.Add(tile);
+            if (ignoreObstacles || !tile.BlockedByObstacle())
+            {
+                tiles.Add(tile);
+            }
+            else
+            {
+                Obstacle blockedBy = null;
+                foreach (Obstacle obst in board.Obstacles)
+                    if (obst.GetOccupiedTile() == tile)
+                        blockedBy = obst;
+                Debug.Log("blocked by = " + blockedBy + " on tile " + blockedBy.GetOccupiedTile());
+                Debug.Log("original = " + original);
+                if (blockedBy.GetOccupiedTile().DistanceFrom(original) == range)
+                {
+                    Debug.Log("you can move an obstacle if you go ontop of it!");
+                    tiles.Add(tile);
+                }
+            }
 		}
 		if (pos.x < (board.GetWidthInTiles - 1))
 		{
 			tile = board.GetTileByTileSpace(new Vector2(pos.x + 1, pos.y));
-			if(ignoreObstacles || !tile.BlockedByObstacle())
-				tiles.Add(tile);
-		}
+            if (ignoreObstacles || !tile.BlockedByObstacle())
+            {
+                tiles.Add(tile);
+            }
+            else
+            {
+                Obstacle blockedBy = null;
+                foreach (Obstacle obst in board.Obstacles)
+                    if (obst.GetOccupiedTile() == tile)
+                        blockedBy = obst;
+                Debug.Log("blocked by = " + blockedBy + " on tile " + blockedBy.GetOccupiedTile());
+                Debug.Log("original = " + original);
+                if (blockedBy.GetOccupiedTile().DistanceFrom(original) == range)
+                {
+                    Debug.Log("you can move an obstacle if you go ontop of it!");
+                    tiles.Add(tile);
+                }
+            }
+        }
 		if (pos.y > 0)
 		{
 			tile = board.GetTileByTileSpace(new Vector2(pos.x, pos.y - 1));
-			if(ignoreObstacles || !tile.BlockedByObstacle())
-				tiles.Add(tile);
-		}
+            if (ignoreObstacles || !tile.BlockedByObstacle())
+            {
+                tiles.Add(tile);
+            }
+            else
+            {
+                Obstacle blockedBy = null;
+                foreach (Obstacle obst in board.Obstacles)
+                    if (obst.GetOccupiedTile() == tile)
+                        blockedBy = obst;
+                Debug.Log("blocked by = " + blockedBy + " on tile " + blockedBy.GetOccupiedTile());
+                Debug.Log("original = " + original);
+                if (blockedBy.GetOccupiedTile().DistanceFrom(original) == range)
+                {
+                    Debug.Log("you can move an obstacle if you go ontop of it!");
+                    tiles.Add(tile);
+                }
+            }
+        }
 		if (pos.y < (board.GetHeightInTiles - 1))
 		{
 			tile = board.GetTileByTileSpace(new Vector2(pos.x, pos.y + 1));
-			if(ignoreObstacles || !tile.BlockedByObstacle())
-				tiles.Add(tile);
-		}
+            if (ignoreObstacles || !tile.BlockedByObstacle())
+            {
+                tiles.Add(tile);
+            }
+            else
+            {
+                Obstacle blockedBy = null;
+                foreach (Obstacle obst in board.Obstacles)
+                    if (obst.GetOccupiedTile() == tile)
+                        blockedBy = obst;
+                Debug.Log("blocked by = " + blockedBy + " on tile " + blockedBy.GetOccupiedTile());
+                Debug.Log("original = " + original);
+                if (blockedBy.GetOccupiedTile().DistanceFrom(original) == range)
+                {
+                    Debug.Log("you can move an obstacle if you go ontop of it!");
+                    tiles.Add(tile);
+                }
+            }
+        }
 		return tiles.ToArray();
 	}
 
@@ -101,14 +176,14 @@ public class Tile : MonoBehaviour
 	 * Returns an array of all Tiles which are adjacent to all Tiles which are also adjacent to this one (within the range).
 	 * Does not take obstacles into account.
 	 */
-	public Tile[] AdjacentTilesSimple(uint range)
+	public Tile[] AdjacentTilesSimple(Tile original, uint range)
 	{
 		if(range == 0)
 			return new Tile[0];
-		Tile[] total = this.AdjacentTiles(true);
+		Tile[] total = this.AdjacentTiles(original, range, true);
 		for(uint i = 1; i < range; i++)
 			foreach(Tile tile in total)
-				total = total.Union(tile.AdjacentTiles(true)).ToArray();
+				total = total.Union(tile.AdjacentTiles(original, range, true)).ToArray();
 		return total.ToArray();
 	}
 
@@ -120,16 +195,11 @@ public class Tile : MonoBehaviour
 	{
 		if(range == 0)
 			return new Tile[0];
-		Tile[] total = this.AdjacentTiles(false);
+		Tile[] total = this.AdjacentTiles(this, range, false);
 		for(uint i = 1; i < range; i++)
 			foreach(Tile tile in total)
 			{
-				bool blockedByObstacle = false;
-				foreach(Obstacle obstacle in this.parent.Obstacles)
-					if(obstacle.GetOccupiedTile() == tile)
-						blockedByObstacle = true;
-				if(!blockedByObstacle)
-					total = total.Union(tile.AdjacentTiles(false)).ToArray();
+				total = total.Union(tile.AdjacentTiles(this, range, false)).ToArray();
 			}
 		return total.ToArray();
 	}
