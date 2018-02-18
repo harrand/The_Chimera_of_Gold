@@ -721,10 +721,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 181975939}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d4b9c3ca31146443bcb3a9b09534aa2, type: 3}
+  m_Script: {fileID: 11500000, guid: 2cd9d859633b49b46b398b7d52bae7af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   quitMenu: {fileID: 1596009023}
+  quitToMenuMenu: {fileID: 0}
   quit: {fileID: 1866807402}
 --- !u!114 &181975945
 MonoBehaviour:
@@ -944,7 +945,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 181975945}
-        m_MethodName: fullScreenToggle
+        m_MethodName: FullScreenToggle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1679,12 +1680,12 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
+      - m_Target: {fileID: 181975945}
+        m_MethodName: ChangeResolution
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1873,7 +1874,6 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 684557932}
-
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -1884,9 +1884,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-
   m_AnchoredPosition: {x: 2.0000305, y: 23}
-
   m_SizeDelta: {x: 219.1, y: 47.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &684557934
@@ -2129,7 +2127,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 181975945}
-        m_MethodName: backPress
+        m_MethodName: BackPress
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3283,7 +3281,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 181975945}
-        m_MethodName: settingsPress
+        m_MethodName: SettingsPress
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4579,7 +4577,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 181975944}
-        m_MethodName: quitPress
+        m_MethodName: QuitPress
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
