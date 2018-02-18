@@ -23,7 +23,7 @@ public class QuitButtons : MonoBehaviour {
     /**
      * Enables menu when quit is pressed 
      */
-    public void quitPress()
+    public void QuitPress()
     {
         quitMenu.enabled = true;
     }
