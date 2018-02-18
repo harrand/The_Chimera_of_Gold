@@ -10,6 +10,7 @@ public class Settings : MonoBehaviour
     public Canvas settingsMenu;
     public Button settings;
     public Dropdown resolution;
+    public Toggle fullScreen;
     private bool isFullScreen;
 
     /**
@@ -19,6 +20,7 @@ public class Settings : MonoBehaviour
     {
         settingsMenu.enabled = false;
         isFullScreen = Screen.fullScreen;
+        fullScreen.isOn = isFullScreen;
     }
 
     /**
@@ -42,8 +44,11 @@ public class Settings : MonoBehaviour
      */
     public void FullScreenToggle()
     {
-        Screen.fullScreen = !Screen.fullScreen;
-        isFullScreen = Screen.fullScreen;
+        if (fullScreen.isOn != isFullScreen)
+        {
+            Screen.fullScreen = !Screen.fullScreen;
+            isFullScreen = Screen.fullScreen;
+        }
     }
 
     /**

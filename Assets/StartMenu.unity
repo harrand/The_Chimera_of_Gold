@@ -741,6 +741,7 @@ MonoBehaviour:
   settingsMenu: {fileID: 1976420465}
   settings: {fileID: 1419593851}
   resolution: {fileID: 625568169}
+  fullScreen: {fileID: 238123246}
 --- !u!114 &181975946
 MonoBehaviour:
   m_ObjectHideFlags: 0
