@@ -969,7 +969,7 @@ GameObject:
   - component: {fileID: 301593234}
   - component: {fileID: 301593235}
   m_Layer: 5
-  m_Name: Brightness
+  m_Name: Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3768,7 +3768,7 @@ GameObject:
   - component: {fileID: 1606450709}
   - component: {fileID: 1606450711}
   m_Layer: 5
-  m_Name: BrightnessLabel
+  m_Name: VolumeLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3824,7 +3824,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Brightness
+  m_Text: Volume
 --- !u!222 &1606450710
 CanvasRenderer:
   m_ObjectHideFlags: 0

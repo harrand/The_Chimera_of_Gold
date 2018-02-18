@@ -44,11 +44,8 @@ public class Settings : MonoBehaviour
      */
     public void FullScreenToggle()
     {
-        if (fullScreen.isOn != isFullScreen)
-        {
-            Screen.fullScreen = !Screen.fullScreen;
-            isFullScreen = Screen.fullScreen;
-        }
+        Screen.fullScreen = fullScreen.isOn;
+        isFullScreen = Screen.fullScreen;
     }
 
     /**
@@ -56,18 +53,11 @@ public class Settings : MonoBehaviour
      */
     public void ChangeResolution()
     {
-        Debug.Log("Changing resolution");
         string option = resolution.options[resolution.value].text;
-        Debug.Log(option);
         string[] tokens = option.Split("x".ToCharArray());
-        Debug.Log("Printing tokens");
-        Debug.Log(tokens[0]);
-        Debug.Log(tokens[1]);
         int max = Int32.Parse(tokens[0]);
         int min = Int32.Parse(tokens[1]);
-        Debug.Log(max);
-        Debug.Log(min);
-        Debug.Log(isFullScreen);
+        isFullScreen = Screen.fullScreen;
         Screen.SetResolution(max, min, isFullScreen);
     }
 }
