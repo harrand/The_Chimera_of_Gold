@@ -60,12 +60,34 @@ public class Board : MonoBehaviour
 			tileObject.name = "Tile " + (i + 1);
 		}
         board.Cull();
+        board.GetGoalTile().gameObject.GetComponent<Renderer>().material.color = Color.yellow / 1.2f;
         board.numberCamps = 5;
 		board.numberObstacles = 13;
 
 		board.Camps = new Camp[board.numberCamps];
-		for (uint i = 0; i < board.numberCamps; i++)
-			board.Camps[i] = Camp.Create(board, board.Tiles[i]);
+        for (uint i = 0; i < board.numberCamps; i++)
+        {
+            Color color = Color.black;
+            switch (i % 5)
+            {
+                case 0:
+                    color = Color.red;
+                    break;
+                case 1:
+                    color = Color.green;
+                    break;
+                case 2:
+                    color = Color.blue;
+                    break;
+                case 3:
+                    color = Color.yellow;
+                    break;
+                case 4:
+                    color = Color.magenta;
+                    break;
+            }
+            board.Camps[i] = Camp.Create(board, board.Tiles[i], color);
+        }
 		board.Obstacles = new Obstacle[board.numberObstacles];
 		for (uint i = 0; i < board.numberObstacles; i++)
 			board.Obstacles[i] = Obstacle.Create(board, board.Tiles[i + 30]);
@@ -109,9 +131,30 @@ public class Board : MonoBehaviour
 		board.numberObstacles = 13;
 
 		board.Camps = new Camp[board.numberCamps];
-		for (uint i = 0; i < board.numberCamps; i++)
-			board.Camps[i] = Camp.Create(board, board.Tiles[i]);
-		board.Obstacles = new Obstacle[board.numberObstacles];
+        for (uint i = 0; i < board.numberCamps; i++)
+        {
+            Color color = Color.black;
+            switch (i % 4)
+            {
+                case 0:
+                    color = Color.red;
+                    break;
+                case 1:
+                    color = Color.green;
+                    break;
+                case 2:
+                    color = Color.blue;
+                    break;
+                case 3:
+                    color = Color.yellow;
+                    break;
+                default:
+                    color = Color.magenta;
+                    break;
+            }
+            board.Camps[i] = Camp.Create(board, board.Tiles[i], color);
+        }
+        board.Obstacles = new Obstacle[board.numberObstacles];
 		for (uint i = 0; i < board.numberObstacles; i++)
 			board.Obstacles[i] = Obstacle.Create(board, board.Tiles[i]);
 		return board;
@@ -138,7 +181,7 @@ public class Board : MonoBehaviour
     /**
     * Returns the Goal Tile, which will be the tile with the greatest y-coordinate (as it is at the top of the mountain).
     */
-    private Tile GetGoalTile()
+    public Tile GetGoalTile()
     {
         Tile max = this.Tiles[0];
         foreach(Tile t in this.Tiles)

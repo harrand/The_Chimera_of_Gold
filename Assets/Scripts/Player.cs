@@ -12,11 +12,10 @@ public class Player : MonoBehaviour
      */
     public static Player Create(Board parent, Tile tilePosition)
     {
-        Vector3 offset = new Vector3(0, 3, 0);
         GameObject playerObject = Instantiate(Resources.Load("Prefabs/Player")) as GameObject;
         Player playerScript = playerObject.AddComponent<Player>();
         playerScript.parent = parent;
-		playerObject.transform.position = tilePosition.gameObject.transform.position + offset;
+		playerObject.transform.position = tilePosition.gameObject.transform.position + Player.POSITION_OFFSET;
         return playerScript;
     }
 
@@ -35,11 +34,19 @@ public class Player : MonoBehaviour
 	}
 
     /**
+     * Destroys the player's gameobject, effectively removing it.
+     */
+    public void Kill()
+    {
+        Destroy(this.gameObject);
+    }
+
+    /**
     * Returns the Tile that the player is sitting upon.
     */
     public Tile GetOccupiedTile()
     {
-        Vector3 noOffset = this.gameObject.transform.position - new Vector3(0, 3, 0);
+        Vector3 noOffset = this.gameObject.transform.position - Player.POSITION_OFFSET;
         foreach (Tile tile in this.parent.Tiles)
             if (tile.gameObject.transform.position == noOffset)
                 return tile;

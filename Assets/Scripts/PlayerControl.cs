@@ -17,8 +17,6 @@ public class PlayerControl
     */
     public Tile[] PossibleMoves(uint diceRoll)
     {
-        // uint diceRoll = this.GetPlayer.parent.parent.GetDice.NumberFaceUp()
-        Debug.Log(diceRoll);
         Tile previousTile = this.GetPlayer.GetOccupiedTile();
         Board parentBoard = this.GetPlayer.GetCamp().GetParent();
         Obstacle[] obstacles = parentBoard.Obstacles;
@@ -30,9 +28,7 @@ public class PlayerControl
                 if (camp.GetOccupiedTile() == adjacentTile)
                     isOnCamp = true;
             if (adjacentTile.DistanceFrom(previousTile) == diceRoll && !isOnCamp)
-            {
                 possibleMoves.Add(adjacentTile);
-            }
         }
         return possibleMoves.ToArray();
     }

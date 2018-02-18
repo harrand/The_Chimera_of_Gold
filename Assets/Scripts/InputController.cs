@@ -45,7 +45,13 @@ public class InputController : MonoBehaviour
             Board board = this.LastClickedPlayer.GetCamp().GetParent();
             board.RemoveTileHighlights();
             if (this.LastClickedPlayer.HasControlledObstacle())
-                board.HighlightTiles(Color.green);
+            {
+                foreach (Tile tile in this.boardScript.Tiles)
+                {
+                    if (!tile.HasOccupant())
+                        tile.gameObject.GetComponent<Renderer>().material.color = Color.green;
+                }
+            }
             else
                 new PlayerControl(this.LastClickedPlayer).HighlightPossibleMoves(board.GetDice.NumberFaceUp(), Color.green);
         }

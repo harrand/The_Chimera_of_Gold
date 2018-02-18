@@ -44,10 +44,14 @@ public class Tile : MonoBehaviour
      */
     public GameObject GetOccupant()
     {
-		foreach(Camp camp in this.parent.Camps)
-			foreach(Player player in camp.TeamPlayers)
-				if(player.gameObject.transform.position == this.gameObject.transform.position)
-					return player.gameObject;
+        foreach (Camp camp in this.parent.Camps)
+        {
+            if (camp.gameObject.transform.position == this.gameObject.transform.position)
+                return camp.gameObject;
+            foreach (Player player in camp.TeamPlayers)
+                if (player.gameObject.transform.position - Player.POSITION_OFFSET == this.gameObject.transform.position)
+                    return player.gameObject;
+        }
 		foreach(Obstacle obst in this.parent.Obstacles)
 			if(obst.gameObject.transform.position == this.gameObject.transform.position)
 				return obst.gameObject;

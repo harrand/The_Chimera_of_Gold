@@ -16,6 +16,8 @@ public class BoardEvent
 	 */
 	public void OnPlayerMove(Player player, Vector3 moveTarget)
 	{
+        if (player == null)
+            return;
 		if(player.transform.position == moveTarget)
 			return;
         if(player.HasControlledObstacle())
@@ -26,17 +28,15 @@ public class BoardEvent
 		uint diceRoll = this.parent.GetDice.NumberFaceUp();
 		// stop if the last clicked player is trying to move to a tile that it should not be able to move to.
 		bool validMove = false;
-		foreach (Tile allowedDestination in new PlayerControl(this.parent.gameObject.GetComponent<InputController>().LastClickedPlayer).PossibleMoves(diceRoll))
-		{
-			if (allowedDestination.transform.position == moveTarget)
-				validMove = true;
-		}
+        foreach (Tile allowedDestination in new PlayerControl(this.parent.gameObject.GetComponent<InputController>().LastClickedPlayer).PossibleMoves(diceRoll))
+            if (allowedDestination.transform.position == moveTarget)
+            {
+                validMove = true;
+                if (allowedDestination == this.parent.GetGoalTile())
+                    this.OnPlayerGoalEvent(player);
+            }
 		if (!validMove)
-		{
-			// Would normally log this but it spams it due to the nature of Input.GetKeyDown being really spammy.
-			//Debug.Log("You cannot move here!");
 			return;
-		}
 		player.gameObject.transform.position = moveTarget + Player.POSITION_OFFSET;
         player.GetCamp().GetParent().obstacleControlFlag = true;
 		this.parent.RemoveTileHighlights();
@@ -47,8 +47,21 @@ public class BoardEvent
 
     public void OnObstacleMove(Obstacle obstacle, Player controller, Vector3 moveTarget)
     {
+        Vector3 previousLocation = obstacle.gameObject.transform.position;
         obstacle.gameObject.transform.position = moveTarget;
+        if (obstacle.GetOccupiedTile() == controller.GetCamp().GetParent().GetGoalTile())
+        {
+            obstacle.gameObject.transform.position = previousLocation;
+            return;
+        }
         this.parent.RemoveTileHighlights();
+        this.parent.GetDice.gameObject.SetActive(false);
+    }
+
+    public void OnPlayerGoalEvent(Player player)
+    {
+        Debug.Log("A player has reached the goal!");
+        player.Kill();
     }
 
     /**
@@ -62,10 +75,9 @@ public class BoardEvent
 			if(camp == friendlyCamp)
 				continue;
 			foreach(Player enemy in camp.TeamPlayers)
-				if(enemy.GetOccupiedTile() == player.GetOccupiedTile())
+				if(enemy.GetOccupiedTile() == player.GetOccupiedTile()) // Player landed on another player and enemy should be sent back to their camp.
 				{
-					enemy.transform.position = camp.GetOccupiedTile().gameObject.transform.position + new Vector3(0, 3, 0);
-					Debug.Log("A player has been sent back to their camp!");
+					enemy.transform.position = camp.GetOccupiedTile().gameObject.transform.position + Player.POSITION_OFFSET;
 				}
 		}
 	}

@@ -9,14 +9,17 @@ public class Camp : MonoBehaviour
     public Vector2 PositionTileSpace { get; private set; }
     private uint numberPlayers;
 	public Player[] TeamPlayers{get; private set;}
+    public Color TeamColor { get; set; }
 
     /**
      * Pseudo-constructor which uses the Prefabs/Camp prefab in the project tree.
      */
-    public static Camp Create(Board parent, Tile tile)
+    public static Camp Create(Board parent, Tile tile, Color teamColour)
     {
         GameObject campObject = Instantiate(Resources.Load("Prefabs/Camp")) as GameObject;
         Camp campScript = campObject.AddComponent<Camp>();
+        campScript.TeamColor = teamColour;
+        campScript.gameObject.GetComponent<Renderer>().material.color = campScript.TeamColor;
         campScript.parent = parent;
         campScript.tile = tile;
         campScript.PositionTileSpace = tile.PositionTileSpace;
@@ -28,12 +31,19 @@ public class Camp : MonoBehaviour
         // Instantiate all Players in the camp.
         for (uint i = 0; i < campScript.numberPlayers; i++)
         {
-			campScript.SpawnPlayer();
+            campScript.SpawnPlayer();
         }
         return campScript;
     }
 
-	/**
+    private void Start()
+    {
+        foreach(Player player in this.TeamPlayers)
+            if (player != null)
+                player.gameObject.GetComponent<Renderer>().material.color = this.TeamColor;
+    }
+
+    /**
 	 * Returns number of active players belonging to the camp.
 	 */
     public uint GetNumberOfPlayers()
