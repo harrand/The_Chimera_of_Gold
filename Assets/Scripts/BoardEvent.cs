@@ -45,6 +45,9 @@ public class BoardEvent
 		this.parent.GetDice.gameObject.SetActive(false);
 	}
 
+    /**
+    * Invoked when the player attempts to move an obstacle.
+    */
     public void OnObstacleMove(Obstacle obstacle, Player controller, Vector3 moveTarget)
     {
         Vector3 previousLocation = obstacle.gameObject.transform.position;
@@ -61,7 +64,20 @@ public class BoardEvent
     public void OnPlayerGoalEvent(Player player)
     {
         Debug.Log("A player has reached the goal!");
+        if(player.GetCamp().GetNumberOfPlayers() <= 1)
+            OnWinEvent(player.GetCamp());
         player.Kill();
+    }
+
+    public void OnWinEvent(Camp winner)
+    {
+        Debug.Log(winner + " has reached the Chimera of Gold and won the game! Congratulations!");
+        winner.TeamColor = Color.yellow / 1.2f;
+        foreach (Camp mongrelLoser in winner.GetParent().Camps)
+            if (mongrelLoser != winner)
+            {
+                mongrelLoser.GetComponent<Renderer>().material.color = Color.gray;
+            }
     }
 
     /**

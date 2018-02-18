@@ -66,6 +66,9 @@ public class Camp : MonoBehaviour
         return null;
 	}
 
+    /**
+     * Returns a reference to the Tile that the camp is ontop of. Returns null if there is no such tile.
+     */
     public Tile GetOccupiedTile()
     {
 		foreach(Tile tile in this.parent.Tiles)
