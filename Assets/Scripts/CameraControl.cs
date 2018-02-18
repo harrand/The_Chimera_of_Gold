@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
-    private Canvas menu;
-
+    private GameObject[] menus;
+    private Canvas Menu;
     private Transform current = null;   //Currently selected will be held here
     public GameObject Ethan;            //Test Doll
 
@@ -32,8 +32,12 @@ public class CameraControl : MonoBehaviour
         x = angles.x;
 
 
-        menu = GameObject.FindGameObjectWithTag("Menu").GetComponent<Canvas>();
-        menu.enabled = false;
+        menus = GameObject.FindGameObjectsWithTag("Menu");
+        for(int i = 0; i < menus.Length; i++)
+            menus[i].GetComponent<Canvas>().enabled = false;
+
+        Menu = GameObject.FindGameObjectWithTag("MainMenu").GetComponent<Canvas>();
+        Menu.enabled = false;
     }
 
     /**
@@ -131,9 +135,11 @@ public class CameraControl : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
-            menu.enabled = !menu.enabled;
-        
-
+        {
+            Menu.enabled = !Menu.enabled;
+            for (int i = 0; i < menus.Length; i++)
+                menus[i].GetComponent<Canvas>().enabled = false;
+        }
 
 	}
 }

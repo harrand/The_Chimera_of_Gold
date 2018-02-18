@@ -34,7 +34,7 @@ public class QuitButtons : MonoBehaviour
         quitMenu.enabled = true;
     }
 
-    public void quitToMenu()
+    public void QuitToMenu()
     {
         quitToMenuMenu.enabled = true;
     }

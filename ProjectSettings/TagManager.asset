@@ -12,6 +12,7 @@ TagManager:
   - Obstacles
   - GameBoard
   - Menu
+  - MainMenu
   layers:
   - Default
   - TransparentFX
