@@ -2,21 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class QuitButtons : MonoBehaviour {
-
+public class QuitButtons : MonoBehaviour
+{
     /**
      * @Author Lawrence
      */
     //Variables     
     public Canvas quitMenu;
+
+    public Canvas quitToMenuMenu;
+
     public Button quit;
     /**
      * Sets Quit to disabled when game starts
      */
     public void Start()
     {
-       quitMenu.enabled = false;
+
+        quitMenu.enabled = false;
+        quitToMenuMenu.enabled = false;
     }
 
 
@@ -28,7 +34,10 @@ public class QuitButtons : MonoBehaviour {
         quitMenu.enabled = true;
     }
 
-
+    public void quitToMenu()
+    {
+        quitToMenuMenu.enabled = true;
+    }
 
     /**
      * YayPress() Allows you to quit the game
@@ -42,5 +51,15 @@ public class QuitButtons : MonoBehaviour {
     public void NayPress()
     {
         quitMenu.enabled = false;
+    }
+
+
+    public void YayMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+    public void NayMenu()
+    {
+        quitToMenuMenu.enabled = false;
     }
 }
