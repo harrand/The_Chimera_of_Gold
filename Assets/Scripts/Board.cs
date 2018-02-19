@@ -200,7 +200,7 @@ public class Board : MonoBehaviour
      */
     public void Cull()
     {
-        Tile[] gameTiles = new Tile[214];
+        Tile[] gameTiles = new Tile[138];
         gameTiles[0] = this.GetGoalTile();
         Vector2 goalTileSpace = gameTiles[0].PositionTileSpace;
         /*
