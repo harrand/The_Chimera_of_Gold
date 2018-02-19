@@ -6,11 +6,12 @@ using UnityEngine.UI;
 
 public class Settings : MonoBehaviour
 {
-    //variables
+    //Variables assigned in the unity editor
     public Canvas settingsMenu;
     public Button settings;
     public Dropdown resolution;
     public Toggle fullScreen;
+    public Slider volumeSlider;
     private bool isFullScreen;
 
     /**
@@ -59,5 +60,13 @@ public class Settings : MonoBehaviour
         int min = Int32.Parse(tokens[1]);
         isFullScreen = Screen.fullScreen;
         Screen.SetResolution(max, min, isFullScreen);
+    }
+
+    /**
+     * Change the volume of the game
+     */
+    public void ChangeVolume()
+    {
+        AudioListener.volume = volumeSlider.value;
     }
 }
