@@ -195,12 +195,15 @@ public class Board : MonoBehaviour
     /**
      * This removes all of the Tiles that do not actually belong to the game board. 
      * This transforms a grid of Tiles to the actual Chimera of Gold game board. Well, it will when it is fully implemented. -Harry
+     * 
+     * A thousand curses on your head for leaving this to me -Aswin
      */
     public void Cull()
     {
-        Tile[] gameTiles = new Tile[138];
+        Tile[] gameTiles = new Tile[214];
         gameTiles[0] = this.GetGoalTile();
         Vector2 goalTileSpace = gameTiles[0].PositionTileSpace;
+        /*
         // start going left from goal node.
         for (uint i = 1; i < 7; i++)
             gameTiles[i] = this.GetTileByTileSpace(new Vector2(goalTileSpace.x - i, goalTileSpace.y));
@@ -214,6 +217,12 @@ public class Board : MonoBehaviour
         foreach (Tile t in gameTiles)
             if(t != null)
 				t.GetComponent<Renderer>().material.color = new Color(0, 1, 0, this.TileMaterial().color.a);
+        */
+        foreach (Tile t in gameTiles)
+        {
+            if (t != null)
+                t.GetComponent<Renderer>().material.color = new Color(0, 255, 0, this.TileMaterial().color.a);
+        }
 
     }
 
