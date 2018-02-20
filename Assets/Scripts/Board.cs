@@ -190,7 +190,6 @@ public class Board : MonoBehaviour
     {
         if (this.CampTurn == null)
             this.ResetTurns();
-        Debug.Log(this.CampTurn.transform.position);
     }
 
     /**
@@ -325,7 +324,7 @@ public class Board : MonoBehaviour
     public void Cull()
     {
         Tile[] gameTiles = new Tile[146];
-        Tile goalTile = new Tile();
+		Tile goalTile = null;
         int j = 0;
         for (int i = 0; i < 420; i++)
         {
@@ -406,7 +405,6 @@ public class Board : MonoBehaviour
 		int campId = -1, playerId = -1;
 		// Set campId and playerId to the corresponding indices for the current Player
         for(uint campCounter = 0; campCounter < this.Camps.Length; campCounter++)
-
         {
             Debug.Log("NextTurn failed -- CampTurn is not a valid reference to a Board camp.");
             return;
@@ -420,12 +418,14 @@ public class Board : MonoBehaviour
     public void HighlightTiles(Color color)
     {
         foreach (Tile tile in this.Tiles)
+			if(tile != null && tile.gameObject.activeSelf)
             tile.GetComponent<Renderer>().material.color = color;
     }
 
     public void RemoveTileHighlights()
     {
         foreach (Tile tile in this.Tiles)
+			if(tile != null && tile.gameObject.activeSelf)
 			tile.GetComponent<Renderer>().material = this.TileMaterial();
     }
 
