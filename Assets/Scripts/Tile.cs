@@ -87,7 +87,7 @@ public class Tile : MonoBehaviour
     }
 
 	/**
-     * Returns an array of all Tiles which are directly adjacent to this one.
+     * Returns an array of all Tiles which are DIRECTLY adjacent to this one.
      */
 	private Tile[] AdjacentTiles(Tile original, uint range, bool ignoreObstacles)
 	{
@@ -98,62 +98,74 @@ public class Tile : MonoBehaviour
 		if (pos.x > 0)
 		{
 			tile = board.GetTileByTileSpace(new Vector2(pos.x - 1, pos.y));
-            if (ignoreObstacles || !tile.BlockedByObstacle())
-                tiles.Add(tile);
-            else
-            {
-                Obstacle blockedBy = null;
-                foreach (Obstacle obst in board.Obstacles)
-                    if (obst.GetOccupiedTile() == tile)
-                        blockedBy = obst;
-                if (blockedBy.GetOccupiedTile().DistanceFrom(original) == range)
-                    tiles.Add(tile);
-            }
+			if(tile.gameObject.activeSelf)
+			{
+	            if (ignoreObstacles || !tile.BlockedByObstacle())
+	                tiles.Add(tile);
+	            else
+	            {
+	                Obstacle blockedBy = null;
+	                foreach (Obstacle obst in board.Obstacles)
+	                    if (obst.GetOccupiedTile() == tile)
+	                        blockedBy = obst;
+	                if (blockedBy.GetOccupiedTile().DistanceFrom(original) == range)
+	                    tiles.Add(tile);
+	            }
+			}
 		}
 		if (pos.x < (board.GetWidthInTiles - 1))
 		{
 			tile = board.GetTileByTileSpace(new Vector2(pos.x + 1, pos.y));
-            if (ignoreObstacles || !tile.BlockedByObstacle())
-                tiles.Add(tile);
-            else
-            {
-                Obstacle blockedBy = null;
-                foreach (Obstacle obst in board.Obstacles)
-                    if (obst.GetOccupiedTile() == tile)
-                        blockedBy = obst;
-                if (blockedBy.GetOccupiedTile().DistanceFrom(original) == range)
-                    tiles.Add(tile);
-            }
+			if(tile.gameObject.activeSelf)
+			{
+	            if (ignoreObstacles || !tile.BlockedByObstacle())
+	                tiles.Add(tile);
+	            else
+	            {
+	                Obstacle blockedBy = null;
+	                foreach (Obstacle obst in board.Obstacles)
+	                    if (obst.GetOccupiedTile() == tile)
+	                        blockedBy = obst;
+	                if (blockedBy.GetOccupiedTile().DistanceFrom(original) == range)
+	                    tiles.Add(tile);
+	            }
+			}
         }
 		if (pos.y > 0)
 		{
 			tile = board.GetTileByTileSpace(new Vector2(pos.x, pos.y - 1));
-            if (ignoreObstacles || !tile.BlockedByObstacle())
-                tiles.Add(tile);
-            else
-            {
-                Obstacle blockedBy = null;
-                foreach (Obstacle obst in board.Obstacles)
-                    if (obst.GetOccupiedTile() == tile)
-                        blockedBy = obst;
-                if (blockedBy.GetOccupiedTile().DistanceFrom(original) == range)
-                    tiles.Add(tile);
-            }
+			if(tile.gameObject.activeSelf)
+			{
+	            if (ignoreObstacles || !tile.BlockedByObstacle())
+	                tiles.Add(tile);
+	            else
+	            {
+	                Obstacle blockedBy = null;
+	                foreach (Obstacle obst in board.Obstacles)
+	                    if (obst.GetOccupiedTile() == tile)
+	                        blockedBy = obst;
+	                if (blockedBy.GetOccupiedTile().DistanceFrom(original) == range)
+	                    tiles.Add(tile);
+	            }
+			}
         }
 		if (pos.y < (board.GetHeightInTiles - 1))
 		{
 			tile = board.GetTileByTileSpace(new Vector2(pos.x, pos.y + 1));
-            if (ignoreObstacles || !tile.BlockedByObstacle())
-                tiles.Add(tile);
-            else
-            {
-                Obstacle blockedBy = null;
-                foreach (Obstacle obst in board.Obstacles)
-                    if (obst.GetOccupiedTile() == tile)
-                        blockedBy = obst;
-                if (blockedBy.GetOccupiedTile().DistanceFrom(original) == range)
-                    tiles.Add(tile);
-            }
+			if(tile.gameObject.activeSelf)
+			{
+	            if (ignoreObstacles || !tile.BlockedByObstacle())
+	                tiles.Add(tile);
+	            else
+	            {
+	                Obstacle blockedBy = null;
+	                foreach (Obstacle obst in board.Obstacles)
+	                    if (obst.GetOccupiedTile() == tile)
+	                        blockedBy = obst;
+	                if (blockedBy.GetOccupiedTile().DistanceFrom(original) == range)
+	                    tiles.Add(tile);
+	            }
+			}
         }
 		return tiles.ToArray();
 	}
