@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraControl : MonoBehaviour
-{    private bool playerSel = false, tileSel = false; //Helps movement of players. playerSel set when first player is selected. tileSel true if current is a tile;   
+
+{
+    private bool playerSel = false, tileSel = false; //Helps movement of players. playerSel set when first player is selected. tileSel true if current is a tile;   
+    private GameObject[] menus;
+    private Canvas Menu;
 
     private Transform current = null;   //Currently selected will be held here
     public GameObject Ethan;            //Test Doll
@@ -28,6 +32,14 @@ public class CameraControl : MonoBehaviour
         Vector3 angles = transform.eulerAngles;
         y = angles.y;
         x = angles.x;
+
+
+        menus = GameObject.FindGameObjectsWithTag("Menu");
+        for(int i = 0; i < menus.Length; i++)
+            menus[i].GetComponent<Canvas>().enabled = false;
+
+        Menu = GameObject.FindGameObjectWithTag("MainMenu").GetComponent<Canvas>();
+        Menu.enabled = false;
     }
 
     /**
@@ -137,6 +149,13 @@ public class CameraControl : MonoBehaviour
             setCameraPosition(Ethan.transform);
             //Debug.Log("Should Follow Ethan ");
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Menu.enabled = !Menu.enabled;
+            for (int i = 0; i < menus.Length; i++)
+                menus[i].GetComponent<Canvas>().enabled = false;
+        }
+
 	}
 }
