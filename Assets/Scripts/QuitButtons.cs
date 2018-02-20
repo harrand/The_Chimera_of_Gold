@@ -11,10 +11,12 @@ public class QuitButtons : MonoBehaviour
      */
     //Variables     
     public Canvas quitMenu;
-
-    public Canvas quitToMenuMenu;
-
+    public Button start;
+    public Button cont;
+    public Button settings;
     public Button quit;
+    public Canvas quitToMenuMenu;
+    
     /**
      * Sets Quit to disabled when game starts
      */
@@ -23,6 +25,22 @@ public class QuitButtons : MonoBehaviour
 
         quitMenu.enabled = false;
         quitToMenuMenu.enabled = false;
+        if (start != null)
+        {
+            start.enabled = true;
+        }
+        if (cont != null)
+        {
+            cont.enabled = true;
+        }
+        if (settings != null)
+        {
+            settings.enabled = true;
+        }
+        if (quit != null)
+        {
+            quit.enabled = true;
+        }
     }
 
 
@@ -37,6 +55,22 @@ public class QuitButtons : MonoBehaviour
     public void QuitToMenu()
     {
         quitToMenuMenu.enabled = true;
+        if (start != null)
+        {
+            start.enabled = false;
+        }
+        if (cont != null)
+        {
+            cont.enabled = false;
+        }
+        if (settings != null)
+        {
+            settings.enabled = false;
+        }
+        if (quit != null)
+        {
+            quit.enabled = false;
+        }
     }
 
     /**
@@ -51,15 +85,51 @@ public class QuitButtons : MonoBehaviour
     public void NayPress()
     {
         quitMenu.enabled = false;
+        if (start != null)
+        {
+            start.enabled = true;
+        }
+        if (cont != null)
+        {
+            cont.enabled = true;
+        }
+        if (settings != null)
+        {
+            settings.enabled = true;
+        }
+        if (quit != null)
+        {
+            quit.enabled = true;
+        }
     }
 
-
+    /**
+     * YayMenu() Allows you to quit the game to the main menu
+     * NayMenu() Allows you to return to the game
+     */
     public void YayMenu()
     {
         SceneManager.LoadScene(0);
     }
+
     public void NayMenu()
     {
         quitToMenuMenu.enabled = false;
+        if (start != null)
+        {
+            start.enabled = true;
+        }
+        if (cont != null)
+        {
+            cont.enabled = true;
+        }
+        if (settings != null)
+        {
+            settings.enabled = true;
+        }
+        if (quit != null)
+        {
+            quit.enabled = true;
+        }
     }
 }

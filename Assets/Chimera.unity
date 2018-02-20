@@ -291,8 +291,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quitMenu: {fileID: 0}
+  start: {fileID: 0}
+  cont: {fileID: 0}
+  settings: {fileID: 1841987683}
+  quit: {fileID: 796120581}
   quitToMenuMenu: {fileID: 1313774533}
-  quit: {fileID: 0}
 --- !u!114 &85780217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,7 +308,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsMenu: {fileID: 1192019792}
+  start: {fileID: 0}
+  cont: {fileID: 0}
   settings: {fileID: 1841987683}
+  quit: {fileID: 796120581}
   resolution: {fileID: 158317683}
   fullScreen: {fileID: 482344515}
   volumeSlider: {fileID: 1703215467}

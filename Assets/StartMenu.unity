@@ -725,8 +725,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quitMenu: {fileID: 1596009023}
-  quitToMenuMenu: {fileID: 0}
+  start: {fileID: 684557934}
+  cont: {fileID: 659764730}
+  settings: {fileID: 1419593851}
   quit: {fileID: 1866807402}
+  quitToMenuMenu: {fileID: 0}
 --- !u!114 &181975945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -739,7 +742,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsMenu: {fileID: 1976420465}
+  start: {fileID: 684557934}
+  cont: {fileID: 659764730}
   settings: {fileID: 1419593851}
+  quit: {fileID: 1866807402}
   resolution: {fileID: 625568169}
   fullScreen: {fileID: 238123246}
   volumeSlider: {fileID: 301593235}
@@ -1799,7 +1805,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 0.09558821, b: 0.09558821, a: 0}
     m_HighlightedColor: {r: 0, g: 0.91764706, b: 1, a: 1}
     m_PressedColor: {r: 0, g: 0.97794116, b: 0.0472108, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
     m_ColorMultiplier: 1.91
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1922,7 +1928,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 0.27205884, b: 0.27205884, a: 0}
     m_HighlightedColor: {r: 0, g: 0.91764706, b: 1, a: 1}
     m_PressedColor: {r: 0, g: 0.9764706, b: 0.047058824, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
     m_ColorMultiplier: 1.91
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -3276,7 +3282,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
     m_HighlightedColor: {r: 0, g: 0.91724133, b: 1, a: 1}
     m_PressedColor: {r: 0, g: 0.9764706, b: 0.047058824, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
     m_ColorMultiplier: 1.91
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -4572,7 +4578,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
     m_HighlightedColor: {r: 0, g: 0.91764706, b: 1, a: 1}
     m_PressedColor: {r: 0, g: 0.9764706, b: 0.047058824, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
     m_ColorMultiplier: 1.91
     m_FadeDuration: 0.1
   m_SpriteState:
