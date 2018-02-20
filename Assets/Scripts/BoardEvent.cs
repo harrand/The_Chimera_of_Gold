@@ -39,7 +39,7 @@ public class BoardEvent
 			return;
 		player.gameObject.transform.position = moveTarget + Player.POSITION_OFFSET;
         player.GetCamp().GetParent().obstacleControlFlag = true;
-		this.parent.RemoveTileHighlights();
+		//this.parent.RemoveTileHighlights();
 		this.HandleTakeovers(player);
 		// Disable the dice so the same roll cannot be used twice.
 		this.parent.GetDice.gameObject.SetActive(false);

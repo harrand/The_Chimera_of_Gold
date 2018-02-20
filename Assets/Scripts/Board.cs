@@ -323,14 +323,17 @@ public class Board : MonoBehaviour
         foreach (Tile t in Tiles)
         {
             if (t != null)
-                t.GetComponent<Renderer>().material.color = new Color(0, 0, 0, 0);
+                //t.GetComponent<Renderer>().material.color = new Color(0, 0, 0, 0);
+                t.gameObject.SetActive(false);
         }
         foreach (Tile t in gameTiles)
         {
             if (t != null)
+            {
                 t.GetComponent<Renderer>().material.color = new Color(0, 255, 0, this.TileMaterial().color.a);
+                t.gameObject.SetActive(true);
+            }
         }
-
     }
 
     /**

@@ -43,7 +43,7 @@ public class InputController : MonoBehaviour
         {
             // highlight possible moves
             Board board = this.LastClickedPlayer.GetCamp().GetParent();
-            board.RemoveTileHighlights();
+            //board.RemoveTileHighlights();
             if (this.LastClickedPlayer.HasControlledObstacle())
             {
                 foreach (Tile tile in this.boardScript.Tiles)
