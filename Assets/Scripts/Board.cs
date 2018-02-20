@@ -65,7 +65,7 @@ public class Board : MonoBehaviour
 			tileObject.name = "Tile " + (i + 1);
 		}
         board.Cull();
-        board.GetGoalTile().gameObject.GetComponent<Renderer>().material.color = Color.yellow / 1.2f;
+        //board.GetGoalTile().gameObject.GetComponent<Renderer>().material.color = Color.yellow / 1.2f;
         board.numberCamps = 5;
 		board.numberObstacles = 13;
 
@@ -325,7 +325,7 @@ public class Board : MonoBehaviour
     public void Cull()
     {
         Tile[] gameTiles = new Tile[146];
-        
+        Tile goalTile = new Tile();
         int j = 0;
         for (int i = 0; i < 420; i++)
         {
@@ -333,6 +333,11 @@ public class Board : MonoBehaviour
             {
                 gameTiles[j] = this.Tiles[i];
                 j++;
+
+            }
+            if (this.Tiles[i].PositionTileSpace.y == 17 && this.Tiles[i].PositionTileSpace.x == 10)
+            {
+                goalTile = Tiles[i];
             }
         }
         foreach (Tile t in Tiles)
@@ -349,6 +354,8 @@ public class Board : MonoBehaviour
                 t.gameObject.SetActive(true);
             }
         }
+        goalTile.gameObject.SetActive(true);
+        goalTile.GetComponent<Renderer>().material.color = Color.yellow / 1.2f;
     }
 
     /**
