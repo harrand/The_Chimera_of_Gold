@@ -281,7 +281,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 408730, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 15.7
       objectReference: {fileID: 0}
     - target: {fileID: 408730, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
       propertyPath: m_LocalPosition.y
@@ -289,7 +289,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 408730, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 2.87
+      value: 15.5
       objectReference: {fileID: 0}
     - target: {fileID: 408730, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
       propertyPath: m_LocalRotation.x
@@ -533,5 +533,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bc12ee59766c33499ad4fcc67629d70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileWidth: 20
-  tileHeight: 19
+  tileWidth: 21
+  tileHeight: 20

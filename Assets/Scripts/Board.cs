@@ -54,7 +54,7 @@ public class Board : MonoBehaviour
 			board.Tiles[i] = Tile.Create(board, xTile, zTile);
 			GameObject tileObject = board.Tiles[i].gameObject;
 			Vector2 tileSize = Board.ExpectedTileSize(root, board.GetWidthInTiles, board.GetHeightInTiles);
-			tileObject.transform.position = Game.MinWorldSpace(root) + (new Vector3(xTile * tileSize.x, 0, zTile * tileSize.y));
+			tileObject.transform.position = Game.MinWorldSpace(root) + (new Vector3(xTile * tileSize.x, 0, zTile * tileSize.y)) + new Vector3(6,0,6);
 			tileObject.transform.position = new Vector3(tileObject.transform.position.x, Game.InterpolateYWorldSpace(root, tileObject.transform.position), tileObject.transform.position.z);
 			tileObject.transform.localScale = new Vector3(tileSize.x, 1, tileSize.y);
 			tileObject.name = "Tile " + (i + 1);
@@ -191,33 +191,140 @@ public class Board : MonoBehaviour
         }
         return max;
     }
-
+    /**
+     *@Author Aswin
+     * Checks which tiles should be spwaned on the terrain to form the board.
+     * x and y are the tile coordinates in a 2D plane. Currently taken from their tileSpace
+     */
+    private bool checkTile(float x, float y)
+    {
+        if (y == 0)
+        {
+            return true;
+        }
+        else if (y == 1)
+        {
+            if (x == 0 || x == 4 || x == 8 || x == 12 || x == 16 || x == 20)
+                return true;
+            else
+                return false;
+        }
+        else if (y == 2)
+        {
+            return true;
+        }
+        else if (y == 3 || y == 4)
+        {
+            if (x == 2 || x == 6 || x == 10 || x == 14 || x == 18)
+                return true;
+            else
+                return false;
+        }
+        else if (y == 5)
+        {
+            if (x >= 2 && x <= 18)
+                return true;
+            else
+                return false;
+        }
+        else if (y == 6)
+        {
+            if (x == 4 || x == 8 || x == 12 || x == 16)
+                return true;
+            else
+                return false;
+        }
+        else if (y == 7)
+        {
+            if (x >= 4 && x <= 16)
+                return true;
+            else
+                return false;
+        }
+        else if (y == 8 || y == 9)
+        {
+            if (x == 6 || x == 14)
+                return true;
+            else
+                return false;
+        }
+        else if (y == 10)
+        {
+            if (x >= 6 && x <= 14)
+                return true;
+            else
+                return false;
+        }
+        else if (y == 11)
+        {
+            if (x == 8 || x == 12)
+                return true;
+            else
+                return false;
+        }
+        else if (y == 12)
+        {
+            if (x >= 8 && x <= 12)
+                return true;
+            else
+                return false;
+        }
+        else if (y == 13)
+        {
+            if (x == 10)
+                return true;
+            else
+                return false;
+        }
+        else if (y == 14)
+        {
+            if (x >= 4 && x <= 16)
+                return true;
+            else
+                return false;
+        }
+        else if (y == 15 || y == 16 || y == 17)
+        {
+            if (x == 4 || x == 16)
+                return true;
+            else
+                return false;
+        }
+        else if (y == 18)
+        {
+            if (x >= 4 && x <= 16)
+                return true;
+            else
+                return false;
+        }
+        else
+            return false;
+    }
     /**
      * This removes all of the Tiles that do not actually belong to the game board. 
      * This transforms a grid of Tiles to the actual Chimera of Gold game board. Well, it will when it is fully implemented. -Harry
      * 
      * A thousand curses on your head for leaving this to me -Aswin
+     * Update - Board is now built and empty tiles are set transparent 
      */
     public void Cull()
     {
-        Tile[] gameTiles = new Tile[138];
-        gameTiles[0] = this.GetGoalTile();
-        Vector2 goalTileSpace = gameTiles[0].PositionTileSpace;
-        /*
-        // start going left from goal node.
-        for (uint i = 1; i < 7; i++)
-            gameTiles[i] = this.GetTileByTileSpace(new Vector2(goalTileSpace.x - i, goalTileSpace.y));
-        // now start going right
-        for(uint i = 7; i < 14; i++)
-            gameTiles[i] = this.GetTileByTileSpace(new Vector2(goalTileSpace.x + (i - 6), goalTileSpace.y));
-
-        gameTiles[14] = this.GetTileByTileSpace(new Vector2(gameTiles[6].PositionTileSpace.x, gameTiles[6].PositionTileSpace.y - 1));
-        for (uint i = 15; i < 18; i++)
-            gameTiles[i] = this.GetTileByTileSpace(new Vector2(gameTiles[i - 1].PositionTileSpace.x, gameTiles[i - 1].PositionTileSpace.y - 1));
-        foreach (Tile t in gameTiles)
-            if(t != null)
-				t.GetComponent<Renderer>().material.color = new Color(0, 1, 0, this.TileMaterial().color.a);
-        */
+        Tile[] gameTiles = new Tile[146];
+        
+        int j = 0;
+        for (int i = 0; i < 420; i++)
+        {
+            if (checkTile(this.Tiles[i].PositionTileSpace.x, this.Tiles[i].PositionTileSpace.y))
+            {
+                gameTiles[j] = this.Tiles[i];
+                j++;
+            }
+        }
+        foreach (Tile t in Tiles)
+        {
+            if (t != null)
+                t.GetComponent<Renderer>().material.color = new Color(0, 0, 0, 0);
+        }
         foreach (Tile t in gameTiles)
         {
             if (t != null)
