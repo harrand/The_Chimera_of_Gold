@@ -397,9 +397,35 @@ public class Board : MonoBehaviour
     {
         this.CampTurn = this.Camps[0];
     }
-		
-    /**
+
+	/**
+	 * Dice is already being rolled when this is invoked. Causes the AI Player to perform its movement functionality approximately one second after the dice is predicted to hit the ground.
+	 */
+	private IEnumerator DelayAIMove(float seconds, Tile previousLocation)
+	{
+		// s = ut + 0.5a(t^2)
+		// v^2 = u^2 + 2as
+		// v = u + at
+		// at = v - u
+		// t = (v - u) / a
+		// a = -9.81 units per second^2
+		// u = 0
+		// s = distance between ground and dice position
+		// v= sqrt(u^2 + 2 * a * s)
+		float s = (this.GetDice.transform.position - previousLocation.transform.position).magnitude;
+		float v = Mathf.Sqrt(2 * s * 9.81f);
+		float t = v / 9.81f;
+		yield return new WaitForSeconds(t + 1);
+		int roll = (int) this.GetDice.NumberFaceUp();
+		Debug.Log("i rolled a " + roll);
+		Tile tileDestination = this.CampTurn.ai.MovementTo(this.CampTurn.TeamPlayers[0].GetOccupiedTile(), roll);
+		this.CampTurn.TeamPlayers[0].gameObject.transform.position = tileDestination.gameObject.transform.position + Player.POSITION_OFFSET;
+		this.NextTurn();
+	}
+
+	/**
      * Simulates the end of the current turn and sets Board::PlayerTurn to the "next" player accordingly.
+     * Also handles the AI Player's turn instantaneously and then passes over to the next player's turn.
      */
     public void NextTurn()
     {
@@ -420,16 +446,12 @@ public class Board : MonoBehaviour
         }
         if (++campId >= this.Camps.Length)
             campId = 0;
-        Debug.Log("campId = " + campId);
         this.CampTurn = this.Camps[campId];
         if(this.CampTurn.isAI())
         {
-            Debug.Log("the ai shall move.");
             Tile previousLocation = this.CampTurn.TeamPlayers[0].GetOccupiedTile();
-            Tile tileDestination = this.CampTurn.ai.MovementTo(this.CampTurn.TeamPlayers[0].GetOccupiedTile(), 2);
-            this.CampTurn.TeamPlayers[0].gameObject.transform.position = tileDestination.gameObject.transform.position + Player.POSITION_OFFSET;
-            Debug.Log("i want from " + previousLocation + " to " + tileDestination);
-            this.NextTurn();
+			this.GetDice.Roll(this.CampTurn.TeamPlayers[0].gameObject.transform.position);
+			StartCoroutine(DelayAIMove(2, previousLocation));
         }
     }
 

@@ -49,7 +49,6 @@ public class DecisionTree : MonoBehaviour
 
     public int Movement(int index, int moves)
     {
-        Debug.Log("Start movement!");
         //go to (x, y, z)
         Vector2 endPosition = new Vector2();
         Vector2 startPosition = new Vector2();
@@ -109,7 +108,7 @@ public class DecisionTree : MonoBehaviour
             //Debug.Log("x position = " + current.x + "  y position = " + current.y);  //use to debug
 
             visited.Add(current.Getposition());  // add the current to the visited list
-            Debug.Log("Visited: " + current.Getposition().x + ", " + current.Getposition().y);
+            //Debug.Log("Visited: " + current.Getposition().x + ", " + current.Getposition().y);
             moves = tempMoves - maxDepth;
 
             for (int i = 0; i < 4; ++i)
@@ -118,7 +117,7 @@ public class DecisionTree : MonoBehaviour
 
                 tem.x = (current.Getposition().x) + dir[i, 0]; //search the neighbour node 
                 tem.y = (current.Getposition().y) + dir[i, 1];
-                Debug.Log("i = " + i + "; Temp Neighbor Position: " + tem.x + ", " + tem.y);
+                //Debug.Log("i = " + i + "; Temp Neighbor Position: " + tem.x + ", " + tem.y);
 
                 neighbour.SetPosition(tem);
                 neighbour.SetDepth(0);
@@ -126,7 +125,7 @@ public class DecisionTree : MonoBehaviour
                 //neighbour.x = current.x+dir[i,0]; //search the neighbour node 
                 //neighbour.y = current.y+dir[i,1];
 
-                Debug.Log("Rest moves: " + moves + "  Max depth: " + maxDepth + "  Current Position: " + current.Getposition().x + ", " + current.Getposition().y);
+                //Debug.Log("Rest moves: " + moves + "  Max depth: " + maxDepth + "  Current Position: " + current.Getposition().x + ", " + current.Getposition().y);
 
                 if ((isvalid(neighbour.Getposition())) && !visited.Contains(neighbour.Getposition()))
                 {
@@ -138,7 +137,7 @@ public class DecisionTree : MonoBehaviour
                             if (!path.Contains(current.Getposition()))
                             {
                                 path.Add(current.Getposition());
-                                Debug.Log("I meet the obstacle oh so sad!");
+                                //Debug.Log("I meet the obstacle oh so sad!");
                             }
                             continue;
                         }
@@ -152,7 +151,7 @@ public class DecisionTree : MonoBehaviour
                         }
                         else
                         {
-                            Debug.Log("moves less than 0!!!!");
+                            //Debug.Log("moves less than 0!!!!");
                         }
                     }
                     if (tempMoves - current.depth == 1)
@@ -165,10 +164,10 @@ public class DecisionTree : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("Neighbour: " + neighbour.depth);
+                        //Debug.Log("Neighbour: " + neighbour.depth);
                         neighbour.SetDepth(current.depth + 1);
                         //maxDepth = neighbour.depth;
-                        Debug.Log("After setting Neighbour: " + neighbour.depth);
+                        //Debug.Log("After setting Neighbour: " + neighbour.depth);
                         waitList.Enqueue(neighbour);  //join the neighbour to the waitList to wait for next search
                     }
                 }
@@ -236,14 +235,14 @@ public class DecisionTree : MonoBehaviour
 
                 if (neighbour.Getposition() == goalposition)
                 {
-                    Debug.Log("We found the goal! distance: " + neighbour.depth);
-                    Debug.Log(startPosition);
+                    //Debug.Log("We found the goal! distance: " + neighbour.depth);
+                    //Debug.Log(startPosition);
                     return neighbour.depth; // when we found the goal
                 }
             }
 
         }
-        Debug.Log("we can't find the goal!!!!!!");
+        //Debug.Log("we can't find the goal!!!!!!");
         return -1;
 
     }
@@ -259,17 +258,17 @@ public class DecisionTree : MonoBehaviour
 
         for (int i = 0; i < path.Count; i++)
         {
-            Debug.Log(path.Count);
+            //Debug.Log(path.Count);
             tmpPosition = path[i];
             distence_to_goal = BFS_Assese_Value(tmpPosition);
-            Debug.Log("Distence to the goal: " + distence_to_goal);
+            //Debug.Log("Distence to the goal: " + distence_to_goal);
 
             score = distence_to_goal;
-            Debug.Log("Score: " + score);
+            //Debug.Log("Score: " + score);
 
             if (distence_to_goal == -1)
             {
-                Debug.Log("error in calculating distence!!!!!!");
+                //Debug.Log("error in calculating distence!!!!!!");
                 score = 0;
             }
 
@@ -403,11 +402,5 @@ public class DecisionTree : MonoBehaviour
         }
         else
             return false;
-    }
-
-    // we pass in [0,0] and [-1, 0] returns [0, 1 in tile space]
-    public static Vector2 TreeToTile(Vector2 nodeTileSpace, Vector2 treeSpace)
-    {
-        return new Vector2(-treeSpace.y, -treeSpace.x);
     }
 }

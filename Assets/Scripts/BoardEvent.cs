@@ -48,7 +48,15 @@ public class BoardEvent
 		this.HandleTakeovers(player);
 		// Disable the dice so the same roll cannot be used twice.
 		this.parent.GetDice.gameObject.SetActive(false);
-        player.GetCamp().GetParent().NextTurn();
+	}
+
+	/**
+	 * Same as BoardEvent::OnPlayerMove(Player, Vector3)
+	 * See above.
+	 */
+	public void OnPlayerMove(Player player, Tile desiredTile)
+	{
+		this.OnPlayerMove(player, desiredTile.gameObject.transform.position);
 	}
 
     /**
@@ -102,14 +110,5 @@ public class BoardEvent
 					enemy.transform.position = camp.GetOccupiedTile().gameObject.transform.position + Player.POSITION_OFFSET;
 				}
 		}
-	}
-
-	/**
-	 * Same as BoardEvent::OnPlayerMove(Player, Vector3)
-	 * See above.
-	 */
-	public void OnPlayerMove(Player player, Tile desiredTile)
-	{
-		this.OnPlayerMove(player, desiredTile.gameObject.transform.position);
 	}
 }
