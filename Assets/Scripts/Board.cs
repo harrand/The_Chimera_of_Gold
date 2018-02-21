@@ -91,7 +91,10 @@ public class Board : MonoBehaviour
                     color = Color.magenta;
                     break;
             }
-            board.Camps[i] = Camp.Create(board, board.Tiles[i], color);
+            if (i == (board.numberCamps - 1))
+                board.Camps[i] = Camp.CreateAICamp(board, board.Tiles[i], color);
+            else
+                board.Camps[i] = Camp.Create(board, board.Tiles[i], color);
         }
 		board.Obstacles = new Obstacle[board.numberObstacles];
 		for (uint i = 0; i < board.numberObstacles; i++)
@@ -400,19 +403,34 @@ public class Board : MonoBehaviour
      */
     public void NextTurn()
     {
-
         this.obstacleControlFlag = false;
-		int campId = -1, playerId = -1;
-		// Set campId and playerId to the corresponding indices for the current Player
-        for(uint campCounter = 0; campCounter < this.Camps.Length; campCounter++)
+        int campId = -1;
+        // Set campId and playerId to the corresponding indices for the current Player
+        for (int campCounter = 0; campCounter < this.Camps.Length; campCounter++)
+        {
+            if (this.CampTurn == this.Camps[campCounter])
+            {
+                campId = campCounter;
+            }
+        }
+        if(campId == -1)
         {
             Debug.Log("NextTurn failed -- CampTurn is not a valid reference to a Board camp.");
             return;
         }
         if (++campId >= this.Camps.Length)
             campId = 0;
+        Debug.Log("campId = " + campId);
         this.CampTurn = this.Camps[campId];
-
+        if(this.CampTurn.isAI())
+        {
+            Debug.Log("the ai shall move.");
+            Tile previousLocation = this.CampTurn.TeamPlayers[0].GetOccupiedTile();
+            Tile tileDestination = this.CampTurn.ai.MovementTo(this.CampTurn.TeamPlayers[0].GetOccupiedTile(), 2);
+            this.CampTurn.TeamPlayers[0].gameObject.transform.position = tileDestination.gameObject.transform.position + Player.POSITION_OFFSET;
+            Debug.Log("i want from " + previousLocation + " to " + tileDestination);
+            this.NextTurn();
+        }
     }
 
     public void HighlightTiles(Color color)

@@ -61,7 +61,7 @@ public class Tile : MonoBehaviour
     /**
     * Returns true if there is an occupant and it is an Obstacle.
     */
-	private bool BlockedByObstacle()
+	public bool BlockedByObstacle()
 	{
 		foreach(Obstacle obst in this.parent.Obstacles)
 			if(obst.GetOccupiedTile() == this)

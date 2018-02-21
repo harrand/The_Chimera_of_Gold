@@ -16,6 +16,11 @@ public class BoardEvent
 	 */
 	public void OnPlayerMove(Player player, Vector3 moveTarget)
 	{
+        if(player.GetCamp().GetParent().CampTurn != player.GetCamp())
+        {
+            Debug.Log("fuck off its not your turn");
+            return;
+        }
         if (player == null)
             return;
 		if(player.transform.position == moveTarget)
@@ -43,6 +48,7 @@ public class BoardEvent
 		this.HandleTakeovers(player);
 		// Disable the dice so the same roll cannot be used twice.
 		this.parent.GetDice.gameObject.SetActive(false);
+        player.GetCamp().GetParent().NextTurn();
 	}
 
     /**
