@@ -12,8 +12,9 @@ public class Dice : NetworkBehaviour
         diceObject.transform.position = position;
         diceObject.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
         diceObject.transform.localScale = scale;
-        diceObject.AddComponent<NetworkIdentity>();
-        diceObject.AddComponent<NetworkTransform>();
+        NetworkServer.Spawn(dice.gameObject);
+        //diceObject.AddComponent<NetworkIdentity>();
+        //diceObject.AddComponent<NetworkTransform>();
         return dice;
     }
 

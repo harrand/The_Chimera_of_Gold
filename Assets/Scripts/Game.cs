@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Networking;
 /**
 * Game shall contain static functions and constant expressions such as:
 * default board size
 * default number of camps per board
 * default number of players per camp
 */
-public class Game : MonoBehaviour
+public class Game : NetworkBehaviour
 {
     public const uint NUMBER_OBSTACLES = 13;
     public const uint NUMBER_CAMPS = 5;
     public const uint PLAYERS_PER_CAMP = 5;
+    public int currentPlayer = 1;
 
     // These are edited in Unity Component settings; 5 is just the default.
 	public uint tileWidth = 5, tileHeight = 5;
@@ -32,16 +33,20 @@ public class Game : MonoBehaviour
 		// Create a normal Board with Input attached. Both Board and InputController are attached to the root GameObject (this).
 		this.board = Board.Create(this.gameObject, tileWidth, tileHeight);
 		this.board.gameObject.AddComponent<InputController>();   
-        
+        /*if(isServer)
+        {
+            NetworkServer.Spawn(this.board.gameObject);
+        }*/
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown("r"))
+        if (Input.GetKeyDown("r"))
         {
             this.board.GetDice.Roll();
         }
     }
+    
 
     void OnDestroy()
 	{

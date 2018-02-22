@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 * Player contains all the data and functionality for a Pawn in the Chimera of Gold.
 * @author Harry Hollands, Ciara O'Brien, Aswin Mathew
 */
-public class Player : NetworkBehaviour 
+public class Player :  NetworkBehaviour
 
 {
 	public static Vector3 POSITION_OFFSET = new Vector3(0, 3, 0);
@@ -26,9 +26,7 @@ public class Player : NetworkBehaviour
         Player playerScript = playerObject.AddComponent<Player>();
         playerScript.parent = parent;
 		playerObject.transform.position = tilePosition.gameObject.transform.position + Player.POSITION_OFFSET;
-        playerScript.gameObject.AddComponent<NetworkIdentity>();
-        playerScript.gameObject.AddComponent<NetworkTransform>();
-        //playerScript.gameObject.GetComponent<NetworkIdentity>()
+        
         return playerScript;
     }
 

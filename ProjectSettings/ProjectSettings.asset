@@ -646,9 +646,9 @@ PlayerSettings:
     UNet: 1
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
-  cloudProjectId: beac4c28-3977-49f4-b959-25867469120b
+  cloudProjectId: aef1c29a-8e22-401f-a96c-27ec10d9407d
   projectName: Chimera of Gold
-  organizationId: harrandev
+  organizationId: quirkyqw3rty
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 /**
 * Board is a container for Camps (and their respective Players), all Tiles and Obstacles. Also handles turns, tile-highlighting and game rule enforcement.
 * @author Harry Hollands, Ciara O'Brien, Aswin Mathew
 */
-public class Board : MonoBehaviour
+public class Board : NetworkBehaviour
 {
     /// width and height use number of Tiles as units.
     private uint numberCamps, numberObstacles;
