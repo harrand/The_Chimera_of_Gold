@@ -3,13 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+/**
+* Player contains all the data and functionality for a Pawn in the Chimera of Gold.
+* @author Harry Hollands, Ciara O'Brien, Aswin Mathew
+*/
 public class Player : NetworkBehaviour 
+
 {
 	public static Vector3 POSITION_OFFSET = new Vector3(0, 3, 0);
 	private Board parent;
-    
+
     /**
      * Pseudo-constructor which uses the Prefabs/Player prefab in the project tree.
+     * @author Harry Hollands
+     * @param parent - Reference to the parent Board.
+     * @param tilePosition - Reference to the Tile to create the Player unto.
+     * @return - Reference to the Player created.
      */
     public static Player Create(Board parent, Tile tilePosition)
     {
@@ -25,6 +34,8 @@ public class Player : NetworkBehaviour
 
     /**
     * Returns a reference to the Camp which holds this Player.
+    * @author Harry Hollands
+    * @return - Reference to the parent Camp.
     */
     public Camp GetCamp()
 	{
@@ -39,6 +50,7 @@ public class Player : NetworkBehaviour
 
     /**
      * Destroys the player's gameobject, effectively removing it.
+     * @author Harry Hollands
      */
     public void Kill()
     {
@@ -47,6 +59,8 @@ public class Player : NetworkBehaviour
 
     /**
     * Returns the Tile that the player is sitting upon.
+    * @author Harry Hollands
+    * @return - Reference to the Tile on which this Player rests.
     */
     public Tile GetOccupiedTile()
     {
@@ -57,6 +71,10 @@ public class Player : NetworkBehaviour
         return null;
     }
 
+    /**
+    * @author Harry Hollands
+    * @return - True if the Player is currently controlling an Obstacle, else false.
+    */
     public bool HasControlledObstacle()
     {
         return this.GetControlledObstacle() != null;
@@ -64,7 +82,8 @@ public class Player : NetworkBehaviour
 
     /**
     * Returns the obstacle that this player is standing on and therefore would be controlling.
-    * Returns null if there is no such obstacle.
+    * @author Harry Hollands
+    * @return - Reference to the Obstacle that the player is controlling, or null if there is no such obstacle.
     */
     public Obstacle GetControlledObstacle()
     {
