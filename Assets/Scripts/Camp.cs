@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Camp : MonoBehaviour
+public class Camp : NetworkBehaviour
 {
     private Board parent;
     private Tile tile;

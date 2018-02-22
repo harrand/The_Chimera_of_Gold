@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/StartMenu.unity
     guid: 8ebc377744eb80a44916b480b49f23b7
+  - enabled: 1
+    path: Assets/Lobby.unity
+    guid: 17f1371ce397f6a41a1be8f4e390510c
   - enabled: 1
     path: Assets/Chimera.unity
     guid: 57b9cc6657d4ca6448e61a2ba15da929

@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System;
+using UnityEngine.Networking;
 
 // Harry and Ciara 12/02/2018
-public class Dice : MonoBehaviour
+public class Dice : NetworkBehaviour
 {
     public static Dice Create(Vector3 position, Vector3 rotation, Vector3 scale)
     {
@@ -11,6 +12,8 @@ public class Dice : MonoBehaviour
         diceObject.transform.position = position;
         diceObject.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
         diceObject.transform.localScale = scale;
+        diceObject.AddComponent<NetworkIdentity>();
+        diceObject.AddComponent<NetworkTransform>();
         return dice;
     }
 

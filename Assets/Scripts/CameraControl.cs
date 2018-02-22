@@ -121,8 +121,8 @@ public class CameraControl : MonoBehaviour
         Vector3 negativeDist = new Vector3(0f, 0f, -distance);
         Vector3 position = currentTarget.position + (rotation * negativeDist);
             
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 0.5f);
-        transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * 0.5f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 3.0f);
+        transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * 1.5f);
         
     }
     // Update is called once per frame

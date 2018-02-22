@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Player : MonoBehaviour 
+public class Player : NetworkBehaviour 
 {
 	public static Vector3 POSITION_OFFSET = new Vector3(0, 3, 0);
 	private Board parent;
@@ -16,6 +17,9 @@ public class Player : MonoBehaviour
         Player playerScript = playerObject.AddComponent<Player>();
         playerScript.parent = parent;
 		playerObject.transform.position = tilePosition.gameObject.transform.position + Player.POSITION_OFFSET;
+        playerScript.gameObject.AddComponent<NetworkIdentity>();
+        playerScript.gameObject.AddComponent<NetworkTransform>();
+        //playerScript.gameObject.GetComponent<NetworkIdentity>()
         return playerScript;
     }
 
