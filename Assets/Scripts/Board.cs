@@ -5,16 +5,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /**
-* The Board class acts like a flat 2D board in the 3D world.
-* Board.cs applies to a GameObject with the following effects:
-* Width (in number of Tiles) = GameObject.Scale.X
-* Height (in number of Tiles) = GameObject.Scale.Y
+* Board is a container for Camps (and their respective Players), all Tiles and Obstacles. Also handles turns, tile-highlighting and game rule enforcement.
+* @author Harry Hollands, Ciara O'Brien, Aswin Mathew
 */
 public class Board : MonoBehaviour
 {
-    /**
-    * width and height use number of Tiles as units.
-    */
+    /// width and height use number of Tiles as units.
     private uint numberCamps, numberObstacles;
     private float width, height;
     public bool obstacleControlFlag;
@@ -28,8 +24,13 @@ public class Board : MonoBehaviour
 
 
     /**
-    * This is to be used to create a new Board when the root GameObject does have a terrain component (interpolating instead of taking dimensions as parameters).
-    * This is currently used for the main game board.
+    * This is to be used to create a new Board when the root GameObject has a terrain component (interpolating instead of taking dimensions as parameters).
+    * This is currently used for the main game board. However, it is not used for the Board unit test.
+    * @author Harry Hollands
+    * @param root - GameObject which the Board should be attached to.
+    * @param tilesWidth - Number of Tiles per row.
+    * @param tilesHeight - Number of Tiles per column.
+    * @return - Reference to the Board created.
     */
     public static Board Create(GameObject root, uint tilesWidth, uint tilesHeight)
 	{
@@ -42,7 +43,6 @@ public class Board : MonoBehaviour
         root.name += " (Board)";
         board.GetDice = Dice.Create(board.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1));
 		board.Event = new BoardEvent(board);
-		//root.transform.localScale = new Vector3(width, 1, height);
 		board.GetWidthInTiles = Convert.ToUInt32(tilesWidth);
 		board.GetHeightInTiles = Convert.ToUInt32(tilesHeight);
 
@@ -51,6 +51,7 @@ public class Board : MonoBehaviour
 		// The reason Board::Awake() cannot have this code block is because that will execute directly after "root.AddComponent<Board>()" which means before board.GetWidthInTiles is assigned.
 		// Thus, the initialisation code MUST happen right here, despite being ugly.
 
+        /// Allocate and assign Tiles (before culling).
 		board.Tiles = new Tile[board.GetWidthInTiles * board.GetHeightInTiles];
 		for(uint i = 0; i < board.Tiles.Length; i++)
 		{
@@ -65,10 +66,11 @@ public class Board : MonoBehaviour
 			tileObject.name = "Tile " + (i + 1);
 		}
         board.Cull();
-        //board.GetGoalTile().gameObject.GetComponent<Renderer>().material.color = Color.yellow / 1.2f;
+        /// Hardcode these; design changes did not allow these to vary.
         board.numberCamps = 5;
 		board.numberObstacles = 13;
 
+        /// Allocate and assign Camps.
 		board.Camps = new Camp[board.numberCamps];
         for (uint i = 0; i < board.numberCamps; i++)
         {
@@ -93,6 +95,7 @@ public class Board : MonoBehaviour
             }
             board.Camps[i] = Camp.Create(board, board.Tiles[i], color);
         }
+        /// Allocate and assign Obstacles.
 		board.Obstacles = new Obstacle[board.numberObstacles];
 		for (uint i = 0; i < board.numberObstacles; i++)
 			board.Obstacles[i] = Obstacle.Create(board, board.Tiles[i + 30]);
@@ -101,9 +104,16 @@ public class Board : MonoBehaviour
 
     /**
     * This is to be used to create a new Board when the root GameObject has no terrain component (taking dimensions as parameters instead of interpolating).
-    * This is currently used for TestBoard.
+    * This is currently used for TestBoard (The unit test for this class).
+    * @author Harry Hollands
+    * @param root - GameObject which the Board should be attached to.
+    * @param width - Geometric width of the Board.
+    * @param height - Geometric height of the Board.
+    * @param tilesWidth - Number of Tiles per row.
+    * @param tilesHeight - Number of Tiles per column.
+    * @return - Reference to the Board created.
     */
-	public static Board CreateNoTerrain(GameObject root, float width, float height, uint tilesWidth, uint tilesHeight)
+    public static Board CreateNoTerrain(GameObject root, float width, float height, uint tilesWidth, uint tilesHeight)
 	{
 		if(tilesWidth < 5 && tilesHeight < 5 && (tilesWidth * tilesHeight) < 13)
 		{
@@ -165,6 +175,11 @@ public class Board : MonoBehaviour
 		return board;
 	}
 
+    /**
+     * Get the Tile prefab's material.
+     * @author Harry Hollands
+     * @return - Reference to the Tile prefab's material.
+     */
     public Material TileMaterial()
     {
         GameObject temp = Instantiate(Resources.Load("Prefabs/Tile")) as GameObject;
@@ -173,19 +188,25 @@ public class Board : MonoBehaviour
         return defaultMaterial;
     }
 
+    /**
+     * @author ?
+     */
 	void Start()
     {
         this.UICanvas = (Instantiate(Resources.Load("Prefabs/ButtonCanvas")) as GameObject).GetComponent<Canvas>();
         this.EndTurnButton = this.UICanvas.GetComponentInChildren<Button>();
         this.EndTurnButton.GetComponentInChildren<Text>().text = "End Turn";
         Vector3 buttonPosition = this.EndTurnButton.transform.position;
-        // Offset y-position of the button by a fourth of the screen width, so the button is 3/4 down the screen.
+        /// Offset y-position of the button by a fourth of the screen width, so the button is 3/4 down the screen.
         buttonPosition.y -= Screen.height / 4.0f;
         this.EndTurnButton.transform.position = buttonPosition;
         this.EndTurnButton.onClick.AddListener(NextTurn);
         this.ResetTurns();
     }
 
+    /**
+    * If CampTurn is somehow broken and null (or at the beginning of the game), reset the turns.
+    */
     void Update()
     {
         if (this.CampTurn == null)
@@ -194,6 +215,8 @@ public class Board : MonoBehaviour
 
     /**
     * Returns the Goal Tile, which will be the tile with the greatest y-coordinate (as it is at the top of the mountain).
+    * @author Harry Hollands, Ciara O'Brien
+    * @return - Reference to the goal Tile.
     */
     public Tile GetGoalTile()
     {
@@ -205,12 +228,16 @@ public class Board : MonoBehaviour
         }
         return max;
     }
+
     /**
-     *@Author Aswin
      * Checks which tiles should be spwaned on the terrain to form the board.
      * x and y are the tile coordinates in a 2D plane. Currently taken from their tileSpace
+     * @author Aswin Mathew
+     * @param x - x-coordinate of the theoretical Tile.
+     * @param y - y-coordinate of the theoretical Tile.
+     * @return - boolean which returns whether the theoretical Tile should exist on the game board or not.
      */
-    private bool checkTile(float x, float y)
+    private bool CheckTile(float x, float y)
     {
         if (y == 0)
         {
@@ -316,19 +343,18 @@ public class Board : MonoBehaviour
     }
     /**
      * This removes all of the Tiles that do not actually belong to the game board. 
-     * This transforms a grid of Tiles to the actual Chimera of Gold game board. Well, it will when it is fully implemented. -Harry
-     * 
-     * A thousand curses on your head for leaving this to me -Aswin
-     * Update - Board is now built and empty tiles are set transparent 
+     * This transforms a grid of Tiles to the actual Chimera of Gold game board. Well, it will when it is fully implemented.
+     * @author Aswin Mathew
      */
     public void Cull()
     {
+        /// Packs the Board::Tiles array into the new gameTiles array.
         Tile[] gameTiles = new Tile[146];
 		Tile goalTile = null;
         int j = 0;
-        for (int i = 0; i < 420; i++)
+        for (int i = 0; i < this.Tiles.Length; i++)
         {
-            if (checkTile(this.Tiles[i].PositionTileSpace.x, this.Tiles[i].PositionTileSpace.y))
+            if (CheckTile(this.Tiles[i].PositionTileSpace.x, this.Tiles[i].PositionTileSpace.y))
             {
                 gameTiles[j] = this.Tiles[i];
                 j++;
@@ -342,7 +368,6 @@ public class Board : MonoBehaviour
         foreach (Tile t in Tiles)
         {
             if (t != null)
-                //t.GetComponent<Renderer>().material.color = new Color(0, 0, 0, 0);
                 t.gameObject.SetActive(false);
         }
         foreach (Tile t in gameTiles)
@@ -358,7 +383,10 @@ public class Board : MonoBehaviour
     }
 
     /**
-     * Given a Vector2 representing tile-space, returns a Tile if it shares the exact position, or null if no tiles share such position.
+     * Gets the Tile at a specific Vector2 position. Returns null if there is no such Tile.
+     * @author Harry Hollands
+     * @param positionTileSpace - The position of the desired Tile.
+     * @return - Reference to the Tile at the position given.
      */
     public Tile GetTileByTileSpace(Vector2 positionTileSpace)
     {
@@ -369,15 +397,18 @@ public class Board : MonoBehaviour
     }
 
     /**
-    * Returns true if the tile has an obstacle ontop of it.
+    * Returns true if the Tile has an obstacle ontop of it.
+    * @author Harry Hollands
+    * @param tile - Reference to the Tile which need be checked for an Obstacle.
+    * @return - True if the Tile has an Obstacle on it, else false.
     */
-    public bool TileOccupiedByObstacle(Tile t)
+    public bool TileOccupiedByObstacle(Tile tile)
     {
-        return this.TileOccupiedByObstacle(t.PositionTileSpace);
+        return this.TileOccupiedByObstacle(tile.PositionTileSpace);
     }
 
     /**
-     * Returns true if the tilePosition contains an obstacle.
+     * See Board::TileOccupiedByObstacle.
      */
     public bool TileOccupiedByObstacle(Vector2 tilePosition)
     {
@@ -389,6 +420,7 @@ public class Board : MonoBehaviour
 
     /**
      * Resets the... well... turns.
+     * @author Harry Hollands
      */
     public void ResetTurns()
     {
@@ -415,6 +447,11 @@ public class Board : MonoBehaviour
 
     }
 
+    /**
+    * Highlights the Tiles with the given colour.
+    * @author Harry Hollands, Ciara O'Brien
+    * @param color - Color of which to highlight all the active Board Tiles.
+    */
     public void HighlightTiles(Color color)
     {
         foreach (Tile tile in this.Tiles)
@@ -422,6 +459,10 @@ public class Board : MonoBehaviour
             tile.GetComponent<Renderer>().material.color = color;
     }
 
+    /**
+    * Sets the materials of all the Tiles to be equal to the Tile prefab's material.
+    * @author Harry Hollands, Ciara O'Brien
+    */
     public void RemoveTileHighlights()
     {
         foreach (Tile tile in this.Tiles)
@@ -429,10 +470,8 @@ public class Board : MonoBehaviour
 			tile.GetComponent<Renderer>().material = this.TileMaterial();
     }
 
-	/**
-	 * Getters for width and height (in units of Tiles and pixels respectively)
-	 */
-	public uint GetWidthInTiles{get; private set;}
+	/// Getters for width and height (in units of Tiles and pixels respectively)
+    public uint GetWidthInTiles{get; private set;}
 	public uint GetHeightInTiles{get; private set;}
 	public float GetWidthInPixels{get{return this.GetWidthInTiles * Board.ExpectedTileSize(this.gameObject, this.GetWidthInTiles, this.GetHeightInTiles).x;}}
 	public float GetHeightInPixels{get{return this.GetHeightInTiles * Board.ExpectedTileSize(this.gameObject, this.GetWidthInTiles, this.GetHeightInTiles).y;}}
@@ -441,8 +480,12 @@ public class Board : MonoBehaviour
     /**
     * Uses the dimensions of the GameObject root parameter and the number of tiles to discern the size that each tile should be.
     * Note: Game.MinWorldSpace and Game.MaxWorldSpace require a Terrain component. Thus, invoking ExpectedTileSize with a root GameObject with no Terrain component WILL throw.
+    * @author Harry Hollands
+    * @param root - Reference to the GameObject of the root object (i.e the terrain).
+    * @param widthTiles - Number of Tiles per row.
+    * @param heightTiles - Number of Tiles per column.
     */
-	public static Vector2 ExpectedTileSize(GameObject root, float widthTiles, float heightTiles)
+    public static Vector2 ExpectedTileSize(GameObject root, float widthTiles, float heightTiles)
 	{
 		Vector3 min = Game.MinWorldSpace(root), max = Game.MaxWorldSpace(root);
 		float deltaX = max.x - min.x, deltaZ = max.z - min.z;
