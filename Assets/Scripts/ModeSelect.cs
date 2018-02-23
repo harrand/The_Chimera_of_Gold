@@ -11,7 +11,7 @@ public class ModeSelect : MonoBehaviour {
     public Button online;
 
     /**
-     *Method to go back to main menu when back button is clicked
+     * Method to go back to main menu when back button is clicked
      * @author Lawrence Howes-Yarlett
      */
     public void BackToStartPress()
@@ -20,16 +20,16 @@ public class ModeSelect : MonoBehaviour {
     }
 
     /**
-     *Method to go to the offline game set up scene
+     * Method to go to the offline game set up scene
      * @author Lawrence Howes-Yarlett
      */
     public void OfflinePress()
     {
-        //SceneManager.LoadScene(//offline setup scene index);
+        SceneManager.LoadScene(2);
     }
 
     /**
-     *Method to go to the online game set up scene
+     * Method to go to the online game set up scene
      * @author Lawrence Howes-Yarlett
      */
     public void OnlinePress()

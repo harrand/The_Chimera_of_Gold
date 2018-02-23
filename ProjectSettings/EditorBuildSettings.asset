@@ -12,5 +12,8 @@ EditorBuildSettings:
     path: Assets/GameModeSelect.unity
     guid: 172f51ca2ef73f04bae341d0deae1202
   - enabled: 1
+    path: Assets/OfflineMenu.unity
+    guid: b1c5a413500c5ca448c4e44724820768
+  - enabled: 1
     path: Assets/Chimera.unity
     guid: 57b9cc6657d4ca6448e61a2ba15da929
