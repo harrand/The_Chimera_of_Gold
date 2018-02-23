@@ -73,4 +73,9 @@ public class Game : MonoBehaviour
 	{
 		return gameObject.GetComponent<Terrain>().SampleHeight(positionWorldSpace);
 	}
+
+    public void BoardNextTurn()
+    {
+        this.board.NextTurn();
+    }
 }

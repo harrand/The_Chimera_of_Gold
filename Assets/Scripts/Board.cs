@@ -23,8 +23,6 @@ public class Board : MonoBehaviour
 	public Camp[] Camps { get; private set; }
     public Dice GetDice { get; private set; }
 	public BoardEvent Event{ get; private set; }
-    public Canvas UICanvas { get; private set; }
-    public Button EndTurnButton { get; private set; }
 
 
     /**
@@ -92,6 +90,7 @@ public class Board : MonoBehaviour
                     break;
             }
             board.Camps[i] = Camp.Create(board, board.Tiles[i], color);
+            board.ResetTurns();
         }
 		board.Obstacles = new Obstacle[board.numberObstacles];
 		for (uint i = 0; i < board.numberObstacles; i++)
@@ -175,20 +174,12 @@ public class Board : MonoBehaviour
 
 	void Start()
     {
-        this.UICanvas = (Instantiate(Resources.Load("Prefabs/ButtonCanvas")) as GameObject).GetComponent<Canvas>();
-        this.EndTurnButton = this.UICanvas.GetComponentInChildren<Button>();
-        this.EndTurnButton.GetComponentInChildren<Text>().text = "End Turn";
-        Vector3 buttonPosition = this.EndTurnButton.transform.position;
-        // Offset y-position of the button by a fourth of the screen width, so the button is 3/4 down the screen.
-        buttonPosition.y -= Screen.height / 4.0f;
-        this.EndTurnButton.transform.position = buttonPosition;
-        this.EndTurnButton.onClick.AddListener(NextTurn);
-        this.ResetTurns();
+
     }
 
     void Update()
     {
-        if (this.CampTurn == null)
+        if (this.CampTurn == null && this.Camps != null)
             this.ResetTurns();
     }
 
@@ -412,7 +403,6 @@ public class Board : MonoBehaviour
         if (++campId >= this.Camps.Length)
             campId = 0;
         this.CampTurn = this.Camps[campId];
-
     }
 
     public void HighlightTiles(Color color)
