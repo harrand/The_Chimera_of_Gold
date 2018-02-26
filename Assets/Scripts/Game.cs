@@ -78,4 +78,9 @@ public class Game : NetworkBehaviour
 	{
 		return gameObject.GetComponent<Terrain>().SampleHeight(positionWorldSpace);
 	}
+
+    public void BoardNextTurn()
+    {
+        this.board.NextTurn();
+    }
 }
