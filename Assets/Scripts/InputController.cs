@@ -17,6 +17,7 @@ public class InputController : MonoBehaviour
      * Decides what to focus the camera on. Basically last clicked object
      */
     public int CurrentSelected { get; private set; }
+
     /**
     * SelectedX represents the Player/Obstacle which should be able to move.
     */
@@ -25,6 +26,7 @@ public class InputController : MonoBehaviour
 
 	void Start ()
     {
+        CurrentSelected = 0;
         this.boardScript = this.GetComponent<Board>();
 		this.LastClickedTile = null;
 		this.LastClickedPlayer = null;

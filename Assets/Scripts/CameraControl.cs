@@ -55,7 +55,11 @@ public class CameraControl : MonoBehaviour
 			return null;
 		}
         //Searchs for the board, and checks what was clicked last. Then puts it into current
-        if (GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 1)
+        if(GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 0)
+        {
+            current = Ethan.transform;
+        }
+        else if (GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 1)
         {
             current = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().LastClickedTile.transform;
             tileSel = true;

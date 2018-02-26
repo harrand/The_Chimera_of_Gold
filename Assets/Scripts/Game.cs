@@ -41,10 +41,14 @@ public class Game : NetworkBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown("r"))
+        //Debug.Log(isLocalPlayer);
+        if (Input.GetKeyDown("r") && this.board.GetComponent<InputController>().CurrentSelected > 0)
         {
-            this.board.GetDice.Cmd_Roll();
+            Player p = this.board.GetComponent<InputController>().LastClickedPlayer;
             
+            p.GetComponent<NetworkIdentity>().AssignClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
+            this.board.GetDice.Cmd_Roll();
+            p.GetComponent<NetworkIdentity>().RemoveClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
         }
     }
     

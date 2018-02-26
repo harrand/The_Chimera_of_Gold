@@ -5,21 +5,29 @@ using UnityEngine.Networking;
 // Harry and Ciara 12/02/2018
 public class Dice : NetworkBehaviour
 {
-    [SyncVar]private static new GameObject gameObject;
-    [Command]
-    public static Dice CmdCreate(Vector3 position, Vector3 rotation, Vector3 scale)
+    [SyncVar]private new GameObject gameObject;
+    
+    public static Dice Create(Vector3 position, Vector3 rotation, Vector3 scale)
     {
-        GameObject diceObject = Instantiate(Resources.Load("Prefabs/Dice") as GameObject);
+        GameObject diceObject = (GameObject)Instantiate(Resources.Load("Prefabs/Dice"));
         Dice dice = diceObject.AddComponent<Dice>();
         diceObject.transform.position = position;
         diceObject.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
         diceObject.transform.localScale = scale;
-        NetworkServer.Spawn(diceObject);
+        
         //diceObject.AddComponent<NetworkIdentity>();
         //diceObject.AddComponent<NetworkTransform>();
         return dice;
     }
 
+    [Command]
+    public void CmdMakeMeADiceYouFuckingCunt()
+    {
+  
+        GameObject diceObject = this.gameObject;
+       
+        NetworkServer.SpawnWithClientAuthority(this.gameObject, connectionToClient);
+    }
     /**
      * Teleports the dice object to the main camera position and applies a random rotation, essentially simulating a literal throw of the die.
      * Velocity of the dice object is also reset incase it was going super fast beforehand.
