@@ -42,7 +42,7 @@ public class Board : NetworkBehaviour
 		Board board = root.AddComponent<Board>();
         root.tag = "GameBoard";
         root.name += " (Board)";
-        board.GetDice = Dice.Create(board.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1));
+        board.GetDice = Dice.CmdCreate(board.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1));
 		board.Event = new BoardEvent(board);
 		board.GetWidthInTiles = Convert.ToUInt32(tilesWidth);
 		board.GetHeightInTiles = Convert.ToUInt32(tilesHeight);

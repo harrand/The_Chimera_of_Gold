@@ -5,14 +5,16 @@ using UnityEngine.Networking;
 // Harry and Ciara 12/02/2018
 public class Dice : NetworkBehaviour
 {
-    public static Dice Create(Vector3 position, Vector3 rotation, Vector3 scale)
+    [SyncVar]private static new GameObject gameObject;
+    [Command]
+    public static Dice CmdCreate(Vector3 position, Vector3 rotation, Vector3 scale)
     {
         GameObject diceObject = Instantiate(Resources.Load("Prefabs/Dice") as GameObject);
         Dice dice = diceObject.AddComponent<Dice>();
         diceObject.transform.position = position;
         diceObject.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
         diceObject.transform.localScale = scale;
-        NetworkServer.Spawn(dice.gameObject);
+        NetworkServer.Spawn(diceObject);
         //diceObject.AddComponent<NetworkIdentity>();
         //diceObject.AddComponent<NetworkTransform>();
         return dice;
@@ -22,13 +24,14 @@ public class Dice : NetworkBehaviour
      * Teleports the dice object to the main camera position and applies a random rotation, essentially simulating a literal throw of the die.
      * Velocity of the dice object is also reset incase it was going super fast beforehand.
      */
-    public void Roll()
+    [Command]
+    public void Cmd_Roll()
     {
-		this.gameObject.SetActive(true);
+		gameObject.SetActive(true);
         Vector3 cameraPosition = Camera.main.gameObject.transform.position;
-        this.gameObject.transform.position = cameraPosition + new Vector3(0, 20, 0);
-		this.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
-        this.gameObject.transform.rotation = Quaternion.Euler(new Vector3(new System.Random().Next(-180, 180), new System.Random().Next(-180, 180), new System.Random().Next(-180, 180)));
+        gameObject.transform.position = cameraPosition + new Vector3(0, 20, 0);
+        gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+        gameObject.transform.rotation = Quaternion.Euler(new Vector3(new System.Random().Next(-180, 180), new System.Random().Next(-180, 180), new System.Random().Next(-180, 180)));
     }
 
     /**
@@ -36,11 +39,11 @@ public class Dice : NetworkBehaviour
     */
     public uint NumberFaceUp()
     {
-		if(!this.gameObject.activeSelf)
+		if(!gameObject.activeSelf)
 			return 0;
-        Vector3 up = this.gameObject.transform.up;
-        Vector3 right = this.gameObject.transform.right;
-        Vector3 forward = this.gameObject.transform.forward;
+        Vector3 up = gameObject.transform.up;
+        Vector3 right = gameObject.transform.right;
+        Vector3 forward = gameObject.transform.forward;
         if (Math.Round(up.y) > 0.75)
             return 3;
         if (Math.Round(up.y) < -0.75)

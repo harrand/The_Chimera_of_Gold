@@ -43,7 +43,8 @@ public class Game : NetworkBehaviour
     {
         if (Input.GetKeyDown("r"))
         {
-            this.board.GetDice.Roll();
+            this.board.GetDice.Cmd_Roll();
+            
         }
     }
     
