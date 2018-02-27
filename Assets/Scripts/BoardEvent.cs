@@ -3,17 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+/**
+* Board Event handles any changes that take place on the board - for example if a player makes a move
+* @author Harry Hollands, Ciara O'Brien
+*/
 public class BoardEvent : NetworkBehaviour
 {
 	private Board parent;
 
+	/**
+	 * BoardEvent Constructor - sets the inputed board to be the board currently running
+	 * @author Harry Hollands
+	 * @param board the board that is currently being played
+	 */
 	public BoardEvent(Board board)
 	{
 		this.parent = board;
 	}
 
 	/**
-	 * Invoked whenever a player attempts to move.
+	 * Invoked whenever a player attempts to move. Handles the complete movement of the player, checking if valid before making it.
+	 * @author Harry Hollands
+	 * @param player holds the current player to move
+	 * @param moveTarget holds the location that the player wants to move to
 	 */
 	public void OnPlayerMove(Player player, Vector3 moveTarget)
 	{
@@ -48,6 +60,10 @@ public class BoardEvent : NetworkBehaviour
 
     /**
     * Invoked when the player attempts to move an obstacle.
+    * @author Harry Hollands
+    * @param obstacle holds the obstacle to move
+    * @param controller holds the player that has control over the obstacle being moved
+    * @param moveTarget holds the location that the player wants to move the obstacle to
     */
     public void OnObstacleMove(Obstacle obstacle, Player controller, Vector3 moveTarget)
     {
@@ -62,6 +78,11 @@ public class BoardEvent : NetworkBehaviour
         this.parent.GetDice.gameObject.SetActive(false);
     }
 
+	/**
+	 * When a player reaches to goal node - the player is killed so that no longer usable - no longer has a turn
+	 * @author Harry Hollands, Ciara O'Brien
+	 * @param player the player that has won the game
+	 */
     public void OnPlayerGoalEvent(Player player)
     {
         Debug.Log("A player has reached the goal!");
@@ -70,19 +91,26 @@ public class BoardEvent : NetworkBehaviour
         player.Kill();
     }
 
+	/**
+	 * This sets the teams colour to yellow to represent a win and sets all the other players' colours to grey
+	 * @author Harry Hollands, Ciara O'Brien
+	 * @param winner represents the winning camp
+	 */
     public void OnWinEvent(Camp winner)
     {
         Debug.Log(winner + " has reached the Chimera of Gold and won the game! Congratulations!");
         winner.TeamColor = Color.yellow / 1.2f;
-        foreach (Camp mongrelLoser in winner.GetParent().Camps)
-            if (mongrelLoser != winner)
+        foreach (Camp playerLost in winner.GetParent().Camps)
+            if (playerLost != winner)
             {
-                mongrelLoser.GetComponent<Renderer>().material.color = Color.gray;
+                playerLost.GetComponent<Renderer>().material.color = Color.gray;
             }
     }
 
     /**
 	 * Called by OnPlayerMove. Ensures that if a player has landed on any others, it sets that player back to the camp spawn.
+	 * @author Harry Hollands
+	 * @param player The player that is taking over another player
 	 */
     private void HandleTakeovers(Player player)
 	{
@@ -102,6 +130,9 @@ public class BoardEvent : NetworkBehaviour
 	/**
 	 * Same as BoardEvent::OnPlayerMove(Player, Vector3)
 	 * See above.
+	 * @author Harry Hollands
+	 * @param player the current player that wants to move
+	 * @param desiredTile the tile that the player is moving onto
 	 */
 	public void OnPlayerMove(Player player, Tile desiredTile)
 	{

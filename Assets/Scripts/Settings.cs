@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+ /**
+  * Controls the settings of the game in game
+  * @author Lawrence Howes-Yarlett
+  */
 public class Settings : MonoBehaviour
 {
     //Variables assigned in the unity editor
@@ -19,6 +22,7 @@ public class Settings : MonoBehaviour
 
     /**
      * Disables the settings menu at the start
+     * @author Lawrence Howes-Yarlett
      */
     void Start()
     {
@@ -45,6 +49,7 @@ public class Settings : MonoBehaviour
 
     /**
      * Enables the setting menu when settings is pressed
+     * @author Lawrence Howes-Yarlett
      */
     public void SettingsPress()
     {
@@ -69,6 +74,7 @@ public class Settings : MonoBehaviour
 
     /**
      * Disables the settings menu when the back button is pressed
+     * @author Lawrence Howes-Yarlett
      */
     public void BackPress()
     {
@@ -93,6 +99,7 @@ public class Settings : MonoBehaviour
 
     /**
      * Toggles between full screen and windowed
+     * @author Lawrence Howes-Yarlett
      */
     public void FullScreenToggle()
     {
@@ -102,6 +109,7 @@ public class Settings : MonoBehaviour
 
     /**
      * Changes the resolution of the game
+     * @author Lawrence Howes-Yarlett
      */
     public void ChangeResolution()
     {
@@ -115,6 +123,7 @@ public class Settings : MonoBehaviour
 
     /**
      * Change the volume of the game
+     * @author Lawrence Howes-Yarlett
      */
     public void ChangeVolume()
     {

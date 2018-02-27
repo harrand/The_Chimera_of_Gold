@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+/**
+ * This class holds all of the information for the camps
+* @author Harry Hollands
+*/
 public class Camp : NetworkBehaviour
 {
     private Board parent;
@@ -14,6 +18,11 @@ public class Camp : NetworkBehaviour
 
     /**
      * Pseudo-constructor which uses the Prefabs/Camp prefab in the project tree.
+     * @author Harry Hollands
+     * @param parent holds the parent board to be edited
+     * @param tile holds the current tile to create a camp and players for that camp
+     * @param teamColour The colour to set the camp and its players to initially
+     * @return the camp created 
      */
     public static Camp Create(Board parent, Tile tile, Color teamColour)
     {
@@ -46,6 +55,8 @@ public class Camp : NetworkBehaviour
 
     /**
 	 * Returns number of active players belonging to the camp.
+	 * @author Harry Hollands
+	 * @return the unit representing how many players there are
 	 */
     public uint GetNumberOfPlayers()
     {
@@ -56,7 +67,11 @@ public class Camp : NetworkBehaviour
         return counter;
     }
 
-	// Do not implement until test is written.
+	/**
+	 * This spawn a player under the current camp, checking if the max number has been exceeded
+	 * @author Harry Hollands
+	 * @return the player that has been created
+	 */
     public Player SpawnPlayer()
 	{
         if(this.GetNumberOfPlayers() < this.numberPlayers)
@@ -69,6 +84,8 @@ public class Camp : NetworkBehaviour
 
     /**
      * Returns a reference to the Tile that the camp is ontop of. Returns null if there is no such tile.
+     * @author Harry Hollands
+     * @return the tile that the camp is on top of
      */
     public Tile GetOccupiedTile()
     {
@@ -78,6 +95,11 @@ public class Camp : NetworkBehaviour
 		return null;
     }
 
+	/**
+	 * This returns the parent board of the camp
+	 * @author Harry Hollands
+	 * @return the parent board of this camp
+	 */
     public Board GetParent()
     {
         return this.parent;

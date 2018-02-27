@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * This performs tests that are relevant to the camps
+ * @author Ciara O'Brien, Harry Hollands
+ */
 public class TestCamp : TestBase
 {
 	private Camp campScript;
@@ -17,11 +21,19 @@ public class TestCamp : TestBase
         this.success &= this.TestGetNumberPlayers(5);
 	}
 
+	/**
+	 * this checks if the player has correctly been spawned 
+	 * @author Harry Hollands, Ciara O'Brien
+	 */
     public bool TestSpawnPlayer(Player expected)
     {
         return this.campScript.SpawnPlayer() == expected;
     }
 
+	/**
+	 * This checks that the correct number of players has been returned
+	 * @author Harry Hollands, Ciara O'Brien
+	 */
     public bool TestGetNumberPlayers(uint expected)
     {
         return this.campScript.GetNumberOfPlayers() == expected;

@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * This tests the functionalities of a player
+ * @authout Harry Hollands
+ */
 public class TestPlayer : TestBase
 {
     private Player playerScript;
@@ -13,7 +17,10 @@ public class TestPlayer : TestBase
         this.playerScript = testBoard.Camps[0].TeamPlayers[0];
         this.success = this.TestGetCamp(testBoard.Camps[0]);
 	}
-
+	 /**
+	  * This checks that the camp is correct 
+	  * @author Harry Hollands
+	  */
     public bool TestGetCamp(Camp expected)
     {
         if (this.playerScript.GetCamp() == expected)

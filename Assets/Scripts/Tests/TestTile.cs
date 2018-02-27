@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /**
- * TestBoard - Completely tests the Board Functionalities.
+ * TestTile - Completely tests the Tiles functionalities
  */
 
 public class TestTile : TestBase
@@ -24,8 +24,11 @@ public class TestTile : TestBase
         this.success &= this.TestGetOccupant(null);
 	}
 
-
-    // This cannot be implemented until we know both where the players are on the board and also where the obstacles are.
+	/**
+	 * This checks if there is an occupant on the tile, therefore checking if this has been done correctly
+	 * @author Harry Hollands
+	 * @param exepected the expected boolean value returned 
+	 */
     bool TestHasOccupant(bool expected)
     {
         if (this.tileScript.HasOccupant() == expected)
@@ -34,6 +37,11 @@ public class TestTile : TestBase
         return false;
     }
 
+	/**
+	 * This checks if the get ocupant function works, checking if it returns the correct value
+	 * @author Harry Hollands
+	 * @param expected the expected gameobject returned when checking for the occupant
+	 */
     bool TestGetOccupant(GameObject expected)
     {
         if (this.tileScript.GetOccupant() == expected)

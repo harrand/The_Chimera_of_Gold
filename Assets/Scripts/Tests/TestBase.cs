@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/**
+ * This sets up the base of the testing - which is then used to test the rest of the program
+ * @author Harry Hollands
+ */
 public abstract class TestBase
 {
     protected bool success;

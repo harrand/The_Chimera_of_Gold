@@ -2,10 +2,21 @@
 using System;
 using UnityEngine.Networking;
 
-// Harry and Ciara 12/02/2018
+/**
+ * Dice is created once at the beginning of the game and then rolled whenever a player plays.
+ * @author Ciara O'Brien, Harry Hollands
+ */
 public class Dice : NetworkBehaviour
 {
-    public static Dice Create(Vector3 position, Vector3 rotation, Vector3 scale)
+    /**
+     * This makes the initial dice
+     * @author Harry Hollands
+     * @param position The position of the dice in the world	
+     * @param rotation The rotation of the dice in Euler angles
+     * @param scale The scale of the dice
+     * @return the dice created
+     */
+	public static Dice Create(Vector3 position, Vector3 rotation, Vector3 scale)
     {
         GameObject diceObject = Instantiate(Resources.Load("Prefabs/Dice") as GameObject);
         Dice dice = diceObject.AddComponent<Dice>();
@@ -21,6 +32,7 @@ public class Dice : NetworkBehaviour
     /**
      * Teleports the dice object to the main camera position and applies a random rotation, essentially simulating a literal throw of the die.
      * Velocity of the dice object is also reset incase it was going super fast beforehand.
+     * @author Harry Hollands
      */
     public void Roll()
     {
@@ -33,6 +45,8 @@ public class Dice : NetworkBehaviour
 
     /**
     * Returns the face which is geometrically deemed to be face up on the dice 3D model.
+    * @author Harry Hollands, Ciara O'Brien
+    * @return a uint holding the current face up - checked when rolled
     */
     public uint NumberFaceUp()
     {

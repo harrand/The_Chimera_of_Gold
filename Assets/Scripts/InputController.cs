@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/**
+ * @author Aswin Mathew, Harry Hollands
+ * The Input controller works with users selections
+ */
 public class InputController : MonoBehaviour
 {
     private Board boardScript;
@@ -58,9 +61,9 @@ public class InputController : MonoBehaviour
     }
 
     /**
-	* Update selected Player, Camp etc...
-    * Aswin: Also updates the tags on the objects. Useful for controlling camera
-    *        Remember to update getLastClicked() in cameraControl.cs if anything new is added here. e.g: Camps...
+	* Update selected Player, Camp etc. Also updates the tags on the objects. Useful for controlling camera
+    *  Remember to update getLastClicked() in cameraControl.cs if anything new is added here. e.g: Camps...
+    * @author Aswin Mathew, Harry Hollands
 	*/
     private void UpdateLastClickedObjects()
     {
@@ -96,6 +99,8 @@ public class InputController : MonoBehaviour
 
     /**
      * Returns the gameobject hit by a ray-cast from the camera transform.
+     * @author Harry Hollands, Aswin Mathew
+     * @return the gameobject currently moused over
      */
 	private GameObject GetMousedGameObject()
 	{
@@ -109,6 +114,8 @@ public class InputController : MonoBehaviour
 
     /**
      * Returns the tile that is GetMousedGameObject. If that is not a tile, returns null.
+     * @author Harry Hollands, Aswin Mathew
+     * @return the tile that is currently moused over
      */
     private Tile GetMousedTile()
     {
@@ -120,6 +127,8 @@ public class InputController : MonoBehaviour
 
     /**
      * Returns the player that is GetMousedGameObject. If that is not a player, returns null.
+     * @author Harry Hollands, Aswin Mathew
+     * @return the player that is currently moused over
      */
     private Player GetMousedPlayer()
 	{
@@ -134,6 +143,8 @@ public class InputController : MonoBehaviour
 
     /**
      * Returns the obstacle that is GetMousedGameObject. If that is not a obstacle, returns null.
+     * @author Harry Hollands, Aswin Mathew
+     * @return the obstacle that is currently moused over
      */
     private Obstacle GetMousedObstacle()
 	{
