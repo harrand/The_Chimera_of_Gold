@@ -420,6 +420,7 @@ public class Board : MonoBehaviour
 		Debug.Log("i rolled a " + roll);
 		Tile tileDestination = this.CampTurn.ai.MovementTo(this.CampTurn.TeamPlayers[0].GetOccupiedTile(), roll);
 		this.CampTurn.TeamPlayers[0].gameObject.transform.position = tileDestination.gameObject.transform.position + Player.POSITION_OFFSET;
+		this.CampTurn.ai.MoveObstacle (tileDestination);
 		this.NextTurn();
 	}
 
@@ -455,6 +456,22 @@ public class Board : MonoBehaviour
         }
     }
 
+	public Obstacle GetObstacleByTile(Tile para)
+	{
+		Obstacle result = null;
+		foreach (Obstacle obst in this.Obstacles)
+			if (obst.GetOccupiedTile () == para)
+				result = obst;
+		return result;
+	}
+	public Obstacle GetObstacleByTileSpace(Vector2 para)
+	{
+		Obstacle result = null;
+		foreach (Obstacle obst in this.Obstacles)
+			if (obst.GetOccupiedTile () == this.GetTileByTileSpace(para))
+				result = obst;
+		return result;
+	}
     public void HighlightTiles(Color color)
     {
         foreach (Tile tile in this.Tiles)
