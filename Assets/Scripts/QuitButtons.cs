@@ -117,7 +117,7 @@ public class QuitButtons : MonoBehaviour
      */
     public void YayMenu()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("StartMenu");
     }
 	/**
 	 * NayMenu() Allows you to return to the game
