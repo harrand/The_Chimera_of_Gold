@@ -91,7 +91,9 @@ public class Board : MonoBehaviour
                     color = Color.magenta;
                     break;
             }
-            board.Camps[i] = Camp.Create(board, board.Tiles[i], color);
+            // we want Tile 4*i + 2
+            Debug.Log("spawning a camp on " + board.Tiles[4 * i + 2].gameObject.name);
+            board.Camps[i] = Camp.Create(board, board.Tiles[(4 * i) + 2], color);
             board.ResetTurns();
         }
         /// Allocate and assign Obstacles.
@@ -217,99 +219,106 @@ public class Board : MonoBehaviour
      */
     private bool CheckTile(float x, float y)
     {
-        if (y == 0)
-        {
-            return true;
-        }
-        else if (y == 1)
-        {
-            if (x == 0 || x == 4 || x == 8 || x == 12 || x == 16 || x == 20)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 2)
-        {
-            return true;
-        }
-        else if (y == 3 || y == 4)
+        if(y == 0)
         {
             if (x == 2 || x == 6 || x == 10 || x == 14 || x == 18)
                 return true;
             else
                 return false;
         }
-        else if (y == 5)
+        else if (y == 1)
         {
-            if (x >= 2 && x <= 18)
+            return true;
+        }
+        else if (y == 2)
+        {
+            if (x == 0 || x == 4 || x == 8 || x == 12 || x == 16 || x == 20)
+                return true;
+            else
+                return false;
+        }
+        else if (y == 3)
+        {
+            return true;
+        }
+        else if (y == 4 || y == 5)
+        {
+            if (x == 2 || x == 6 || x == 10 || x == 14 || x == 18)
                 return true;
             else
                 return false;
         }
         else if (y == 6)
         {
-            if (x == 4 || x == 8 || x == 12 || x == 16)
+            if (x >= 2 && x <= 18)
                 return true;
             else
                 return false;
         }
         else if (y == 7)
         {
+            if (x == 4 || x == 8 || x == 12 || x == 16)
+                return true;
+            else
+                return false;
+        }
+        else if (y == 8)
+        {
             if (x >= 4 && x <= 16)
                 return true;
             else
                 return false;
         }
-        else if (y == 8 || y == 9)
+        else if (y == 9 || y == 10)
         {
             if (x == 6 || x == 14)
                 return true;
             else
                 return false;
         }
-        else if (y == 10)
+        else if (y == 11)
         {
             if (x >= 6 && x <= 14)
                 return true;
             else
                 return false;
         }
-        else if (y == 11)
+        else if (y == 12)
         {
             if (x == 8 || x == 12)
                 return true;
             else
                 return false;
         }
-        else if (y == 12)
+        else if (y == 13)
         {
             if (x >= 8 && x <= 12)
                 return true;
             else
                 return false;
         }
-        else if (y == 13)
+        else if (y == 14)
         {
             if (x == 10)
                 return true;
             else
                 return false;
         }
-        else if (y == 14)
+        else if (y == 15)
         {
             if (x >= 4 && x <= 16)
                 return true;
             else
                 return false;
         }
-        else if (y == 15 || y == 16 || y == 17)
+        else if (y == 16 || y == 17 || y == 18)
         {
             if (x == 4 || x == 16)
                 return true;
             else
                 return false;
         }
-        else if (y == 18)
+        else if (y == 19)
         {
             if (x >= 4 && x <= 16)
                 return true;
@@ -327,7 +336,7 @@ public class Board : MonoBehaviour
     public void Cull()
     {
         /// Packs the Board::Tiles array into the new gameTiles array.
-        Tile[] gameTiles = new Tile[146];
+        Tile[] gameTiles = new Tile[151];
 		Tile goalTile = null;
         int j = 0;
         for (int i = 0; i < this.Tiles.Length; i++)
