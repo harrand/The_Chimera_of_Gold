@@ -13,9 +13,9 @@ public class DecisionTree : MonoBehaviour
     //public ObstacleManager obstaclescript;
     public Board board;
 
-    public DecisionTree()
+    public DecisionTree(Board board)
     {
-
+        this.board = board;
     }
 
     class Node
@@ -47,127 +47,6 @@ public class DecisionTree : MonoBehaviour
             this.depth = arg;
         }
     }
-
-    /*public int Movement(int index, int moves)
-    {
-        //go to (x, y, z)
-        Vector2 endPosition = new Vector2();
-        Vector2 startPosition = new Vector2();
-
-        startPosition.x = transform.position.x;
-        startPosition.y = transform.position.y;
-
-        endPosition = BFS_Find_Path(moves, startPosition);
-
-        target.x = endPosition.x;
-        target.y = endPosition.y;
-        transform.position = target;
-		Obstacle currentObstacle = null;
-
-		/* let AI have the ability to move obstacles */
-	/*
-		if (board.GetObstacleByTileSpace(target) != null)
-		{
-			currentObstacle = board.GetObstacleByTileSpace (target);
-		}
-
-		if (currentObstacle != null) 
-		{
-			ObstacleEasyMovement (currentObstacle);
-		}
-        return moves;
-    }*/
-
-	/* Obstacle movement for easy mode */
-	void ObstacleEasyMovement (Obstacle obstacle)
-	{
-		Vector2 posi = new Vector2 (Random.Range (0, 20), Random.Range (1, 18));
-		while (true) 
-		{
-			// should check if there is a Obstacle on the tile.
-			if (isvalid (posi)) 
-			{
-				obstacle.transform.position = board.GetTileByTileSpace(posi).transform.position;
-				break;
-			}
-			posi = new Vector2 (Random.Range (0, 20), Random.Range (1, 18));
-		}
-
-	}
-		
-	/* Obstacle movement for hard mode */
-	void ObstacleHardMovement(Obstacle obstacle)
-	{
-		Player[] playerPawns = new Player[board.Camps.Length * 5];
-		int q = 0;
-		for (int i = 0; i < board.Camps.Length; i++) 
-		{
-			for (int j = 0; j < board.Camps[i].TeamPlayers.Length; j++) 
-			{
-				playerPawns[q] = board.Camps [i].TeamPlayers[j];
-				q++;
-			}
-		}
-		Debug.Log ("PlayerPawns length K value IS " + q);
-		Vector2 invalidPosition = new Vector2(-999, -999);
-		Vector2 posi = new Vector2 ();
-
-		for (int i = 1; i < playerPawns.Length; i++)
-		{
-			Player temp = playerPawns[i];
-			if(playerPawns[i].transform.position.y > playerPawns[i - 1].transform.position.y)
-			{
-				for(int j = 0; j < i; j++)
-				{
-					if(playerPawns[i].transform.position.y > playerPawns[j].transform.position.y)
-					{
-						temp = playerPawns[j];
-						playerPawns[j] = playerPawns[i];
-						playerPawns[i] = temp;
-					}
-				}
-			}
-		}
-		for(int k = 0; k < playerPawns.Length; k++)
-		{
-			if (CheckAdjacentObstacles(playerPawns[k]) != invalidPosition)
-			{
-				posi = CheckAdjacentObstacles(playerPawns[k]);
-				obstacle.transform.position = posi;
-				Debug.Log("*********************Position: (" + posi.x + ", " + posi.y);
-				return;
-			}
-		}
-		Debug.Log("Can't move the obstacle (hard mode)");
-	}
-
-	public Vector2 CheckAdjacentObstacles(Player pawn)
-	{
-		Player pawnCopy = pawn;
-		Vector2 invalidPosition = new Vector2(-999, -999);
-		Vector2 posi = new Vector2();
-		int[,] dir = new int[8, 2]
-		{
-			{0, 1}, {1, 0},
-			{0, -1}, {-1, 0},
-			{0, 2}, {2, 0},
-			{0, -2}, {-2, 0}
-		};
-		for (int j = 0; j < 8; ++j)
-		{
-			posi.x = (pawnCopy.transform.position.x) + dir[j, 0]; //search the neighbour node 
-			posi.y = (pawnCopy.transform.position.y) + dir[j, 1];
-			if (board.GetObstacleByTileSpace(target) == null && isvalid(posi))
-			{
-				return posi;
-			}
-			else
-			{
-				continue;
-			}
-		}
-		return invalidPosition;
-	}
 	
     public Tile MovementTo(Tile startTile, int moves)
     {
@@ -192,15 +71,95 @@ public class DecisionTree : MonoBehaviour
 		}
 	}
 
-    /*
-    public DecisionTree(ObstacleManager obstaclescript)
+    /* Obstacle movement for easy mode */
+    void ObstacleEasyMovement(Obstacle obstacle)
     {
-        this.obstaclescript = obstaclescript;
+        Vector2 posi = new Vector2(Random.Range(0, 20), Random.Range(1, 18));
+        while (true)
+        {
+            // should check if there is a Obstacle on the tile.
+            if (isvalid(posi))
+            {
+                obstacle.transform.position = board.GetTileByTileSpace(posi).transform.position;
+                break;
+            }
+            posi = new Vector2(Random.Range(0, 20), Random.Range(1, 18));
+        }
+
     }
-    */
-    public DecisionTree(Board board)
+
+    /* Obstacle movement for hard mode */
+    void ObstacleHardMovement(Obstacle obstacle)
     {
-        this.board = board;
+        Player[] playerPawns = new Player[board.Camps.Length * 5];
+        int q = 0;
+        for (int i = 0; i < board.Camps.Length; i++)
+        {
+            for (int j = 0; j < board.Camps[i].TeamPlayers.Length; j++)
+            {
+                playerPawns[q] = board.Camps[i].TeamPlayers[j];
+                q++;
+            }
+        }
+        Debug.Log("PlayerPawns length K value IS " + q);
+        Vector2 invalidPosition = new Vector2(-999, -999);
+        Vector2 posi = new Vector2();
+
+        for (int i = 1; i < playerPawns.Length; i++)
+        {
+            Player temp = playerPawns[i];
+            if (playerPawns[i].transform.position.z > playerPawns[i - 1].transform.position.z)
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    if (playerPawns[i].transform.position.z > playerPawns[j].transform.position.z)
+                    {
+                        temp = playerPawns[j];
+                        playerPawns[j] = playerPawns[i];
+                        playerPawns[i] = temp;
+                    }
+                }
+            }
+        }
+        for (int k = 0; k < playerPawns.Length; k++)
+        {
+            if (CheckAdjacentObstacles(playerPawns[k]) != invalidPosition)
+            {
+                posi = CheckAdjacentObstacles(playerPawns[k]);
+                obstacle.transform.position = board.GetTileByTileSpace(posi).transform.position; ;
+                //Debug.Log("*********************Position: (" + posi.x + ", " + posi.y);
+                return;
+            }
+        }
+        Debug.Log("Can't move the obstacle (hard mode)");
+    }
+
+    public Vector2 CheckAdjacentObstacles(Player pawn)
+    {
+        Player pawnCopy = pawn;
+        Vector2 invalidPosition = new Vector2(-999, -999);
+        Vector2 posi = new Vector2();
+        int[,] dir = new int[8, 2]
+        {
+            {0, 1}, {1, 0},
+            {0, -1}, {-1, 0},
+            {0, 2}, {2, 0},
+            {0, -2}, {-2, 0}
+        };
+        for (int j = 0; j < 8; ++j)
+        {
+            posi.x = (pawnCopy.transform.position.x) + dir[j, 0]; //search the neighbour node 
+            posi.y = (pawnCopy.transform.position.y) + dir[j, 1];
+            if (board.GetObstacleByTileSpace(target) == null && isvalid(posi))
+            {
+                return posi;
+            }
+            else
+            {
+                continue;
+            }
+        }
+        return invalidPosition;
     }
 
     //this method is to find all possibilities of paths after rolling a dice.
