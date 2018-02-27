@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 * Board is a container for Camps (and their respective Players), all Tiles and Obstacles. Also handles turns, tile-highlighting and game rule enforcement.
 * @author Harry Hollands, Ciara O'Brien, Aswin Mathew
 */
-public class Board : NetworkBehaviour
+public class Board : MonoBehaviour
 {
     /// width and height use number of Tiles as units.
     private uint numberCamps, numberObstacles;
@@ -20,7 +20,6 @@ public class Board : NetworkBehaviour
 	public Camp[] Camps { get; private set; }
     public Dice GetDice { get; private set; }
 	public BoardEvent Event{ get; private set; }
-
 
     /**
     * This is to be used to create a new Board when the root GameObject has a terrain component (interpolating instead of taking dimensions as parameters).
@@ -174,19 +173,6 @@ public class Board : NetworkBehaviour
 			board.Obstacles[i] = Obstacle.Create(board, board.Tiles[i]);
 		return board;
 	}
-
-    /**
-     * Get the Tile prefab's material.
-     * @author Harry Hollands
-     * @return - Reference to the Tile prefab's material.
-     */
-    public Material TileMaterial()
-    {
-        GameObject temp = Instantiate(Resources.Load("Prefabs/Tile")) as GameObject;
-        Material defaultMaterial = temp.GetComponent<Renderer>().material;
-        Destroy(temp);
-        return defaultMaterial;
-    }
 
     /**
      * @author ?
@@ -366,12 +352,13 @@ public class Board : NetworkBehaviour
         {
             if (t != null)
             {
-                t.GetComponent<Renderer>().material.color = new Color(0, 255, 0, this.TileMaterial().color.a);
+                t.GetComponent<Renderer>().material = t.InitialMaterial;
                 t.gameObject.SetActive(true);
             }
         }
         goalTile.gameObject.SetActive(true);
         goalTile.GetComponent<Renderer>().material.color = Color.yellow / 1.2f;
+        goalTile.InitialMaterial = goalTile.GetComponent<Renderer>().material;
     }
 
     /**
@@ -457,8 +444,8 @@ public class Board : NetworkBehaviour
     public void RemoveTileHighlights()
     {
         foreach (Tile tile in this.Tiles)
-			if(tile != null && tile.gameObject.activeSelf)
-			tile.GetComponent<Renderer>().material = this.TileMaterial();
+            if (tile != null && tile.gameObject.activeSelf)
+                tile.GetComponent<Renderer>().material = tile.InitialMaterial;
     }
 
 	/// Getters for width and height (in units of Tiles and pixels respectively)

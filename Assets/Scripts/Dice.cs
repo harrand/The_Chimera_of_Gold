@@ -6,7 +6,7 @@ using UnityEngine.Networking;
  * Dice is created once at the beginning of the game and then rolled whenever a player plays.
  * @author Ciara O'Brien, Harry Hollands
  */
-public class Dice : NetworkBehaviour
+public class Dice : MonoBehaviour
 {
     /**
      * This makes the initial dice
@@ -23,9 +23,6 @@ public class Dice : NetworkBehaviour
         diceObject.transform.position = position;
         diceObject.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
         diceObject.transform.localScale = scale;
-        NetworkServer.Spawn(dice.gameObject);
-        //diceObject.AddComponent<NetworkIdentity>();
-        //diceObject.AddComponent<NetworkTransform>();
         return dice;
     }
 

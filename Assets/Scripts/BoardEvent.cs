@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 * Board Event handles any changes that take place on the board - for example if a player makes a move
 * @author Harry Hollands, Ciara O'Brien
 */
-public class BoardEvent : NetworkBehaviour
+public class BoardEvent
 {
 	private Board parent;
 

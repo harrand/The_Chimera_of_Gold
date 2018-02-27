@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 * default number of players per camp
 * @author Harry Hollands
 */
-public class Game : NetworkBehaviour
+public class Game : MonoBehaviour
 {
     public const uint NUMBER_OBSTACLES = 13;
     public const uint NUMBER_CAMPS = 5;
