@@ -133,7 +133,7 @@ public class OfflineMenu : MonoBehaviour
      */
     public void StartGame()
     {
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(4);
         //add stuff so correct amount of players spawn and correct amount of them are AI
     }
 

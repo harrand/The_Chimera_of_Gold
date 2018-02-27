@@ -34,6 +34,6 @@ public class ModeSelect : MonoBehaviour {
      */
     public void OnlinePress()
     {
-        //SceneManager.LoadScene(//online setup scene index);
+        SceneManager.LoadScene(3);
     }
 }
