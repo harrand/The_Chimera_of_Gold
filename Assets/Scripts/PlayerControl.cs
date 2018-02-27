@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-
+/**
+ * This controls the player - checking and showing movement available 
+ * @author Harry Hollands
+ */
 public class PlayerControl 
 {
     public Player GetPlayer { get; private set; }
@@ -14,6 +17,9 @@ public class PlayerControl
 
     /**
     * Given a rolled dice value, produces an array of all the Tiles that the game-logic would deem legal to move to.
+    * @author Harry Hollands, Ciara O'Brien
+    * @param diceRoll the move that has been done, therefore checking any possible tiles that can be visited within that number
+    * @return a list of the tiles that can possibly be moved to
     */
     public Tile[] PossibleMoves(uint diceRoll)
     {
@@ -36,6 +42,8 @@ public class PlayerControl
     /**
      * Paints every Tile from this.PossibleMoves(uint) the colour of highlightColour.
      * Use this to signify to the player which tiles can be moved to.
+     * @param diceRoll the move that has been done, therefore checking any possible tiles that can be visited within that number
+     * @param highlightColour changes the colour of all of the available tiles to move to under the current move
      */
     public void HighlightPossibleMoves(uint diceRoll, Color highlightColour)
     {

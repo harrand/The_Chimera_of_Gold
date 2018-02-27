@@ -6,6 +6,7 @@ using UnityEngine;
 /**
  * TestBoard - Completely tests the Board Functionalities.
  * Note: TestBoard does NOT have clickable Tiles.
+ * @author Harry Hollands, Ciara O'Brien
  */
 public class TestBoard : TestBase
 {
@@ -138,7 +139,7 @@ public class TestBoard : TestBase
 
     /**
 	 * TestObstacles
-	 * @Author Harry Hollands, Lawrence Howes-Yarlett (https://www.facebook.com/lawrence.howesyarlett) & Ciara O'Brien
+	 * @Author Harry Hollands, Lawrence Howes-Yarlett & Ciara O'Brien
      * Ensures that the turn system of the Board is implemented correctly for every single turn state.
      */
     public bool TestTurns()

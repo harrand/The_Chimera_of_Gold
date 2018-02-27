@@ -4,11 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+  /**
+   * The functionalities to leave the game
+   * @Author Lawrence Howes-Yarlett
+   */
 public class QuitButtons : MonoBehaviour
 {
-    /**
-     * @Author Lawrence
-     */
+    
     //Variables     
     public Canvas quitMenu;
     public Button start;
@@ -19,6 +21,7 @@ public class QuitButtons : MonoBehaviour
     
     /**
      * Sets Quit to disabled when game starts
+     * @author Lawrence Howes-Yarlett
      */
     public void Start()
     {
@@ -46,6 +49,7 @@ public class QuitButtons : MonoBehaviour
 
     /**
      * Enables menu when quit is pressed 
+     * @author Lawrence Howes-Yarlett
      */
     public void QuitPress()
     {
@@ -75,13 +79,17 @@ public class QuitButtons : MonoBehaviour
 
     /**
      * YayPress() Allows you to quit the game
-     * NayPress() Allows you to return to the main menu
+     * @author Lawrence Howes-Yarlett
      */
     public void YayPress()
     {
         Application.Quit();
     }
 
+   /**
+	* NayPress() Allows you to return to the main menu
+	* @author Lawrnce Howes-Yarlett
+	*/
     public void NayPress()
     {
         quitMenu.enabled = false;
@@ -105,13 +113,16 @@ public class QuitButtons : MonoBehaviour
 
     /**
      * YayMenu() Allows you to quit the game to the main menu
-     * NayMenu() Allows you to return to the game
+     * @author Lawrence Howes-Yarlett
      */
     public void YayMenu()
     {
         SceneManager.LoadScene(0);
     }
-
+	/**
+	 * NayMenu() Allows you to return to the game
+	 * @author Lawrence Howes-Yarlett
+	 */
     public void NayMenu()
     {
         quitToMenuMenu.enabled = false;

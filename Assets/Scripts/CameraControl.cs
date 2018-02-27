@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+* The controls for the camera - after input has been processed this moves the camera accordingly
+* @author Aswin Mathew
+*/
 public class CameraControl : MonoBehaviour
 
 {
@@ -44,8 +48,8 @@ public class CameraControl : MonoBehaviour
 
     /**
      * getLastClicked
-     * @author Aswin
-     * Returns the object that was last clicked if it can be focused on. Otherwise returns null
+     * @author Aswin Mathew
+     * @return the object that was last clicked if it can be focused on. Otherwise returns null
      */
     private Transform getLastClicked()
     {
@@ -85,8 +89,12 @@ public class CameraControl : MonoBehaviour
     }
 
     /**
-     * ClampAngle
      * Clamps the angle at between the limits (20 is high enough to stop ground clip).
+     * @author Aswin Mathew
+     * @param angle the limits of how far you can rotate the camera
+     * @param min the minimum limit on how far you can rotate the camera
+     * @param max the maximum limit on how far you can rotate the camera
+     * @return the float representing the angle 
      */
     private float ClampAngle(float angle, float min, float max)
     {
@@ -97,9 +105,9 @@ public class CameraControl : MonoBehaviour
         return Mathf.Clamp(angle, min, max);
     }
     /**
-     * setCameraPostion
-     * @author Aswin
      * rotates the camera around the currently selected object. 
+     * @author Aswin Mathew
+     * @param currentTarget the thing that is currently being looked at
      */
     private void setCameraPosition(Transform currentTarget)
     {   
