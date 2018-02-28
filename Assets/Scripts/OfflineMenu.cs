@@ -124,7 +124,7 @@ public class OfflineMenu : MonoBehaviour
      */
     public void BackToModeSelect()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("GameModeSelect");
     }
 
     /**
@@ -133,7 +133,7 @@ public class OfflineMenu : MonoBehaviour
      */
     public void StartGame()
     {
-        SceneManager.LoadScene(4);
+        SceneManager.LoadScene("Chimera");
         //add stuff so correct amount of players spawn and correct amount of them are AI
     }
 

@@ -22,6 +22,6 @@ public class TextSwirl : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void PlayGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("GameModeSelect");
     }
 }

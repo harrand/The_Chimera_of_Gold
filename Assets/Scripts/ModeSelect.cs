@@ -16,7 +16,7 @@ public class ModeSelect : MonoBehaviour {
      */
     public void BackToStartPress()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("StartMenu");
     }
 
     /**
@@ -25,7 +25,7 @@ public class ModeSelect : MonoBehaviour {
      */
     public void OfflinePress()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene("OfflineMenu");
     }
 
     /**
@@ -34,6 +34,6 @@ public class ModeSelect : MonoBehaviour {
      */
     public void OnlinePress()
     {
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene("Lobby");
     }
 }
