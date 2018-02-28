@@ -23,7 +23,7 @@ public class CameraControl : MonoBehaviour
 
     //Needed to Limit rotation. Limits clipping with terrain somewhat. 
     private float minY = 10.0f, maxY = 80.0f;
-    //!(minY doesn't do anything. I don't know why. I've temporarily hardcoded the value in setCameraPosition and commented out the variable line.)!
+    //!(minY doesn't do anything. I don't know why. I've temporarily hardcoded the value in SetCameraPosition and commented out the variable line.)!
 
     //Used for angles
     private float x =0, y=0;
@@ -47,11 +47,11 @@ public class CameraControl : MonoBehaviour
     }
 
     /**
-     * getLastClicked
+     * GetLastClicked
      * @author Aswin Mathew
      * @return the object that was last clicked if it can be focused on. Otherwise returns null
      */
-    private Transform getLastClicked()
+    private Transform GetLastClicked()
     {
 		// If no GameObjects with the tag exists, return null or this will throw during unit-tests where there is nothing tagged "GameBoard". - Harry
 		if(GameObject.FindGameObjectWithTag("GameBoard") == null)
@@ -109,7 +109,7 @@ public class CameraControl : MonoBehaviour
      * @author Aswin Mathew
      * @param currentTarget the thing that is currently being looked at
      */
-    private void setCameraPosition(Transform currentTarget)
+    private void SetCameraPosition(Transform currentTarget)
     {   
         //Only allows rotation if right mouse is held down. (It was difficult to click on other objects when the camera kept moving)
         if (Input.GetMouseButton(1))
@@ -136,25 +136,25 @@ public class CameraControl : MonoBehaviour
     // Update is called once per frame
     void LateUpdate ()
     {
-        current = getLastClicked();
+        current = GetLastClicked();
 
         if (current != null && Input.GetKey(KeyCode.LeftShift) && playerSel && tileSel)
         {
             //offset from tile
             GameObject boardObject = GameObject.FindGameObjectWithTag("GameBoard");
-            setCameraPosition(current);
+            SetCameraPosition(current);
             // after moving the player, remove all board highlights.
 			boardObject.GetComponent<Board>().Event.OnPlayerMove(boardObject.GetComponent<InputController>().LastClickedPlayer, current.position);
             //Debug.Log(tileSel);
         }
         else if (current != null)
         { 
-            setCameraPosition(current);
+            SetCameraPosition(current);
             //Debug.Log("Should rotate around selected");
         }
         else
         {
-            setCameraPosition(Ethan.transform);
+            SetCameraPosition(Ethan.transform);
             //Debug.Log("Should Follow Ethan ");
         }
 

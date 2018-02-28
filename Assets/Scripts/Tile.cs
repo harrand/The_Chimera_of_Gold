@@ -39,7 +39,10 @@ public class Tile : MonoBehaviour
 
     public static Material PrefabMaterial()
     {
-        return (Instantiate(Resources.Load("Prefabs/Tile")) as GameObject).GetComponent<Renderer>().material;
+        GameObject temp = Instantiate(Resources.Load("Prefabs/Tile")) as GameObject;
+        Material mat = temp.GetComponent<Renderer>().material;
+        Destroy(temp);
+        return mat;
     }
 
     /**

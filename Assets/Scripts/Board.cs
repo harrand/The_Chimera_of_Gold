@@ -92,7 +92,6 @@ public class Board : MonoBehaviour
                     break;
             }
             // we want Tile 4*i + 2
-            Debug.Log("spawning a camp on " + board.Tiles[4 * i + 2].gameObject.name);
             board.Camps[i] = Camp.Create(board, board.Tiles[(4 * i) + 2], color);
             board.ResetTurns();
         }
