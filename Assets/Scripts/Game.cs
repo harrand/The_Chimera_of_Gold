@@ -42,10 +42,10 @@ public class Game : MonoBehaviour
 
     private void Update()
     {
-        /*if (Input.GetKeyDown("r"))
+        if (Input.GetKeyDown("r"))
         {
-            this.board.GetDice.Roll();
-        }*/
+           this.board.GetDice.Roll(Camera.main.transform.position + new Vector3(0, 20, 0));
+        }
     }
 
     public void DiceRoll()

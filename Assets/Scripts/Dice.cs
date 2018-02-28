@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using UnityEngine.Networking;
+using System.Collections;
 
 /**
  * Dice is created once at the beginning of the game and then rolled whenever a player plays.
@@ -31,11 +32,10 @@ public class Dice : MonoBehaviour
      * Velocity of the dice object is also reset incase it was going super fast beforehand.
      * @author Harry Hollands
      */
-    public void Roll()
+	public void Roll(Vector3 spawnPosition)
     {
 		this.gameObject.SetActive(true);
-        Vector3 cameraPosition = Camera.main.gameObject.transform.position;
-        this.gameObject.transform.position = cameraPosition + new Vector3(0, 20, 0);
+		this.gameObject.transform.position = spawnPosition;
 		this.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         this.gameObject.transform.rotation = Quaternion.Euler(new Vector3(new System.Random().Next(-180, 180), new System.Random().Next(-180, 180), new System.Random().Next(-180, 180)));
     }

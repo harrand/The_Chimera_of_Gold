@@ -91,10 +91,16 @@ public class Board : MonoBehaviour
                     color = Color.magenta;
                     break;
             }
-            // we want Tile 4*i + 2
-            Debug.Log("spawning a camp on " + board.Tiles[4 * i + 2].gameObject.name);
-            board.Camps[i] = Camp.Create(board, board.Tiles[(4 * i) + 2], color);
-            board.ResetTurns();
+
+            if (i == (board.numberCamps - 1))
+                board.Camps[i] = Camp.CreateAICamp(board, board.Tiles[i], color);
+            else
+			{
+				// we want Tile 4*i + 2
+				Debug.Log("spawning a camp on " + board.Tiles[4 * i + 2].gameObject.name);
+				board.Camps[i] = Camp.Create(board, board.Tiles[(4 * i) + 2], color);
+				board.ResetTurns();
+			}
         }
         /// Allocate and assign Obstacles.
 		board.Obstacles = new Obstacle[board.numberObstacles];
@@ -414,17 +420,50 @@ public class Board : MonoBehaviour
     {
         this.CampTurn = this.Camps[0];
     }
-		
-    /**
+
+	/**
+	 * Dice is already being rolled when this is invoked. Causes the AI Player to perform its movement functionality approximately one second after the dice is predicted to hit the ground.
+	 */
+	private IEnumerator DelayAIMove(float seconds, Tile previousLocation)
+	{
+		// s = ut + 0.5a(t^2)
+		// v^2 = u^2 + 2as
+		// v = u + at
+		// at = v - u
+		// t = (v - u) / a
+		// a = -9.81 units per second^2
+		// u = 0
+		// s = distance between ground and dice position
+		// v= sqrt(u^2 + 2 * a * s)
+		float s = (this.GetDice.transform.position - previousLocation.transform.position).magnitude;
+		float v = Mathf.Sqrt(2 * s * 9.81f);
+		float t = v / 9.81f;
+		yield return new WaitForSeconds(t + 1);
+		int roll = (int) this.GetDice.NumberFaceUp();
+		Debug.Log("i rolled a " + roll);
+		Tile tileDestination = this.CampTurn.ai.MovementTo(this.CampTurn.TeamPlayers[0].GetOccupiedTile(), roll);
+		this.CampTurn.TeamPlayers[0].gameObject.transform.position = tileDestination.gameObject.transform.position + Player.POSITION_OFFSET;
+		this.CampTurn.ai.MoveObstacle (tileDestination);
+		this.NextTurn();
+	}
+
+	/**
      * Simulates the end of the current turn and sets Board::PlayerTurn to the "next" player accordingly.
+     * Also handles the AI Player's turn instantaneously and then passes over to the next player's turn.
      */
     public void NextTurn()
     {
-
         this.obstacleControlFlag = false;
-		int campId = -1, playerId = -1;
-		// Set campId and playerId to the corresponding indices for the current Player
-        for(uint campCounter = 0; campCounter < this.Camps.Length; campCounter++)
+        int campId = -1;
+        // Set campId and playerId to the corresponding indices for the current Player
+        for (int campCounter = 0; campCounter < this.Camps.Length; campCounter++)
+        {
+            if (this.CampTurn == this.Camps[campCounter])
+            {
+                campId = campCounter;
+            }
+        }
+        if(campId == -1)
         {
             Debug.Log("NextTurn failed -- CampTurn is not a valid reference to a Board camp.");
             return;
@@ -432,13 +471,38 @@ public class Board : MonoBehaviour
         if (++campId >= this.Camps.Length)
             campId = 0;
         this.CampTurn = this.Camps[campId];
+
+        if(this.CampTurn.isAI())
+        {
+            Tile previousLocation = this.CampTurn.TeamPlayers[0].GetOccupiedTile();
+			this.GetDice.Roll(this.CampTurn.TeamPlayers[0].gameObject.transform.position);
+			StartCoroutine(DelayAIMove(2, previousLocation));
+        }
     }
 
-    /**
+	public Obstacle GetObstacleByTile(Tile para)
+	{
+		Obstacle result = null;
+		foreach (Obstacle obst in this.Obstacles)
+			if (obst.GetOccupiedTile () == para)
+				result = obst;
+		return result;
+	}
+	public Obstacle GetObstacleByTileSpace(Vector2 para)
+	{
+		Obstacle result = null;
+		foreach (Obstacle obst in this.Obstacles)
+			if (obst.GetOccupiedTile () == this.GetTileByTileSpace(para))
+				result = obst;
+		return result;
+	}
+
+	/**
     * Highlights the Tiles with the given colour.
     * @author Harry Hollands, Ciara O'Brien
     * @param color - Color of which to highlight all the active Board Tiles.
     */
+
     public void HighlightTiles(Color color)
     {
         foreach (Tile tile in this.Tiles)
