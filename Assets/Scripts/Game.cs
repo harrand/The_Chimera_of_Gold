@@ -48,10 +48,10 @@ public class Game : MonoBehaviour
         }
     }
 
-    public void DiceRoll()
-    {
-        this.board.GetDice.Roll();
-    }
+//    public void DiceRoll()
+//    {
+//        this.board.GetDice.Roll();
+//    }
     
 
     void OnDestroy()

@@ -63,15 +63,6 @@ public class BoardEvent
 		this.parent.GetDice.gameObject.SetActive(false);
 	}
 
-	/**
-	 * Same as BoardEvent::OnPlayerMove(Player, Vector3)
-	 * See above.
-	 */
-	public void OnPlayerMove(Player player, Tile desiredTile)
-	{
-		this.OnPlayerMove(player, desiredTile.gameObject.transform.position);
-	}
-
     /**
     * Invoked when the player attempts to move an obstacle.
     * @author Harry Hollands
