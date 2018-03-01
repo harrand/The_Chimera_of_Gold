@@ -67,7 +67,7 @@ public class DecisionTree : MonoBehaviour
 
 		if (currentObstacle != null) 
 		{
-			ObstacleEasyMovement (currentObstacle);
+            ObstacleHardMovement(currentObstacle);
 		}
 	}
 
@@ -77,8 +77,8 @@ public class DecisionTree : MonoBehaviour
         Vector2 posi = new Vector2(Random.Range(0, 20), Random.Range(1, 18));
         while (true)
         {
-            // should check if there is a Obstacle on the tile.
-            if (isvalid(posi))
+            // should check if there is an obstacle or a player pawn on the tile.
+            if (isvalid(posi) && !board.TileOccupiedByObstacle(posi))
             {
                 obstacle.transform.position = board.GetTileByTileSpace(posi).transform.position;
                 break;
@@ -126,7 +126,9 @@ public class DecisionTree : MonoBehaviour
             if (CheckAdjacentObstacles(playerPawns[k]) != invalidPosition)
             {
                 posi = CheckAdjacentObstacles(playerPawns[k]);
-                obstacle.transform.position = board.GetTileByTileSpace(posi).transform.position; ;
+                if(board.GetTileByTileSpace(posi) == null)
+                    Debug.Log("***************************Obstable position is null! ");
+                obstacle.transform.position = board.GetTileByTileSpace(posi).transform.position;
                 //Debug.Log("*********************Position: (" + posi.x + ", " + posi.y);
                 return;
             }
@@ -137,20 +139,22 @@ public class DecisionTree : MonoBehaviour
     public Vector2 CheckAdjacentObstacles(Player pawn)
     {
         Player pawnCopy = pawn;
+        Vector2 pawnPosition = pawnCopy.GetOccupiedTile().PositionTileSpace;
         Vector2 invalidPosition = new Vector2(-999, -999);
         Vector2 posi = new Vector2();
         int[,] dir = new int[8, 2]
-        {
-            {0, 1}, {1, 0},
-            {0, -1}, {-1, 0},
-            {0, 2}, {2, 0},
-            {0, -2}, {-2, 0}
-        };
+            {
+                {0, 1}, {1, 0},
+                {0, -1}, {-1, 0},
+                {0, 2}, {2, 0},
+                {0, -2}, {-2, 0}
+            };
+
         for (int j = 0; j < 8; ++j)
         {
-            posi.x = (pawnCopy.transform.position.x) + dir[j, 0]; //search the neighbour node 
-            posi.y = (pawnCopy.transform.position.y) + dir[j, 1];
-            if (board.GetObstacleByTileSpace(target) == null && isvalid(posi))
+            posi.x = pawnPosition.x + dir[j, 0]; //search the neighbour node 
+            posi.y = pawnPosition.y + dir[j, 1];
+            if (board.GetObstacleByTileSpace(posi) == null && isvalid(posi))
             {
                 return posi;
             }
@@ -203,14 +207,12 @@ public class DecisionTree : MonoBehaviour
                 neighbour.SetPosition(tem);
                 neighbour.SetDepth(0);
 
-                //neighbour.x = current.x+dir[i,0]; //search the neighbour node 
-                //neighbour.y = current.y+dir[i,1];
-
                 //Debug.Log("Rest moves: " + moves + "  Max depth: " + maxDepth + "  Current Position: " + current.Getposition().x + ", " + current.Getposition().y);
 
                 if ((isvalid(neighbour.Getposition())) && !visited.Contains(neighbour.Getposition()))
                 {
                     Tile neighbourTile = this.board.GetTileByTileSpace(neighbour.Getposition());
+                    //Debug.Log("Neighbour position: " + neighbourTile.transform.position.x + ", " + neighbourTile.transform.position.y + ", " + neighbourTile.transform.position.z);
                     if (neighbourTile.BlockedByObstacle())
                     {
                         if (tempMoves - current.depth != 1)
@@ -218,7 +220,7 @@ public class DecisionTree : MonoBehaviour
                             if (!path.Contains(current.Getposition()))
                             {
                                 path.Add(current.Getposition());
-                                //Debug.Log("I meet the obstacle oh so sad!");
+                                Debug.Log("I meet the obstacle oh so sad!");
                             }
                             continue;
                         }
@@ -232,7 +234,7 @@ public class DecisionTree : MonoBehaviour
                         }
                         else
                         {
-                            //Debug.Log("moves less than 0!!!!");
+                            Debug.Log("moves less than 0!!!!");
                         }
                     }
                     if (tempMoves - current.depth == 1)
@@ -307,6 +309,7 @@ public class DecisionTree : MonoBehaviour
                 {
                     neighbour.SetDepth(current.depth + 1);
                     Tile neighbourTile = this.board.GetTileByTileSpace(neighbour.Getposition());
+                    //Debug.Log("Asses Neighbour position: " + neighbourTile.transform.position.x + ", " + neighbourTile.transform.position.y + ", " + neighbourTile.transform.position.z);
                     if (neighbourTile.BlockedByObstacle())
                     {
                         neighbour.depth += 20; //this means that if there is an obstacle the value should plus 20
@@ -378,103 +381,103 @@ public class DecisionTree : MonoBehaviour
         int x = (int)position.x;
         int y = (int)position.y;
 
-        if (y == -1 || x == -1 || y == 19 || x == 21)
+        if (y == 0 || x == -1 || y == 20 || x == 21)
         {
             return false;
         }
-        if (y == 0)
+        if (y == 1)
         {
             return true;
         }
-        else if (y == 1)
+        else if (y == 2)
         {
             if (x == 0 || x == 4 || x == 8 || x == 12 || x == 16 || x == 20)
                 return true;
             else
                 return false;
         }
-        else if (y == 2)
+        else if (y == 3)
         {
             return true;
         }
-        else if (y == 3 || y == 4)
+        else if (y == 4 || y == 5)
         {
             if (x == 2 || x == 6 || x == 10 || x == 14 || x == 18)
                 return true;
             else
                 return false;
         }
-        else if (y == 5)
+        else if (y == 6)
         {
             if (x >= 2 && x <= 18)
                 return true;
             else
                 return false;
         }
-        else if (y == 6)
+        else if (y == 7)
         {
             if (x == 4 || x == 8 || x == 12 || x == 16)
                 return true;
             else
                 return false;
         }
-        else if (y == 7)
+        else if (y == 8)
         {
             if (x >= 4 && x <= 16)
                 return true;
             else
                 return false;
         }
-        else if (y == 8 || y == 9)
+        else if (y == 9 || y == 10)
         {
             if (x == 6 || x == 14)
                 return true;
             else
                 return false;
         }
-        else if (y == 10)
+        else if (y == 11)
         {
             if (x >= 6 && x <= 14)
                 return true;
             else
                 return false;
         }
-        else if (y == 11)
+        else if (y == 12)
         {
             if (x == 8 || x == 12)
                 return true;
             else
                 return false;
         }
-        else if (y == 12)
+        else if (y == 13)
         {
             if (x >= 8 && x <= 12)
                 return true;
             else
                 return false;
         }
-        else if (y == 13)
+        else if (y == 14)
         {
             if (x == 10)
                 return true;
             else
                 return false;
         }
-        else if (y == 14)
+        else if (y == 15)
         {
             if (x >= 4 && x <= 16)
                 return true;
             else
                 return false;
         }
-        else if (y == 15 || y == 16 || y == 17)
+        else if (y == 16 || y == 17 || y == 18)
         {
             if (x == 4 || x == 16)
                 return true;
             else
                 return false;
         }
-        else if (y == 18)
+        else if (y == 19)
         {
             if (x >= 4 && x <= 16)
                 return true;

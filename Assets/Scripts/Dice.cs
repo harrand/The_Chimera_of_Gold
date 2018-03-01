@@ -32,10 +32,11 @@ public class Dice : MonoBehaviour
      * Velocity of the dice object is also reset incase it was going super fast beforehand.
      * @author Harry Hollands
      */
-	public void Roll(Vector3 spawnPosition)
+	public void Roll()
     {
 		this.gameObject.SetActive(true);
-		this.gameObject.transform.position = spawnPosition;
+        Vector3 cameraPosition = Camera.main.gameObject.transform.position;
+		this.gameObject.transform.position = cameraPosition + new Vector3(0, 20, 0);
 		this.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         this.gameObject.transform.rotation = Quaternion.Euler(new Vector3(new System.Random().Next(-180, 180), new System.Random().Next(-180, 180), new System.Random().Next(-180, 180)));
     }

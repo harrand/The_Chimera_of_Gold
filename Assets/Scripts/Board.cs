@@ -93,7 +93,7 @@ public class Board : MonoBehaviour
             }
 
             if (i == (board.numberCamps - 1))
-                board.Camps[i] = Camp.CreateAICamp(board, board.Tiles[i], color);
+                board.Camps[i] = Camp.CreateAICamp(board, board.Tiles[(4 * i) + 2], color);
             else
 			{
 				// we want Tile 4*i + 2
@@ -413,6 +413,30 @@ public class Board : MonoBehaviour
     }
 
     /**
+    * Returns true if the Tile has a player pawn ontop of it.
+    * @author Yutian Xue and Zibo Zhang
+    * @param tilePosition - Position of the Tile which need be checked for a player pawn.
+    * @return - True if the Tile has a player pawn on it, else false.
+    */
+    public bool TileOccupiedByPlayerPawn(Vector2 tilePosition)
+    {
+        Camp tempCamp = new Camp();
+        Vector2 tempPosition = new Vector2();
+        foreach (Camp myCamp in this.Camps)
+        {
+            tempCamp = myCamp;
+            foreach (Player myPlayer in tempCamp.TeamPlayers)
+            {
+                tempPosition.x = myPlayer.GetOccupiedTile().transform.position.x;
+                tempPosition.y = myPlayer.GetOccupiedTile().transform.position.y;
+                if (tempPosition == tilePosition)
+                    return true;
+            }
+        }       
+        return false;
+    }
+
+    /**
      * Resets the... well... turns.
      * @author Harry Hollands
      */
@@ -475,7 +499,7 @@ public class Board : MonoBehaviour
         if(this.CampTurn.isAI())
         {
             Tile previousLocation = this.CampTurn.TeamPlayers[0].GetOccupiedTile();
-			this.GetDice.Roll(this.CampTurn.TeamPlayers[0].gameObject.transform.position);
+			this.GetDice.Roll();
 			StartCoroutine(DelayAIMove(2, previousLocation));
         }
     }
