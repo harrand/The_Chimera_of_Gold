@@ -92,7 +92,7 @@ public class Tile : MonoBehaviour
     * @author Harry Hollands
     * @return - True if an Obstacle is on this Tile, else false.
     */
-    private bool BlockedByObstacle()
+	public bool BlockedByObstacle()
 	{
 		foreach(Obstacle obst in this.parent.Obstacles)
 			if(obst.GetOccupiedTile() == this)

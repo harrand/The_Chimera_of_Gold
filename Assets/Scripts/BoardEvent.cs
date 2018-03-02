@@ -29,6 +29,11 @@ public class BoardEvent
 	 */
 	public void OnPlayerMove(Player player, Vector3 moveTarget)
 	{
+        if(player.GetCamp().GetParent().CampTurn != player.GetCamp())
+        {
+            Debug.Log("fuck off its not your turn");
+            return;
+        }
         if (player == null)
             return;
 		if(player.transform.position == moveTarget)

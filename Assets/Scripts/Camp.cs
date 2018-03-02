@@ -15,6 +15,7 @@ public class Camp : NetworkBehaviour
     private uint numberPlayers;
 	public Player[] TeamPlayers{get; private set;}
     public Color TeamColor { get; set; }
+    public DecisionTree ai { get; private set; }
 
     /**
      * Pseudo-constructor which uses the Prefabs/Camp prefab in the project tree.
@@ -34,7 +35,7 @@ public class Camp : NetworkBehaviour
         campScript.tile = tile;
         campScript.PositionTileSpace = tile.PositionTileSpace;
 		campObject.transform.position = tile.gameObject.transform.position;
-
+        campScript.ai = null;
         // Define Player array size.
         campScript.numberPlayers = 5;
         campScript.TeamPlayers = new Player[campScript.numberPlayers];
@@ -44,6 +45,19 @@ public class Camp : NetworkBehaviour
             campScript.SpawnPlayer();
         }
         return campScript;
+    }
+
+    public static Camp CreateAICamp(Board parent, Tile tile, Color teamColour)
+    {
+        Camp camp = Camp.Create(parent, tile, teamColour);
+        camp.ai = camp.gameObject.AddComponent<DecisionTree>();
+        camp.ai.board = camp.GetParent();
+        return camp;
+    }
+
+    public bool isAI()
+    {
+        return this.ai != null;
     }
 
     private void Start()
