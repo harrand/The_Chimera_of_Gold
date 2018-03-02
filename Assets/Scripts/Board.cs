@@ -56,6 +56,7 @@ public class Board : MonoBehaviour
 			float xTile = i % board.GetWidthInTiles;
 			float zTile = i / board.GetWidthInTiles;
 			board.Tiles[i] = Tile.Create(board, xTile, zTile);
+            board.Tiles[i].InitialMaterial = Tile.PrefabMaterial();
 			GameObject tileObject = board.Tiles[i].gameObject;
 			Vector2 tileSize = Board.ExpectedTileSize(root, board.GetWidthInTiles, board.GetHeightInTiles);
 			tileObject.transform.position = Game.MinWorldSpace(root) + (new Vector3(xTile * tileSize.x, 0, zTile * tileSize.y)) + new Vector3(6,0,6);
@@ -69,8 +70,8 @@ public class Board : MonoBehaviour
 		board.numberObstacles = 13;
 
         /// Allocate and assign Camps.
-		board.Camps = new Camp[board.numberCamps];
-        for (uint i = 0; i < board.numberCamps; i++)
+		board.Camps = new Camp[PlayerData.numberOfPlayers];
+        for (uint i = 0; i < PlayerData.numberOfPlayers; i++)
         {
             Color color = Color.black;
             switch (i % 5)
@@ -91,15 +92,14 @@ public class Board : MonoBehaviour
                     color = Color.magenta;
                     break;
             }
-            if (i == (board.numberCamps - 1))
+            if (PlayerData.isAIPlayer[i])
                 board.Camps[i] = Camp.CreateAICamp(board, board.Tiles[(4 * i) + 2], color);
             else
 			{
-				// we want Tile 4*i + 2
-				Debug.Log("spawning a camp on " + board.Tiles[4 * i + 2].gameObject.name);
-				board.Camps[i] = Camp.Create(board, board.Tiles[(4 * i) + 2], color);
-				board.ResetTurns();
+                // we want Tile 4*i + 2
+                board.Camps[i] = Camp.Create(board, board.Tiles[(4 * i) + 2], color);
 			}
+            board.ResetTurns();
         }
         /// Allocate and assign Obstacles.
 		board.Obstacles = new Obstacle[board.numberObstacles];
@@ -464,7 +464,22 @@ public class Board : MonoBehaviour
 		yield return new WaitForSeconds(t + 1);
 		int roll = (int) this.GetDice.NumberFaceUp();
 		Debug.Log("i rolled a " + roll);
-		Tile tileDestination = this.CampTurn.ai.MovementTo(this.CampTurn.TeamPlayers[0].GetOccupiedTile(), roll);
+        int index = new System.Random().Next() % 5;
+        Player aiPlayer = null;
+        uint count = 0;
+        do
+        {
+            if (++count > 5)
+                break;
+            aiPlayer = this.CampTurn.TeamPlayers[index++];
+            if (index > 5)
+                index = 0;
+        } while (aiPlayer == null);
+        Debug.Log("campturn = " + this.CampTurn);
+        Debug.Log("campturn AI = " + this.CampTurn.ai == null ? "IS NULL" : "is fine");
+        Debug.Log("aiplayer tile is " + aiPlayer.GetOccupiedTile() == null ? "SHIT" : "fine.");
+        Debug.Log("roll = " + roll);
+        Tile tileDestination = this.CampTurn.ai.MovementTo(aiPlayer.GetOccupiedTile(), roll);
 		this.CampTurn.TeamPlayers[0].gameObject.transform.position = tileDestination.gameObject.transform.position + Player.POSITION_OFFSET;
 		this.CampTurn.ai.MoveObstacle (tileDestination);
 		this.NextTurn();
@@ -501,6 +516,7 @@ public class Board : MonoBehaviour
 			this.GetDice.Roll();
 			StartCoroutine(DelayAIMove(2, previousLocation));
         }
+        this.RemoveTileHighlights();
     }
 
 	public Obstacle GetObstacleByTile(Tile para)

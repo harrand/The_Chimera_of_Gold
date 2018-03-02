@@ -52,7 +52,14 @@ public class Player :  NetworkBehaviour
      */
     public void Kill()
     {
+        uint thisIndex = 0;
+        for(uint index = 0; index < 5; index++)
+        {
+            if (this.GetCamp().TeamPlayers[index] == this)
+                thisIndex = index;
+        }
         Destroy(this.gameObject);
+        this.GetCamp().TeamPlayers[thisIndex] = null;
     }
 
     /**
