@@ -55,7 +55,7 @@ public class DecisionTree : MonoBehaviour
 		return this.board.GetTileByTileSpace(destination);
 	}
 
-	public void MoveObstacle(Tile para)
+	public void MoveObstacle(Tile para, Player aiPlayer)
 	{
 		Obstacle currentObstacle = null;
 
@@ -67,7 +67,7 @@ public class DecisionTree : MonoBehaviour
 
 		if (currentObstacle != null) 
 		{
-            ObstacleHardMovement(currentObstacle);
+            ObstacleHardMovement(currentObstacle, aiPlayer);
 		}
 	}
 
@@ -78,7 +78,7 @@ public class DecisionTree : MonoBehaviour
         while (true)
         {
             // should check if there is an obstacle or a player pawn on the tile.
-            if (isvalid(posi) && !board.TileOccupiedByObstacle(posi))
+            if (isvalid(posi) && !board.TileOccupiedByObstacle(posi) && !board.TileOccupiedByPlayerPawn(posi))
             {
                 obstacle.transform.position = board.GetTileByTileSpace(posi).transform.position;
                 break;
@@ -89,7 +89,7 @@ public class DecisionTree : MonoBehaviour
     }
 
     /* Obstacle movement for hard mode */
-    void ObstacleHardMovement(Obstacle obstacle)
+    void ObstacleHardMovement(Obstacle obstacle, Player aiPlayer)
     {
         Player[] playerPawns = new Player[board.Camps.Length * 5];
         int q = 0;
@@ -123,7 +123,10 @@ public class DecisionTree : MonoBehaviour
         }
         for (int k = 0; k < playerPawns.Length; k++)
         {
-            if (CheckAdjacentObstacles(playerPawns[k]) != invalidPosition)
+            if(aiPlayer.GetCamp() == playerPawns[k].GetCamp())
+            {
+                continue;
+            }else if (CheckAdjacentObstacles(playerPawns[k]) != invalidPosition)
             {
                 posi = CheckAdjacentObstacles(playerPawns[k]);
                 if(board.GetTileByTileSpace(posi) == null)
@@ -154,7 +157,7 @@ public class DecisionTree : MonoBehaviour
         {
             posi.x = pawnPosition.x + dir[j, 0]; //search the neighbour node 
             posi.y = pawnPosition.y + dir[j, 1];
-            if (board.GetObstacleByTileSpace(posi) == null && isvalid(posi))
+            if (board.GetObstacleByTileSpace(posi) == null && isvalid(posi) && !board.TileOccupiedByPlayerPawn(posi))
             {
                 return posi;
             }

@@ -480,8 +480,8 @@ public class Board : MonoBehaviour
         Debug.Log("aiplayer tile is " + aiPlayer.GetOccupiedTile() == null ? "SHIT" : "fine.");
         Debug.Log("roll = " + roll);
         Tile tileDestination = this.CampTurn.ai.MovementTo(aiPlayer.GetOccupiedTile(), roll);
-		this.CampTurn.TeamPlayers[0].gameObject.transform.position = tileDestination.gameObject.transform.position + Player.POSITION_OFFSET;
-		this.CampTurn.ai.MoveObstacle (tileDestination);
+        aiPlayer.gameObject.transform.position = tileDestination.gameObject.transform.position + Player.POSITION_OFFSET;
+		this.CampTurn.ai.MoveObstacle (tileDestination, aiPlayer);
 		this.NextTurn();
 	}
 
