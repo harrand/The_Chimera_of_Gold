@@ -420,18 +420,15 @@ public class Board : MonoBehaviour
     public bool TileOccupiedByPlayerPawn(Vector2 tilePosition)
     {
         Camp tempCamp = null;
-        Vector2 tempPosition = new Vector2();
         foreach (Camp myCamp in this.Camps)
         {
             tempCamp = myCamp;
             foreach (Player myPlayer in tempCamp.TeamPlayers)
             {
-                tempPosition.x = myPlayer.GetOccupiedTile().transform.position.x;
-                tempPosition.y = myPlayer.GetOccupiedTile().transform.position.y;
-                if (tempPosition == tilePosition)
+                if (myPlayer.GetOccupiedTile().transform.position == GetTileByTileSpace(tilePosition).transform.position)
                     return true;
             }
-        }       
+        }
         return false;
     }
 
