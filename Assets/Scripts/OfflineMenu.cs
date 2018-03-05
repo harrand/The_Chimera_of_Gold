@@ -9,19 +9,32 @@ public class OfflineMenu : MonoBehaviour
 {
     public Dropdown numberOfPlayers;
     public GameObject player2AI;
+    public GameObject player2AIDifficulty;
     public Text player3Text;
     public GameObject player3AI;
+    public GameObject player3AIDifficulty;
     public Text player4Text;
     public GameObject player4AI;
+    public GameObject player4AIDifficulty;
     public Text player5Text;
     public GameObject player5AI;
+    public GameObject player5AIDifficulty;
 
     // Disable player 3, 4 and 5 elements at the start
     void Start ()
     {
+        player2AIDifficulty.SetActive(player2AI.GetComponent<Toggle>().isOn);
         DisableThree();
         DisableFour();
         DisableFive();
+    }
+
+    private void Update()
+    {
+        player2AIDifficulty.SetActive(player2AI.GetComponent<Toggle>().isOn);
+        player3AIDifficulty.SetActive(player3AI.GetComponent<Toggle>().isOn && player3AI.activeInHierarchy);
+        player4AIDifficulty.SetActive(player4AI.GetComponent<Toggle>().isOn && player4AI.activeInHierarchy);
+        player5AIDifficulty.SetActive(player5AI.GetComponent<Toggle>().isOn && player5AI.activeInHierarchy);
     }
 
     /**
@@ -60,6 +73,7 @@ public class OfflineMenu : MonoBehaviour
     {
         player3Text.enabled = false;
         player3AI.SetActive(false);
+        player3AIDifficulty.SetActive(false);
     }
 
     /**
@@ -70,6 +84,7 @@ public class OfflineMenu : MonoBehaviour
     {
         player4Text.enabled = false;
         player4AI.SetActive(false);
+        player4AIDifficulty.SetActive(false);
     }
 
     /**
@@ -80,6 +95,7 @@ public class OfflineMenu : MonoBehaviour
     {
         player5Text.enabled = false;
         player5AI.SetActive(false);
+        player5AIDifficulty.SetActive(false);
     }
 
     /**
