@@ -67,6 +67,8 @@ public class InputController : MonoBehaviour
 	*/
     private void UpdateLastClickedObjects()
     {
+        if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(-1))
+            return;
         Tile currentTile = this.GetMousedTile();
         if (currentTile != null)
         {
