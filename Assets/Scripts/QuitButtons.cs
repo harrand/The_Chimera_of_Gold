@@ -25,9 +25,10 @@ public class QuitButtons : MonoBehaviour
      */
     public void Start()
     {
-
-        quitMenu.enabled = false;
-        quitToMenuMenu.enabled = false;
+        if(quitMenu != null)
+            quitMenu.enabled = false;
+        if(quitToMenuMenu != null)
+            quitToMenuMenu.enabled = false;
         if (start != null)
         {
             start.enabled = true;

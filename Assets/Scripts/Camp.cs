@@ -91,6 +91,7 @@ public class Camp : NetworkBehaviour
         if(this.GetNumberOfPlayers() < this.numberPlayers)
         {
             this.TeamPlayers[this.GetNumberOfPlayers()] = Player.Create(this.parent, this.tile);
+            return this.TeamPlayers[this.GetNumberOfPlayers() - 1];
         }
         Debug.Log("Camp tried to spawn Player but already has the maximum number of spawned players active.");
         return null;

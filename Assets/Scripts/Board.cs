@@ -512,6 +512,7 @@ public class Board : MonoBehaviour
 			StartCoroutine(DelayAIMove(2, previousLocation));
         }
         this.RemoveTileHighlights();
+        //consider highlighting something in some way to display the colour of the current camp turn
         //this.GetDice.GetComponent<Renderer>().material.color = this.CampTurn.TeamColor;
     }
 
