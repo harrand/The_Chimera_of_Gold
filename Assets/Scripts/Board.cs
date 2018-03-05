@@ -419,7 +419,7 @@ public class Board : MonoBehaviour
     */
     public bool TileOccupiedByPlayerPawn(Vector2 tilePosition)
     {
-        Camp tempCamp = new Camp();
+        Camp tempCamp = null;
         Vector2 tempPosition = new Vector2();
         foreach (Camp myCamp in this.Camps)
         {
@@ -463,7 +463,6 @@ public class Board : MonoBehaviour
 		float t = v / 9.81f;
 		yield return new WaitForSeconds(t + 1);
 		int roll = (int) this.GetDice.NumberFaceUp();
-		Debug.Log("i rolled a " + roll);
         int index = new System.Random().Next() % 5;
         Player aiPlayer = null;
         uint count = 0;
@@ -475,10 +474,6 @@ public class Board : MonoBehaviour
             if (index > 5)
                 index = 0;
         } while (aiPlayer == null);
-        Debug.Log("campturn = " + this.CampTurn);
-        Debug.Log("campturn AI = " + this.CampTurn.ai == null ? "IS NULL" : "is fine");
-        Debug.Log("aiplayer tile is " + aiPlayer.GetOccupiedTile() == null ? "SHIT" : "fine.");
-        Debug.Log("roll = " + roll);
         Tile tileDestination = this.CampTurn.ai.MovementTo(aiPlayer.GetOccupiedTile(), roll);
         aiPlayer.gameObject.transform.position = tileDestination.gameObject.transform.position + Player.POSITION_OFFSET;
 		this.CampTurn.ai.MoveObstacle (tileDestination, aiPlayer);
@@ -517,6 +512,7 @@ public class Board : MonoBehaviour
 			StartCoroutine(DelayAIMove(2, previousLocation));
         }
         this.RemoveTileHighlights();
+        //this.GetDice.GetComponent<Renderer>().material.color = this.CampTurn.TeamColor;
     }
 
 	public Obstacle GetObstacleByTile(Tile para)
