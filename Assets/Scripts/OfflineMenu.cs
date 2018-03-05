@@ -146,7 +146,7 @@ public class OfflineMenu : MonoBehaviour
 
     /**
      * Method to start the game with the desired number of players and AI
-     * @author Lawrence Howes-Yarlett
+     * @author Lawrence Howes-Yarlett & Harry Hollands
      */
     public void StartGame()
     {
@@ -161,8 +161,5 @@ public class OfflineMenu : MonoBehaviour
         PlayerData.isAIPlayer[3] = player4AI.GetComponent<Toggle>().isOn;
         PlayerData.isAIPlayer[4] = player5AI.GetComponent<Toggle>().isOn;
         SceneManager.LoadScene("Chimera");
-        //add stuff so correct amount of players spawn and correct amount of them are AI
     }
-
-    //Add AI toggle stuff so if player3AI.GetComponent<Toggle>().isOn = true player 3 will be AI and same for players 4 and 5
 }
