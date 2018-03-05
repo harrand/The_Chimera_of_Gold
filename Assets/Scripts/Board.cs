@@ -447,7 +447,7 @@ public class Board : MonoBehaviour
 	/**
 	 * Dice is already being rolled when this is invoked. Causes the AI Player to perform its movement functionality approximately one second after the dice is predicted to hit the ground.
 	 */
-	private IEnumerator DelayAIMove(float seconds, Tile previousLocation)
+	private IEnumerator DelayAIMove(float seconds, Tile previousLocation, Player aiPlayer)
 	{
 		// s = ut + 0.5a(t^2)
 		// v^2 = u^2 + 2as
@@ -463,17 +463,6 @@ public class Board : MonoBehaviour
 		float t = v / 9.81f;
 		yield return new WaitForSeconds(t + 1);
 		int roll = (int) this.GetDice.NumberFaceUp();
-        int index = new System.Random().Next() % 5;
-        Player aiPlayer = null;
-        uint count = 0;
-        do
-        {
-            if (++count > 5)
-                break;
-            aiPlayer = this.CampTurn.TeamPlayers[index++];
-            if (index > 5)
-                index = 0;
-        } while (aiPlayer == null);
         Tile tileDestination = this.CampTurn.ai.MovementTo(aiPlayer.GetOccupiedTile(), roll);
         aiPlayer.gameObject.transform.position = tileDestination.gameObject.transform.position + Player.POSITION_OFFSET;
 		this.CampTurn.ai.MoveObstacle (tileDestination, aiPlayer);
@@ -507,9 +496,20 @@ public class Board : MonoBehaviour
 
         if(this.CampTurn.isAI())
         {
-            Tile previousLocation = this.CampTurn.TeamPlayers[0].GetOccupiedTile();
-			this.GetDice.Roll();
-			StartCoroutine(DelayAIMove(2, previousLocation));
+            Player aiPlayer = null;
+            uint count = 0;
+            do
+            {
+                if (++count > 5)
+                    break;
+                int index = new System.Random().Next() % 5;
+                aiPlayer = this.CampTurn.TeamPlayers[index++];
+                if (index > 5)
+                    index = 0;
+            } while (aiPlayer == null);
+            Tile previousLocation = aiPlayer.GetOccupiedTile();
+			this.GetDice.Roll(aiPlayer.gameObject.transform.position + new Vector3(0, 20, 0));
+			StartCoroutine(DelayAIMove(2, previousLocation, aiPlayer));
         }
         this.RemoveTileHighlights();
         //consider highlighting something in some way to display the colour of the current camp turn
