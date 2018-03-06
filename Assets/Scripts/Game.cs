@@ -58,7 +58,7 @@ public class Game : NetworkBehaviour
            this.board.GetDice.Roll(Camera.main.transform.position + new Vector3(0, 20, 0));
         }*/
         //To me tomorrow. This is important. 
-        if(Input.GetKeyDown("r"))
+        /*if(Input.GetKeyDown("r"))
         {
             GameObject dicePrefab = ((GameObject)Instantiate(Resources.Load("Prefabs/Dice")));
             NetworkHash128 assetId = dicePrefab.GetComponent<NetworkIdentity>().assetId;//Gets netID!!!
@@ -72,7 +72,7 @@ public class Game : NetworkBehaviour
         if(Input.GetKeyDown("d"))
         {
             //UnSpawn(My parents disappointment); //ahaha a joke because,.. funny
-        }
+        }*/
     }
 
     public void DiceRoll()

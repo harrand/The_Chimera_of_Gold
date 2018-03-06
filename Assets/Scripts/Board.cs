@@ -9,17 +9,26 @@ using UnityEngine.Networking;
 * Board is a container for Camps (and their respective Players), all Tiles and Obstacles. Also handles turns, tile-highlighting and game rule enforcement.
 * @author Harry Hollands, Ciara O'Brien, Aswin Mathew
 */
-public class Board : MonoBehaviour
+public class Board : NetworkBehaviour
 {
     /// width and height use number of Tiles as units.
     private uint numberCamps, numberObstacles;
     private float width, height;
     public bool obstacleControlFlag;
     public Tile[] Tiles { get; private set; }
-	public Obstacle[] Obstacles { get; private set; }
-	public Camp[] Camps { get; private set; }
-    public Dice GetDice { get; private set; }
+    public Obstacle[] Obstacles { get; private set; }
+    public Camp[] Camps { get; private set; }
+    public Dice GetDice { get { return diceObject == null ? null : diceObject.GetComponent<Dice>(); } private set { } }
+    [SyncVar]
+    public GameObject diceObject = null;
+
 	public BoardEvent Event{ get; private set; }
+
+    public void Start()
+    {
+        this.diceObject = Dice.Create(this.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1)).gameObject;
+        Debug.Log(this.diceObject);
+    }
 
     /**
     * This is to be used to create a new Board when the root GameObject has a terrain component (interpolating instead of taking dimensions as parameters).
@@ -31,16 +40,16 @@ public class Board : MonoBehaviour
     * @return - Reference to the Board created.
     */
     public static Board Create(GameObject root, uint tilesWidth, uint tilesHeight)
-	{
-		if(tilesWidth < 5 && tilesHeight < 5 && (tilesWidth * tilesHeight) < 13)
-		{
-			Debug.LogError("Board has invalid width/height (tile-space). One of width or height must be at least 5 AND width * height MUST be greater than 13.");
-		}
-		Board board = root.AddComponent<Board>();
+    {
+        if (tilesWidth < 5 && tilesHeight < 5 && (tilesWidth * tilesHeight) < 13)
+        {
+            Debug.LogError("Board has invalid width/height (tile-space). One of width or height must be at least 5 AND width * height MUST be greater than 13.");
+        }
+        Board board = root.AddComponent<Board>();
         root.tag = "GameBoard";
         root.name += " (Board)";
-        board.GetDice = Dice.Create(board.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1));
-		board.Event = new BoardEvent(board);
+        
+        board.Event = new BoardEvent(board);
 		board.GetWidthInTiles = Convert.ToUInt32(tilesWidth);
 		board.GetHeightInTiles = Convert.ToUInt32(tilesHeight);
 
@@ -180,14 +189,6 @@ public class Board : MonoBehaviour
 			board.Obstacles[i] = Obstacle.Create(board, board.Tiles[i]);
 		return board;
 	}
-
-    /**
-     * @author ?
-     */
-	void Start()
-    {
-
-    }
 
     /**
     * If CampTurn is somehow broken and null (or at the beginning of the game), reset the turns.

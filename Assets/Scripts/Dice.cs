@@ -7,7 +7,7 @@ using System.Collections;
  * Dice is created once at the beginning of the game and then rolled whenever a player plays.
  * @author Ciara O'Brien, Harry Hollands
  */
-public class Dice : MonoBehaviour
+public class Dice : NetworkBehaviour
 {
     /**
      * This makes the initial dice
@@ -17,15 +17,37 @@ public class Dice : MonoBehaviour
      * @param scale The scale of the dice
      * @return the dice created
      */
-	public static Dice Create(Vector3 position, Vector3 rotation, Vector3 scale)
+    private void Start()
     {
-        GameObject diceObject = Instantiate(Resources.Load("Prefabs/Dice") as GameObject);
-        Dice dice = diceObject.AddComponent<Dice>();
+        ClientScene.RegisterPrefab(this.gameObject);
+
+        if (isServer)
+        {
+            Debug.Log("Server");
+            NetworkServer.Spawn(this.gameObject);
+        }
+        else
+            Debug.Log("NOT");
+    }
+
+    public static Dice Create(Vector3 position, Vector3 rotation, Vector3 scale)
+    {
+        GameObject diceObject;
+
+        Dice dice;
+        
+        diceObject = Instantiate(Resources.Load("Prefabs/Dice") as GameObject);
+        dice = diceObject.AddComponent<Dice>();
+        diceObject.tag = "Dice";
         diceObject.transform.position = position;
         diceObject.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
         diceObject.transform.localScale = scale;
+        
+        
+
         return dice;
     }
+
 
     /**
      * Teleports the dice object to the main camera position and applies a random rotation, essentially simulating a literal throw of the die.
@@ -34,7 +56,13 @@ public class Dice : MonoBehaviour
      */
 	public void Roll(Vector3 desiredPosition)
     {
-		this.gameObject.SetActive(true);
+        CmdRoll(desiredPosition);	
+    }
+
+    [Command]
+    public void CmdRoll(Vector3 desiredPosition)
+    {
+        this.gameObject.SetActive(true);
         Vector3 cameraPosition = Camera.main.gameObject.transform.position;
         this.gameObject.transform.position = desiredPosition;
 		this.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
