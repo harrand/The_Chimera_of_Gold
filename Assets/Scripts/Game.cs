@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 * default number of players per camp
 * @author Harry Hollands
 */
-public class Game : MonoBehaviour
+public class Game : NetworkBehaviour
 {
     public const uint NUMBER_OBSTACLES = 13;
     public const uint NUMBER_CAMPS = 5;
@@ -21,7 +21,18 @@ public class Game : MonoBehaviour
 
     private Board board;
 
-	void Start()
+    //Handles spawning request? yes use this me
+    public GameObject SpawnDice(Vector3 position, NetworkHash128 assetId)
+    {
+        return (GameObject)Instantiate(Resources.Load("Prefabs/Dice"), position, Quaternion.identity);
+    }
+    //handles unspawn request? maybe useful??
+    public void UnSpawn(GameObject spawned)
+    {
+        Destroy(spawned);
+    }
+
+    void Start()
 	{
         /*
         new TestBoard(50, 50, 5, 5); // Perform Board Unit Test
@@ -46,6 +57,22 @@ public class Game : MonoBehaviour
         {
            this.board.GetDice.Roll(Camera.main.transform.position + new Vector3(0, 20, 0));
         }*/
+        //To me tomorrow. This is important. 
+        if(Input.GetKeyDown("r"))
+        {
+            GameObject dicePrefab = ((GameObject)Instantiate(Resources.Load("Prefabs/Dice")));
+            NetworkHash128 assetId = dicePrefab.GetComponent<NetworkIdentity>().assetId;//Gets netID!!!
+            //            ClientScene.RegisterSpawnHandler(assetId, SpawnDice, UnSpawnDice);  
+            ClientScene.RegisterPrefab(dicePrefab);
+            NetworkServer.Spawn(dicePrefab);
+
+            //I offfer this sacrifice to the tiny snake god and pray for his help
+            //All praise his shiny scales <3
+        }
+        if(Input.GetKeyDown("d"))
+        {
+            //UnSpawn(My parents disappointment); //ahaha a joke because,.. funny
+        }
     }
 
     public void DiceRoll()
@@ -103,4 +130,5 @@ public class Game : MonoBehaviour
     {
         this.board.NextTurn();
     }
+
 }
