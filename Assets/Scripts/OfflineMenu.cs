@@ -29,6 +29,10 @@ public class OfflineMenu : MonoBehaviour
         DisableFive();
     }
 
+    /**
+     * Method to check whether any AI checkbox is ticked, and showing or hiding the toggle depending on the result
+     * @author Lawrence Howes-Yarlett
+     */
     private void Update()
     {
         player2AIDifficulty.SetActive(player2AI.GetComponent<Toggle>().isOn);
@@ -155,11 +159,15 @@ public class OfflineMenu : MonoBehaviour
         PlayerData.numberOfPlayers += player4AI.GetComponent<Toggle>().IsActive() ? 1u : 0u;
         PlayerData.numberOfPlayers += player5AI.GetComponent<Toggle>().IsActive() ? 1u : 0u;
         PlayerData.isAIPlayer[0] = false;
-        // player2 is done somewhere else
         PlayerData.isAIPlayer[1] = player2AI.GetComponent<Toggle>().isOn;
         PlayerData.isAIPlayer[2] = player3AI.GetComponent<Toggle>().isOn;
         PlayerData.isAIPlayer[3] = player4AI.GetComponent<Toggle>().isOn;
         PlayerData.isAIPlayer[4] = player5AI.GetComponent<Toggle>().isOn;
+        PlayerData.isHardAI[0] = false;
+        PlayerData.isHardAI[1] = player2AIDifficulty.GetComponent<Toggle>().isOn;
+        PlayerData.isHardAI[2] = player3AIDifficulty.GetComponent<Toggle>().isOn;
+        PlayerData.isHardAI[3] = player4AIDifficulty.GetComponent<Toggle>().isOn;
+        PlayerData.isHardAI[4] = player5AIDifficulty.GetComponent<Toggle>().isOn;
         SceneManager.LoadScene("Chimera");
     }
 }
