@@ -51,8 +51,9 @@ public class Camp : NetworkBehaviour
     {
         Camp camp = Camp.Create(parent, tile, teamColour);
         //camp.ai = camp.gameObject.AddComponent<DecisionTree>();
-        camp.ai = DecisionTree.Create(camp, hardMode);
+        camp.ai = DecisionTree.Create(parent, camp, hardMode);
         camp.ai.board = camp.GetParent();
+        Debug.Log("created " + (hardMode ? "hard" : "easy") + " mode AI player.");
         return camp;
     }
 
