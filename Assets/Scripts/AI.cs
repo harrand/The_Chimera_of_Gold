@@ -21,11 +21,20 @@ public class DecisionTree : MonoBehaviour
     * @author Zibo Zhang and Yutian Xue
     * @param board - the whole board object of the game.
     */
+    public static DecisionTree Create(Board board, Camp camp, bool hardMode)
+    {
+        DecisionTree tree = camp.gameObject.AddComponent<DecisionTree>();
+        tree.board = board;
+        tree.HardMode = hardMode;
+        return tree;
+    }
+    /*
     public DecisionTree(Board board, bool hardMode)
     {
         this.board = board;
         this.HardMode = HardMode;
     }
+    */
 
 	/**
     * This is a class which is the used to store the information of BFS search tree.
