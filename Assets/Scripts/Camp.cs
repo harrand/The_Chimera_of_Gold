@@ -47,10 +47,11 @@ public class Camp : NetworkBehaviour
         return campScript;
     }
 
-    public static Camp CreateAICamp(Board parent, Tile tile, Color teamColour)
+    public static Camp CreateAICamp(Board parent, Tile tile, Color teamColour, bool hardMode)
     {
         Camp camp = Camp.Create(parent, tile, teamColour);
-        camp.ai = camp.gameObject.AddComponent<DecisionTree>();
+        //camp.ai = camp.gameObject.AddComponent<DecisionTree>();
+        camp.ai = DecisionTree.Create(camp, hardMode);
         camp.ai.board = camp.GetParent();
         return camp;
     }

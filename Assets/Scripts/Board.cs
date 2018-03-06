@@ -93,7 +93,9 @@ public class Board : MonoBehaviour
                     break;
             }
             if (PlayerData.isAIPlayer[i])
-                board.Camps[i] = Camp.CreateAICamp(board, board.Tiles[(4 * i) + 2], color);
+            {
+                board.Camps[i] = Camp.CreateAICamp(board, board.Tiles[(4 * i) + 2], color, PlayerData.isHardAI[i]);
+            }
             else
 			{
                 // we want Tile 4*i + 2

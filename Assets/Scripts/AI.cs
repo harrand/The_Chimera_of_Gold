@@ -13,6 +13,7 @@ public class DecisionTree : MonoBehaviour
     public Vector2 target;
     public Vector3 origin;
 	public Board board;
+    public bool HardMode { get; private set; }
     int value;
 
 	/**
@@ -20,9 +21,10 @@ public class DecisionTree : MonoBehaviour
     * @author Zibo Zhang and Yutian Xue
     * @param board - the whole board object of the game.
     */
-    public DecisionTree(Board board)
+    public DecisionTree(Board board, bool hardMode)
     {
         this.board = board;
+        this.HardMode = HardMode;
     }
 
 	/**
@@ -90,7 +92,10 @@ public class DecisionTree : MonoBehaviour
 
 		if (currentObstacle != null) 
 		{
-            ObstacleHardMovement(currentObstacle, aiPlayer);
+            if (this.HardMode)
+                ObstacleHardMovement(currentObstacle, aiPlayer);
+            else
+                ObstacleEasyMovement(currentObstacle);
 		}
 	}
 
