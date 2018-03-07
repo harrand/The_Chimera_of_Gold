@@ -18,16 +18,23 @@ public class Board : NetworkBehaviour
     public Tile[] Tiles { get; private set; }
     public Obstacle[] Obstacles { get; private set; }
     public Camp[] Camps { get; private set; }
-    public Dice GetDice { get { return diceObject == null ? null : diceObject.GetComponent<Dice>(); } private set { } }
-    [SyncVar]
-    public GameObject diceObject = null;
+    public Dice GetDice { get; private set; }
+    //[SyncVar]
+    //public GameObject diceObject = null;
 
-	public BoardEvent Event{ get; private set; }
+    //public Dice dice = null;
+	
+    public BoardEvent Event{ get; private set; }
 
     public void Start()
     {
-        this.diceObject = Dice.Create(this.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1)).gameObject;
-        Debug.Log(this.diceObject);
+        //this.diceObject = Dice.Create(this.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1)).gameObject;
+        //this.diceObject.SetActive(true);
+        //Debug.Log(this.GetDice.gameObject);
+        //ClientScene.RegisterPrefab(this.GetDice.gameObject);
+        //Debug.Log(this.GetDice.gameObject);
+        //NetworkServer.Spawn(this.GetDice.gameObject);
+        //Debug.Log(this.GetDice.gameObject);
     }
 
     /**
@@ -48,7 +55,21 @@ public class Board : NetworkBehaviour
         Board board = root.AddComponent<Board>();
         root.tag = "GameBoard";
         root.name += " (Board)";
-        
+
+        board.GetDice = Dice.Create(board.gameObject.transform.position, new Vector3(), new Vector3(1,1,1));
+        //if (board.diceObject == null)
+        //{
+            //board.diceObject = Dice.Create(board.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1)).gameObject;
+            //board.dice = Dice.Create(board.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1));
+            //Debug.Log(board.dice);
+           // ClientScene.RegisterPrefab(board.dice.gameObject);
+            //board.diceObject = board.dice.gameObject;
+            //Debug.Log(board.diceObject);
+        //}
+        //else
+        //{
+            //Debug.Log("Dice isn't null");
+        //}
         board.Event = new BoardEvent(board);
 		board.GetWidthInTiles = Convert.ToUInt32(tilesWidth);
 		board.GetHeightInTiles = Convert.ToUInt32(tilesHeight);
