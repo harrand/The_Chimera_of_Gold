@@ -10,7 +10,6 @@ using Random = UnityEngine.Random;
 */
 public class DecisionTree : MonoBehaviour
 {
-    public Vector2 target;
     public Vector3 origin;
 	public Board board;
     public bool HardMode { get; private set; }
@@ -79,8 +78,12 @@ public class DecisionTree : MonoBehaviour
     */
     public Tile MovementTo(Tile startTile, int moves)
     {
+        Debug.Log("Ai rolled " + moves);
         Vector2 destination = BFS_Find_Path(moves, startTile.PositionTileSpace);   
-		target = destination;
+        if (isgoal(destination))
+        {
+            destination.y = 17;
+        }
 		return this.board.GetTileByTileSpace(destination);
 	}
 
@@ -116,16 +119,16 @@ public class DecisionTree : MonoBehaviour
     */
     void ObstacleEasyMovement(Obstacle obstacle)
     {
-        Vector2 posi = new Vector2(Random.Range(0, 20), Random.Range(1, 18));
+        Vector2 posi = new Vector2(Random.Range(0, 20), Random.Range(2, 19));
         while (true)
         {
             // should check if there is an obstacle or a player pawn on the tile.
-            if (isvalid(posi) && !board.TileOccupiedByObstacle(posi) && !board.TileOccupiedByPlayerPawn(posi))
+            if (isvalid(posi) && !board.TileOccupiedByObstacle(posi) && !board.TileOccupiedByPlayerPawn(posi) && !isgoal(posi))
             {
                 obstacle.transform.position = board.GetTileByTileSpace(posi).transform.position;
                 break;
             }
-            posi = new Vector2(Random.Range(0, 20), Random.Range(1, 18));
+            posi = new Vector2(Random.Range(0, 20), Random.Range(2, 19));
         }
 
     }
@@ -209,7 +212,7 @@ public class DecisionTree : MonoBehaviour
         {
             posi.x = pawnPosition.x + dir[j, 0]; //search the neighbour node 
             posi.y = pawnPosition.y + dir[j, 1];
-            if (board.GetObstacleByTileSpace(posi) == null && isvalid(posi) && !board.TileOccupiedByPlayerPawn(posi))
+            if (board.GetObstacleByTileSpace(posi) == null && isvalid(posi) && !board.TileOccupiedByPlayerPawn(posi) && !isgoal(posi))
             {
                 return posi;
             }
@@ -241,9 +244,7 @@ public class DecisionTree : MonoBehaviour
         var path = new List<Vector2>();
         var visited = new HashSet<Vector2>(); //store node that has been visited
         var endPosition = new Vector2();
-
         var waitList = new Queue<Node>();  //store node that need to be visited
-
         Node start = new Node(0, startPosition);
 
         waitList.Enqueue(start);
@@ -269,7 +270,7 @@ public class DecisionTree : MonoBehaviour
                 {
                     Tile neighbourTile = this.board.GetTileByTileSpace(neighbour.Getposition());
 
-                    if (neighbourTile.BlockedByObstacle())
+                    if (neighbourTile.BlockedByObstacle() || isgoal(neighbour.Getposition()))
                     {
                         if (tempMoves - current.depth != 1)
                         {
@@ -341,7 +342,6 @@ public class DecisionTree : MonoBehaviour
 			distence_to_goal = BFS_Assese_Value(tmpPosition);
 
 			score = distence_to_goal;
-
 			if (distence_to_goal == -1)
 			{
 				score = 0;
@@ -380,7 +380,7 @@ public class DecisionTree : MonoBehaviour
 
 		var visited = new HashSet<Vector2>(); //store node that has been visited
 		var waitList = new Queue<Node>();  //store node that need to be visited
-		Vector2 goalposition = new Vector2 (10, 18);
+		
         Node start = new Node(0, startPosition);
         waitList.Enqueue(start);
 
@@ -412,8 +412,9 @@ public class DecisionTree : MonoBehaviour
                     waitList.Enqueue(neighbour);  //join the neighbour to the waitList to wait for next search
                 }
 
-                if (neighbour.Getposition() == goalposition)
+                if (isgoal(neighbour.Getposition()))
                 {
+                    Debug.Log("Final neighbour position: " + neighbour.depth);
                     return neighbour.depth; // when we found the goal
                 }
             }
@@ -421,6 +422,14 @@ public class DecisionTree : MonoBehaviour
         }
         return -1;
 
+    }
+
+    public bool isgoal(Vector2 posi)
+    {
+        if ((int)posi.x == 10 && (int)posi.y == 18)
+            return true;
+        else
+            return false;
     }
 
 	/**
@@ -523,9 +532,16 @@ public class DecisionTree : MonoBehaviour
             else
                 return false;
         }
-        else if (y == 16 || y == 17 || y == 18)
+        else if (y == 16 || y == 17)
         {
             if (x == 4 || x == 16)
+                return true;
+            else
+                return false;
+        }
+        else if(y == 18)
+        {
+            if (x == 4 || x == 10 || x == 16)
                 return true;
             else
                 return false;
