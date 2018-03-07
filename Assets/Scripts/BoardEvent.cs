@@ -31,7 +31,7 @@ public class BoardEvent
 	{
         if(player.GetCamp().GetParent().CampTurn != player.GetCamp())
         {
-            Debug.Log("fuck off its not your turn");
+            Debug.Log("its not your turn");
             return;
         }
         if (player == null)

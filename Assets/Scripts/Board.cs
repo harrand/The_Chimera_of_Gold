@@ -464,6 +464,10 @@ public class Board : MonoBehaviour
 		int roll = (int) this.GetDice.NumberFaceUp();
         Tile tileDestination = this.CampTurn.ai.MovementTo(aiPlayer.GetOccupiedTile(), roll);
         aiPlayer.gameObject.transform.position = tileDestination.gameObject.transform.position + Player.POSITION_OFFSET;
+		if(tileDestination == this.GetGoalTile())
+		{
+			new BoardEvent(this).OnPlayerGoalEvent(aiPlayer);	
+		}
 		this.CampTurn.ai.MoveObstacle (tileDestination, aiPlayer);
 		this.NextTurn();
 	}
@@ -502,10 +506,11 @@ public class Board : MonoBehaviour
                 if (++count > 5)
                     break;
                 int index = new System.Random().Next() % 5;
-                aiPlayer = this.CampTurn.TeamPlayers[index++];
+				aiPlayer = this.CampTurn.TeamPlayers[index++];
                 if (index > 5)
                     index = 0;
             } while (aiPlayer == null);
+//			aiPlayer = this.CampTurn.TeamPlayers[0];
             Tile previousLocation = aiPlayer.GetOccupiedTile();
 			this.GetDice.Roll(aiPlayer.gameObject.transform.position + new Vector3(0, 20, 0));
 			StartCoroutine(DelayAIMove(2, previousLocation, aiPlayer));
