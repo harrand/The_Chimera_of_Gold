@@ -19,23 +19,16 @@ public class Board : MonoBehaviour
 <<<<<<< HEAD
     public Obstacle[] Obstacles { get; private set; }
     public Camp[] Camps { get; private set; }
-    public Dice GetDice { get; private set; }
-    //[SyncVar]
-    //public GameObject diceObject = null;
+    public Dice GetDice { get { return diceObject == null ? null : diceObject.GetComponent<Dice>(); } private set { } }
+    [SyncVar]
+    public GameObject diceObject = null;
 
-    //public Dice dice = null;
-	
-    public BoardEvent Event{ get; private set; }
+	public BoardEvent Event{ get; private set; }
 
     public void Start()
     {
-        //this.diceObject = Dice.Create(this.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1)).gameObject;
-        //this.diceObject.SetActive(true);
-        //Debug.Log(this.GetDice.gameObject);
-        //ClientScene.RegisterPrefab(this.GetDice.gameObject);
-        //Debug.Log(this.GetDice.gameObject);
-        //NetworkServer.Spawn(this.GetDice.gameObject);
-        //Debug.Log(this.GetDice.gameObject);
+        this.diceObject = Dice.Create(this.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1)).gameObject;
+        Debug.Log(this.diceObject);
     }
 
 =======
@@ -64,6 +57,7 @@ public class Board : MonoBehaviour
         root.tag = "GameBoard";
         root.name += " (Board)";
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         board.GetDice = Dice.Create(board.gameObject.transform.position, new Vector3(), new Vector3(1,1,1));
         //if (board.diceObject == null)
@@ -79,6 +73,9 @@ public class Board : MonoBehaviour
         //{
             //Debug.Log("Dice isn't null");
         //}
+=======
+        
+>>>>>>> parent of 9b419f8... Everthing is broken
         board.Event = new BoardEvent(board);
 =======
         board.GetDice = Dice.Create(board.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1));

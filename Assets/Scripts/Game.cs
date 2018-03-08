@@ -20,9 +20,18 @@ public class Game : NetworkBehaviour
 	public uint tileWidth = 5, tileHeight = 5;
 
     private Board board;
-    [SyncVar]
-    public GameObject dice = null;
-    
+
+    //Handles spawning request? yes use this me
+    public GameObject SpawnDice(Vector3 position, NetworkHash128 assetId)
+    {
+        return (GameObject)Instantiate(Resources.Load("Prefabs/Dice"), position, Quaternion.identity);
+    }
+    //handles unspawn request? maybe useful??
+    public void UnSpawn(GameObject spawned)
+    {
+        Destroy(spawned);
+    }
+
     void Start()
 	{
         /*
@@ -31,40 +40,15 @@ public class Game : NetworkBehaviour
         new TestCamp();
         new TestPlayer();
         */
+
         
-        if (isServer)
-        {
-            //GameObject terrain = (GameObject)Instantiate(Resources.Load("Prefabs/Terrain"));
-            //ClientScene.RegisterPrefab(terrain);
-            ///NetworkServer.Spawn(terrain);
-            CmdSpawnDice();
-            dice = GameObject.FindGameObjectWithTag("Dice");
-            Debug.Log(dice);
-        }
-        //dice = GameObject.FindGameObjectWithTag("Dice");
-
-        // Create a normal Board with Input attached. Both Board and InputController are attached to the root GameObject (this).
-        this.board = Board.Create(this.gameObject, tileWidth, tileHeight);
-		this.board.gameObject.AddComponent<InputController>();
-
+		// Create a normal Board with Input attached. Both Board and InputController are attached to the root GameObject (this).
+		this.board = Board.Create(this.gameObject, tileWidth, tileHeight);
+		this.board.gameObject.AddComponent<InputController>();   
         /*if(isServer)
         {
             NetworkServer.Spawn(this.board.gameObject);
         }*/
-    }
-
-    [Command]
-    private void CmdSpawnDice()
-    {
-        GameObject diceprefab = (GameObject)Instantiate(Resources.Load("Prefabs/Dice"));
-        diceprefab.tag = "Dice";
-        //dice.AddComponent<Dice>();
-        Debug.Log(diceprefab);
-        ClientScene.RegisterPrefab(diceprefab);
-
-        Debug.Log(diceprefab.GetComponent<NetworkIdentity>().assetId);
-        NetworkServer.Spawn(diceprefab);
-        
     }
 
     private void Update()
@@ -93,18 +77,6 @@ public class Game : NetworkBehaviour
 
     public void DiceRoll()
     {
-        /*if (dice == null)
-        {
-            dice = (GameObject)Instantiate(Resources.Load("Prefabs/Dice"));
-            dice.tag = "Dice";
-            //dice.AddComponent<Dice>();
-            Debug.Log(dice);
-            ClientScene.RegisterPrefab(dice);
-            Debug.Log(dice.GetComponent<NetworkIdentity>().assetId);
-            NetworkServer.Spawn(dice);
-        }*/
-        Debug.Log("dice id = " + dice.GetComponent<NetworkIdentity>().assetId);
-
         Player last = this.board.gameObject.GetComponent<InputController>().LastClickedPlayer;
         if (last != null)
             this.board.GetDice.Roll(last.transform.position + new Vector3(0, 20, 0));

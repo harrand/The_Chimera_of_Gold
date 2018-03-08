@@ -20,28 +20,35 @@ public class Dice : MonoBehaviour
 	public static Dice Create(Vector3 position, Vector3 rotation, Vector3 scale)
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         //ClientScene.RegisterPrefab(this.gameObject);
+=======
+        ClientScene.RegisterPrefab(this.gameObject);
+>>>>>>> parent of 9b419f8... Everthing is broken
 
         if (isServer)
         {
             Debug.Log("Server");
-            //NetworkServer.Spawn(this.gameObject);
+            NetworkServer.Spawn(this.gameObject);
         }
         else
-        {
             Debug.Log("NOT");
-            //NetworkServer.Spawn(this.gameObject);
-        }
     }
 
     public static Dice Create(Vector3 position, Vector3 rotation, Vector3 scale)
     {
-        GameObject diceObject = GameObject.FindGameObjectWithTag("Dice");
-        Dice dice = diceObject.AddComponent<Dice>();
-        //diceObject.tag = "Dice";
+        GameObject diceObject;
+
+        Dice dice;
+        
+        diceObject = Instantiate(Resources.Load("Prefabs/Dice") as GameObject);
+        dice = diceObject.AddComponent<Dice>();
+        diceObject.tag = "Dice";
         diceObject.transform.position = position;
         diceObject.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
         diceObject.transform.localScale = scale;
+        
+        
 
 =======
         GameObject diceObject = Instantiate(Resources.Load("Prefabs/Dice") as GameObject);
