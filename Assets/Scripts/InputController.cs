@@ -60,6 +60,14 @@ public class InputController : MonoBehaviour
         }
     }
 
+	public void setDefalutTile(Tile tile)
+	{
+		this.LastClickedTile = tile;
+		tile.tag = "CurrentTile";
+		this.CurrentSelected = 1;
+
+
+	}
     /**
 	* Update selected Player, Camp etc. Also updates the tags on the objects. Useful for controlling camera
     *  Remember to update getLastClicked() in cameraControl.cs if anything new is added here. e.g: Camps...

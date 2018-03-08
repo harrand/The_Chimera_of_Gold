@@ -93,6 +93,7 @@ public class BoardEvent
         Debug.Log("A player has reached the goal!");
         if(player.GetCamp().GetNumberOfPlayers() <= 1)
             OnWinEvent(player.GetCamp());
+		parent.GetComponent<InputController> ().setDefalutTile(parent.Tiles[367]);
         player.Kill();
     }
 
