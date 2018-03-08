@@ -7,7 +7,7 @@ using System.Collections;
  * Dice is created once at the beginning of the game and then rolled whenever a player plays.
  * @author Ciara O'Brien, Harry Hollands
  */
-public class Dice : NetworkBehaviour
+public class Dice : MonoBehaviour
 {
     /**
      * This makes the initial dice
@@ -17,8 +17,9 @@ public class Dice : NetworkBehaviour
      * @param scale The scale of the dice
      * @return the dice created
      */
-    private void Start()
+	public static Dice Create(Vector3 position, Vector3 rotation, Vector3 scale)
     {
+<<<<<<< HEAD
         //ClientScene.RegisterPrefab(this.gameObject);
 
         if (isServer)
@@ -42,9 +43,15 @@ public class Dice : NetworkBehaviour
         diceObject.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
         diceObject.transform.localScale = scale;
 
+=======
+        GameObject diceObject = Instantiate(Resources.Load("Prefabs/Dice") as GameObject);
+        Dice dice = diceObject.AddComponent<Dice>();
+        diceObject.transform.position = position;
+        diceObject.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
+        diceObject.transform.localScale = scale;
+>>>>>>> parent of 2017a61... Networking work session 2
         return dice;
     }
-
 
     /**
      * Teleports the dice object to the main camera position and applies a random rotation, essentially simulating a literal throw of the die.
@@ -53,13 +60,7 @@ public class Dice : NetworkBehaviour
      */
 	public void Roll(Vector3 desiredPosition)
     {
-        CmdRoll(desiredPosition);	
-    }
-
-    [Command]
-    public void CmdRoll(Vector3 desiredPosition)
-    {
-        this.gameObject.SetActive(true);
+		this.gameObject.SetActive(true);
         Vector3 cameraPosition = Camera.main.gameObject.transform.position;
         this.gameObject.transform.position = desiredPosition;
 		this.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);

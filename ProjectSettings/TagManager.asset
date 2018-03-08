@@ -13,7 +13,6 @@ TagManager:
   - GameBoard
   - Menu
   - MainMenu
-  - Dice
   layers:
   - Default
   - TransparentFX
