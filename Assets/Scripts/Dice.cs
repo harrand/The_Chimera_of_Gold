@@ -17,46 +17,14 @@ public class Dice : MonoBehaviour
      * @param scale The scale of the dice
      * @return the dice created
      */
-	public static Dice Create(Vector3 position, Vector3 rotation, Vector3 scale)
-    {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        //ClientScene.RegisterPrefab(this.gameObject);
-=======
-        ClientScene.RegisterPrefab(this.gameObject);
->>>>>>> parent of 9b419f8... Everthing is broken
-
-        if (isServer)
-        {
-            Debug.Log("Server");
-            NetworkServer.Spawn(this.gameObject);
-        }
-        else
-            Debug.Log("NOT");
-    }
 
     public static Dice Create(Vector3 position, Vector3 rotation, Vector3 scale)
     {
-        GameObject diceObject;
-
-        Dice dice;
-        
-        diceObject = Instantiate(Resources.Load("Prefabs/Dice") as GameObject);
-        dice = diceObject.AddComponent<Dice>();
-        diceObject.tag = "Dice";
-        diceObject.transform.position = position;
-        diceObject.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
-        diceObject.transform.localScale = scale;
-        
-        
-
-=======
         GameObject diceObject = Instantiate(Resources.Load("Prefabs/Dice") as GameObject);
         Dice dice = diceObject.AddComponent<Dice>();
         diceObject.transform.position = position;
         diceObject.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
         diceObject.transform.localScale = scale;
->>>>>>> parent of 2017a61... Networking work session 2
         return dice;
     }
 

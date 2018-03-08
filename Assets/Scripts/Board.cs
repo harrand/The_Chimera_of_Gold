@@ -16,28 +16,12 @@ public class Board : MonoBehaviour
     private float width, height;
     public bool obstacleControlFlag;
     public Tile[] Tiles { get; private set; }
-<<<<<<< HEAD
-    public Obstacle[] Obstacles { get; private set; }
-    public Camp[] Camps { get; private set; }
-    public Dice GetDice { get { return diceObject == null ? null : diceObject.GetComponent<Dice>(); } private set { } }
-    [SyncVar]
-    public GameObject diceObject = null;
 
-	public BoardEvent Event{ get; private set; }
-
-    public void Start()
-    {
-        this.diceObject = Dice.Create(this.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1)).gameObject;
-        Debug.Log(this.diceObject);
-    }
-
-=======
 	public Obstacle[] Obstacles { get; private set; }
 	public Camp[] Camps { get; private set; }
     public Dice GetDice { get; private set; }
 	public BoardEvent Event{ get; private set; }
 
->>>>>>> parent of 2017a61... Networking work session 2
     /**
     * This is to be used to create a new Board when the root GameObject has a terrain component (interpolating instead of taking dimensions as parameters).
     * This is currently used for the main game board. However, it is not used for the Board unit test.
@@ -56,31 +40,9 @@ public class Board : MonoBehaviour
 		Board board = root.AddComponent<Board>();
         root.tag = "GameBoard";
         root.name += " (Board)";
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-        board.GetDice = Dice.Create(board.gameObject.transform.position, new Vector3(), new Vector3(1,1,1));
-        //if (board.diceObject == null)
-        //{
-            //board.diceObject = Dice.Create(board.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1)).gameObject;
-            //board.dice = Dice.Create(board.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1));
-            //Debug.Log(board.dice);
-           // ClientScene.RegisterPrefab(board.dice.gameObject);
-            //board.diceObject = board.dice.gameObject;
-            //Debug.Log(board.diceObject);
-        //}
-        //else
-        //{
-            //Debug.Log("Dice isn't null");
-        //}
-=======
-        
->>>>>>> parent of 9b419f8... Everthing is broken
-        board.Event = new BoardEvent(board);
-=======
         board.GetDice = Dice.Create(board.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1));
-		board.Event = new BoardEvent(board);
->>>>>>> parent of 2017a61... Networking work session 2
+        board.Event = new BoardEvent(board);
 		board.GetWidthInTiles = Convert.ToUInt32(tilesWidth);
 		board.GetHeightInTiles = Convert.ToUInt32(tilesHeight);
 
