@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 * Board is a container for Camps (and their respective Players), all Tiles and Obstacles. Also handles turns, tile-highlighting and game rule enforcement.
 * @author Harry Hollands, Ciara O'Brien, Aswin Mathew
 */
-public class Board : MonoBehaviour
+public class Board : NetworkBehaviour
 {
     /// width and height use number of Tiles as units.
     private uint numberCamps, numberObstacles;
@@ -40,8 +40,19 @@ public class Board : MonoBehaviour
 		Board board = root.AddComponent<Board>();
         root.tag = "GameBoard";
         root.name += " (Board)";
+        /*
+         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+         Currently breaks here. Clients can't find the dice so everything breaks. Servers work fine.
+         There are too many methods that call GetDice for me to replace it... 
+         A global dice is definitely the correct answer here but right now the code is written for local dice...
+         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+         */
+        //board.GetDice = NetworkServer.FindLocalObject(diceID).GetComponent<Dice>();
+        board.GetDice = GameObject.FindObjectOfType<Dice>();
+        //board.GetDice = Dice.Create(board.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1));
+     
+        Debug.Log(board.GetDice.gameObject);
 
-        board.GetDice = Dice.Create(board.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1));
         board.Event = new BoardEvent(board);
 		board.GetWidthInTiles = Convert.ToUInt32(tilesWidth);
 		board.GetHeightInTiles = Convert.ToUInt32(tilesHeight);

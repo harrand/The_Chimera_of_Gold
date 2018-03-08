@@ -32,6 +32,9 @@ public class Game : NetworkBehaviour
         Destroy(spawned);
     }
 
+    [SyncVar]
+    NetworkInstanceId diceID;
+
     void Start()
 	{
         /*
@@ -40,8 +43,15 @@ public class Game : NetworkBehaviour
         new TestCamp();
         new TestPlayer();
         */
-
         
+        if (isServer)
+        {
+            Dice dice = Dice.Create(new Vector3(10, 10, 10), new Vector3(), new Vector3(1, 1, 1));
+            ClientScene.RegisterPrefab(dice.gameObject);
+            diceID = dice.gameObject.GetComponent<NetworkIdentity>().netId;
+            Debug.Log(diceID);
+            NetworkServer.Spawn(dice.gameObject);
+        }
 		// Create a normal Board with Input attached. Both Board and InputController are attached to the root GameObject (this).
 		this.board = Board.Create(this.gameObject, tileWidth, tileHeight);
 		this.board.gameObject.AddComponent<InputController>();   
