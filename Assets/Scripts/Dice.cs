@@ -2,12 +2,12 @@
 using System;
 using UnityEngine.Networking;
 using System.Collections;
-
+using UnityEngine.Networking;
 /**
  * Dice is created once at the beginning of the game and then rolled whenever a player plays.
  * @author Ciara O'Brien, Harry Hollands
  */
-public class Dice : MonoBehaviour
+public class Dice : NetworkBehaviour
 {
     /**
      * This makes the initial dice
@@ -40,6 +40,16 @@ public class Dice : MonoBehaviour
         this.gameObject.transform.position = desiredPosition;
 		this.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         this.gameObject.transform.rotation = Quaternion.Euler(new Vector3(new System.Random().Next(-180, 180), new System.Random().Next(-180, 180), new System.Random().Next(-180, 180)));
+    }
+    [Command]
+    public void CmdDiceRoll(Vector3 desiredPosition)
+    {
+        this.gameObject.SetActive(true);
+        Vector3 cameraPosition = Camera.main.gameObject.transform.position;
+        this.gameObject.transform.position = desiredPosition;
+        this.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+        this.gameObject.transform.rotation = Quaternion.Euler(new Vector3(new System.Random().Next(-180, 180), new System.Random().Next(-180, 180), new System.Random().Next(-180, 180)));
+
     }
 
     /**

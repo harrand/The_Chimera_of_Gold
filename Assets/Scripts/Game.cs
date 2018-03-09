@@ -35,6 +35,18 @@ public class Game : NetworkBehaviour
     [SyncVar]
     NetworkInstanceId diceID;
 
+    [SyncVar]
+    GameObject globalDice = null;
+
+    IEnumerator WaitForDice()
+    {
+        yield return new WaitUntil(()=> this.globalDice != null);
+    }
+
+    IEnumerator WaitForServer()
+    {
+        yield return new WaitForSeconds(4);
+    }
     void Start()
 	{
         /*
@@ -43,17 +55,35 @@ public class Game : NetworkBehaviour
         new TestCamp();
         new TestPlayer();
         */
-        
+        Debug.Log(this.globalDice);
         if (isServer)
         {
             Dice dice = Dice.Create(new Vector3(10, 10, 10), new Vector3(), new Vector3(1, 1, 1));
             ClientScene.RegisterPrefab(dice.gameObject);
             diceID = dice.gameObject.GetComponent<NetworkIdentity>().netId;
-            Debug.Log(diceID);
+            //Debug.Log(diceID);
             NetworkServer.Spawn(dice.gameObject);
+            this.globalDice = dice.gameObject;
+            //Debug.Log(this.globalDice);
+            Debug.Log(this.globalDice.GetComponent<Dice>());
         }
-		// Create a normal Board with Input attached. Both Board and InputController are attached to the root GameObject (this).
-		this.board = Board.Create(this.gameObject, tileWidth, tileHeight);
+        else
+        {
+            //Debug.Log(this.globalDice);
+            WaitForDice();
+            Dice dice = this.globalDice.AddComponent<Dice>();
+            //Debug.Log(this.globalDice);
+        }
+
+        // Create a normal Board with Input attached. Both Board and InputController are attached to the root GameObject (this).
+        if (!isServer)
+        {
+            Debug.Log("Waiting");
+            WaitForServer();
+        }
+        Debug.Log(this.globalDice);
+        Debug.Log(this.globalDice.GetComponent<Dice>());
+        this.board = Board.Create(this.gameObject, tileWidth, tileHeight, this.globalDice.GetComponent<Dice>());
 		this.board.gameObject.AddComponent<InputController>();   
         /*if(isServer)
         {
@@ -87,14 +117,35 @@ public class Game : NetworkBehaviour
 
     public void DiceRoll()
     {
+        if (isServer)
+        {
+            Debug.Log("Server Rolling");
+            Player last = this.board.gameObject.GetComponent<InputController>().LastClickedPlayer;
+            if (last != null)
+                this.board.GetDice.Roll(last.transform.position + new Vector3(0, 20, 0));
+            else
+                this.board.GetDice.Roll(Camera.main.transform.position + new Vector3(0, 20, 0));
+        }
+        else
+        {
+            Debug.Log("Sending Cmd");
+            Player last = this.board.gameObject.GetComponent<InputController>().LastClickedPlayer;
+            if (last != null)
+                this.board.GetDice.Roll(last.transform.position + new Vector3(0, 20, 0));
+            else
+                this.board.GetDice.Roll(Camera.main.transform.position + new Vector3(0, 20, 0));
+        }
+    }
+    /*[Command]
+    public void CmdDiceRoll()
+    {
         Player last = this.board.gameObject.GetComponent<InputController>().LastClickedPlayer;
         if (last != null)
             this.board.GetDice.Roll(last.transform.position + new Vector3(0, 20, 0));
         else
             this.board.GetDice.Roll(Camera.main.transform.position + new Vector3(0, 20, 0));
     }
-    
-
+    */
     void OnDestroy()
 	{
 

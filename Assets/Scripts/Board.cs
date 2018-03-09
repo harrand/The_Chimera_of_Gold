@@ -31,7 +31,7 @@ public class Board : NetworkBehaviour
     * @param tilesHeight - Number of Tiles per column.
     * @return - Reference to the Board created.
     */
-    public static Board Create(GameObject root, uint tilesWidth, uint tilesHeight)
+    public static Board Create(GameObject root, uint tilesWidth, uint tilesHeight, Dice globalDice)
 	{
 		if(tilesWidth < 5 && tilesHeight < 5 && (tilesWidth * tilesHeight) < 13)
 		{
@@ -40,18 +40,15 @@ public class Board : NetworkBehaviour
 		Board board = root.AddComponent<Board>();
         root.tag = "GameBoard";
         root.name += " (Board)";
-        /*
-         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-         Currently breaks here. Clients can't find the dice so everything breaks. Servers work fine.
-         There are too many methods that call GetDice for me to replace it... 
-         A global dice is definitely the correct answer here but right now the code is written for local dice...
-         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-         */
+
         //board.GetDice = NetworkServer.FindLocalObject(diceID).GetComponent<Dice>();
-        board.GetDice = GameObject.FindObjectOfType<Dice>();
+        //board.GetDice = GameObject.FindObjectOfType<Dice>();
         //board.GetDice = Dice.Create(board.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1));
-     
-        Debug.Log(board.GetDice.gameObject);
+        Debug.Log(globalDice);
+        board.GetDice = globalDice;
+        //Debug.Log(board.GetDice.gameObject);
+        Debug.Log(globalDice);
+        Debug.Log(board.GetDice);
 
         board.Event = new BoardEvent(board);
 		board.GetWidthInTiles = Convert.ToUInt32(tilesWidth);
@@ -500,10 +497,12 @@ public class Board : NetworkBehaviour
             Debug.Log("NextTurn failed -- CampTurn is not a valid reference to a Board camp.");
             return;
         }
+
         if (++campId >= this.Camps.Length)
             campId = 0;
         this.CampTurn = this.Camps[campId];
 
+        
         if(this.CampTurn.isAI())
         {
             Player aiPlayer = null;
