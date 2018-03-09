@@ -15,6 +15,7 @@ public class Board : MonoBehaviour
     private uint numberCamps, numberObstacles;
     private float width, height;
     public bool obstacleControlFlag;
+    public Player movingAI;
     public Tile[] Tiles { get; private set; }
 	public Obstacle[] Obstacles { get; private set; }
 	public Camp[] Camps { get; private set; }
@@ -469,8 +470,9 @@ public class Board : MonoBehaviour
 			new BoardEvent(this).OnPlayerGoalEvent(aiPlayer);	
 		}
 		this.CampTurn.ai.MoveObstacle (tileDestination, aiPlayer);
-		this.NextTurn();
-	}
+        //movingAI = null;
+        this.NextTurn();
+    }
 
 	/**
      * Simulates the end of the current turn and sets Board::PlayerTurn to the "next" player accordingly.
@@ -512,7 +514,8 @@ public class Board : MonoBehaviour
             } while (aiPlayer == null);
 //			aiPlayer = this.CampTurn.TeamPlayers[0];
             Tile previousLocation = aiPlayer.GetOccupiedTile();
-			this.GetDice.Roll(aiPlayer.gameObject.transform.position + new Vector3(0, 20, 0));
+            movingAI = aiPlayer;
+            this.GetDice.Roll(aiPlayer.gameObject.transform.position + new Vector3(0, 20, 0));
 			StartCoroutine(DelayAIMove(2, previousLocation, aiPlayer));
         }
         this.RemoveTileHighlights();

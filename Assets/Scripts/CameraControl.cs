@@ -136,8 +136,10 @@ public class CameraControl : MonoBehaviour
     // Update is called once per frame
     void LateUpdate ()
     {
+        GameObject myBoard = GameObject.FindGameObjectWithTag("GameBoard");
         current = GetLastClicked();
-
+        Transform temp = null;
+              
         if (current != null && Input.GetKey(KeyCode.LeftShift) && playerSel && tileSel)
         {
             //offset from tile
@@ -147,9 +149,20 @@ public class CameraControl : MonoBehaviour
 			boardObject.GetComponent<Board>().Event.OnPlayerMove(boardObject.GetComponent<InputController>().LastClickedPlayer, current.position);
             //Debug.Log(tileSel);
         }
-        else if (current != null)
-        { 
+        else if(myBoard.GetComponent<Board>().movingAI != null)
+        {
+            current = myBoard.GetComponent<Board>().movingAI.transform;
+            temp = current;
+            Debug.Log("Moving AI Position: " + current.position.x + ", " + current.position.y);
             SetCameraPosition(current);
+        }
+        else if(current != null)
+        {
+            if (myBoard.GetComponent<Board>().movingAI == null)
+            {
+                SetCameraPosition(temp);
+            }
+                SetCameraPosition(current);
             //Debug.Log("Should rotate around selected");
         }
         else
@@ -164,6 +177,5 @@ public class CameraControl : MonoBehaviour
             for (int i = 0; i < menus.Length; i++)
                 menus[i].GetComponent<Canvas>().enabled = false;
         }
-
-	}
+    }
 }
