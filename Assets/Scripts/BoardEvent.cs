@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -104,6 +105,9 @@ public class BoardEvent
     public void OnWinEvent(Camp winner)
     {
         Debug.Log(winner + " has reached the Chimera of Gold and won the game! Congratulations!");
+        PlayerData.winnerColour = winner.TeamColor;
+        int winnerIndex = Array.IndexOf(this.parent.Camps, winner);
+        PlayerData.winnerNumber = winnerIndex + 1;
         winner.TeamColor = Color.yellow / 1.2f;
         foreach (Camp playerLost in winner.GetParent().Camps)
             if (playerLost != winner)
