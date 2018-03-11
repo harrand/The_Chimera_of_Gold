@@ -221,14 +221,14 @@ public class Tile : MonoBehaviour
      * @param range - The range in which you would like to check for adjacent tiles (For example, a dice roll). 
 	 * @return - Array of Tiles adjacent to the original within the specified range, including all Tiles which would normally be blocked by Obstacles etc.
      */
-    public Tile[] AdjacentTilesNoObstacles(Tile original, uint range)
+    public Tile[] AdjacentTilesNoObstacles(uint range)
 	{
 		if(range == 0)
 			return new Tile[0];
-		Tile[] total = this.AdjacentTiles(original, range, true);
+		Tile[] total = this.AdjacentTiles(this, range, true);
 		for(uint i = 1; i < range; i++)
 			foreach(Tile tile in total)
-				total = total.Union(tile.AdjacentTiles(original, range, true)).ToArray();
+				total = total.Union(tile.AdjacentTiles(this, range, true)).ToArray();
 		return total.ToArray();
 	}
 
@@ -246,7 +246,12 @@ public class Tile : MonoBehaviour
 		Tile[] total = this.AdjacentTiles(this, range, false);
 		for(uint i = 1; i < range; i++)
 			foreach(Tile tile in total)
-				total = total.Union(tile.AdjacentTiles(this, range, false)).ToArray();
+			{
+				if(tile != null)
+				{
+					total = total.Union(tile.AdjacentTiles(this, range, false)).ToArray();
+				}
+			}
 		return total.ToArray();
 	}
 }

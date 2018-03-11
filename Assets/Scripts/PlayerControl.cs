@@ -27,13 +27,19 @@ public class PlayerControl
         Board parentBoard = this.GetPlayer.GetCamp().GetParent();
         Obstacle[] obstacles = parentBoard.Obstacles;
         List<Tile> possibleMoves = new List<Tile>();
-        foreach(Tile adjacentTile in previousTile.AdjacentTiles(diceRoll))
+		Tile[] adjacents = previousTile.AdjacentTiles(diceRoll);
+		Tile[] adjacentsIgnoreRules = previousTile.AdjacentTilesNoObstacles(diceRoll);
+        foreach(Tile adjacentTile in adjacents)
         {
             bool isOnCamp = false;
             foreach (Camp camp in parentBoard.Camps)
                 if (camp.GetOccupiedTile() == adjacentTile)
                     isOnCamp = true;
-            if (adjacentTile.DistanceFrom(previousTile) == diceRoll && !isOnCamp)
+			bool allNeighboursAccountedFor = true;
+			foreach(Tile neighbour in adjacentTile.AdjacentTilesNoObstacles(1))
+				if(Array.IndexOf(adjacentsIgnoreRules, neighbour) == -1)
+					allNeighboursAccountedFor = false;
+			if (!allNeighboursAccountedFor && !isOnCamp)
                 possibleMoves.Add(adjacentTile);
         }
         return possibleMoves.ToArray();
