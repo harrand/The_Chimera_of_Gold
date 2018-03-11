@@ -109,7 +109,7 @@ public class CameraControl : MonoBehaviour
      * @author Aswin Mathew
      * @param currentTarget the thing that is currently being looked at
      */
-    private void SetCameraPosition(Transform currentTarget)
+    public void SetCameraPosition(Transform currentTarget)
     {   
         //Only allows rotation if right mouse is held down. (It was difficult to click on other objects when the camera kept moving)
         if (Input.GetMouseButton(1))

@@ -56,7 +56,6 @@ public class Board : MonoBehaviour
 			float xTile = i % board.GetWidthInTiles;
 			float zTile = i / board.GetWidthInTiles;
 			board.Tiles[i] = Tile.Create(board, xTile, zTile);
-            board.Tiles[i].InitialMaterial = Tile.PrefabMaterial();
 			GameObject tileObject = board.Tiles[i].gameObject;
 			Vector2 tileSize = Board.ExpectedTileSize(root, board.GetWidthInTiles, board.GetHeightInTiles);
 			tileObject.transform.position = Game.MinWorldSpace(root) + (new Vector3(xTile * tileSize.x, 0, zTile * tileSize.y)) + new Vector3(6,0,6);
@@ -368,13 +367,11 @@ public class Board : MonoBehaviour
         {
             if (t != null)
             {
-                t.GetComponent<Renderer>().material = t.InitialMaterial;
                 t.gameObject.SetActive(true);
             }
         }
         goalTile.gameObject.SetActive(true);
-        goalTile.GetComponent<Renderer>().material.color = Color.yellow / 1.2f;
-        goalTile.InitialMaterial = goalTile.GetComponent<Renderer>().material;
+		goalTile.GetComponent<Renderer>().material.color = Tile.goalColour;
 		this.Obstacles[0].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(0, 3)).gameObject.transform.position;
 		this.Obstacles[1].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(4, 3)).gameObject.transform.position;
 		this.Obstacles[2].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(8, 3)).gameObject.transform.position;
@@ -478,7 +475,7 @@ public class Board : MonoBehaviour
 		float s = (this.GetDice.transform.position - previousLocation.transform.position).magnitude;
 		float v = Mathf.Sqrt(2 * s * 9.81f);
 		float t = v / 9.81f;
-		yield return new WaitForSeconds(t + 1);
+		yield return new WaitUntil(()=> this.GetDice.GetComponent<Rigidbody>().velocity.magnitude < 0.01f);
 		int roll = (int) this.GetDice.NumberFaceUp();
         Tile tileDestination = this.CampTurn.ai.MovementTo(aiPlayer.GetOccupiedTile(), roll);
         aiPlayer.gameObject.transform.position = tileDestination.gameObject.transform.position + Player.POSITION_OFFSET;
@@ -510,7 +507,6 @@ public class Board : MonoBehaviour
         if (++campId >= this.Camps.Length)
             campId = 0;
         this.CampTurn = this.Camps[campId];
-
         if(this.CampTurn.isAI())
         {
             Player aiPlayer = null;
@@ -524,6 +520,8 @@ public class Board : MonoBehaviour
                 if (index > 5)
                     index = 0;
             } while (aiPlayer == null);
+			// pan camera to the ai's chosen player.
+			this.GetComponent<InputController>().LastClickedPlayer = aiPlayer;
             Tile previousLocation = aiPlayer.GetOccupiedTile();
 			this.GetDice.Roll(aiPlayer.gameObject.transform.position + new Vector3(0, 20, 0));
 			StartCoroutine(DelayAIMove(2, previousLocation, aiPlayer));
@@ -571,7 +569,12 @@ public class Board : MonoBehaviour
     {
         foreach (Tile tile in this.Tiles)
             if (tile != null && tile.gameObject.activeSelf)
-                tile.GetComponent<Renderer>().material = tile.InitialMaterial;
+			{
+				if(this.GetGoalTile() == tile)
+					tile.gameObject.GetComponent<Renderer>().material.color = Tile.goalColour;
+				else
+					tile.gameObject.GetComponent<Renderer>().material.color = Tile.defaultColour;
+			}
     }
 
 	/// Getters for width and height (in units of Tiles and pixels respectively)

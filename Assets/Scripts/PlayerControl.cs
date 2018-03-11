@@ -51,9 +51,16 @@ public class PlayerControl
      * @param diceRoll the move that has been done, therefore checking any possible tiles that can be visited within that number
      * @param highlightColour changes the colour of all of the available tiles to move to under the current move
      */
-    public void HighlightPossibleMoves(uint diceRoll, Color highlightColour)
+	public void HighlightPossibleMoves(uint diceRoll, Color moveHighlightColour, Color obstacleHighlightColour, Color takeoverHighlightColour)
     {
         foreach (Tile tile in this.PossibleMoves(diceRoll))
-            tile.GetComponent<Renderer>().material.color = new Color(highlightColour.r, highlightColour.g, highlightColour.b, highlightColour.a);
+		{
+			if(tile.BlockedByObstacle())
+				tile.GetComponent<Renderer>().material.color = obstacleHighlightColour;
+			else if(tile.GetOccupant() != null && tile.GetOccupant().GetComponent<Player>() != null)
+				tile.GetComponent<Renderer>().material.color = takeoverHighlightColour;
+			else
+				tile.GetComponent<Renderer>().material.color = moveHighlightColour;
+		}
     }
 }

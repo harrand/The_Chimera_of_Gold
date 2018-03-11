@@ -32,7 +32,7 @@ public class BoardEvent
 	{
         if(player.GetCamp().GetParent().CampTurn != player.GetCamp())
         {
-            Debug.Log("fuck off its not your turn");
+            Debug.Log("It is not this Pawn's turn!");
             return;
         }
         if (player == null)

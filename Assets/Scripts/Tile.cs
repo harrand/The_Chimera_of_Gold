@@ -11,9 +11,9 @@ using UnityEngine;
 public class Tile : MonoBehaviour
 {
 	private Board parent;
-    public Material InitialMaterial { get; set; }
     public Vector2 PositionTileSpace { get; private set; }
-
+	public static Color defaultColour = ((Material)Instantiate(Resources.Load("Prefabs/Translucent"))).color;
+	public static Color goalColour = ((Material)Instantiate(Resources.Load("Prefabs/Translucent 1"))).color;
     /**
      * Pseudo-constructor which uses the Prefabs/Tile prefab in the project tree.
      * @author Harry Hollands
@@ -27,7 +27,6 @@ public class Tile : MonoBehaviour
         GameObject tileObject = Instantiate(Resources.Load("Prefabs/Tile")) as GameObject;
         Tile tileScript = tileObject.AddComponent<Tile>();
         // is assigned in this::Start()
-        tileScript.InitialMaterial = Tile.PrefabMaterial();
         if (parent != null)
         {
             tileObject.transform.parent = parent.gameObject.transform;
@@ -35,14 +34,6 @@ public class Tile : MonoBehaviour
         }
         tileScript.PositionTileSpace = new Vector2(xTile, zTile);
         return tileScript;
-    }
-
-    public static Material PrefabMaterial()
-    {
-        GameObject temp = Instantiate(Resources.Load("Prefabs/Tile")) as GameObject;
-        Material mat = temp.GetComponent<Renderer>().material;
-        Destroy(temp);
-        return mat;
     }
 
     /**
@@ -53,7 +44,6 @@ public class Tile : MonoBehaviour
     {
         if(this.parent != null)
             gameObject.transform.parent = this.parent.gameObject.transform;
-        this.InitialMaterial = this.gameObject.GetComponent<Renderer>().material;
 	}
 
     /**
