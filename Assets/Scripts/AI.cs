@@ -341,6 +341,7 @@ public class DecisionTree : MonoBehaviour
 			distence_to_goal = BFS_Assese_Value(tmpPosition);
 
 			score = distence_to_goal;
+			Debug.Log ("Path score: " + score);
 
 			if (distence_to_goal == -1)
 			{
@@ -414,6 +415,7 @@ public class DecisionTree : MonoBehaviour
 
                 if (neighbour.Getposition() == goalposition)
                 {
+					Debug.Log ("In asses neighbour score: " + neighbour.depth);
                     return neighbour.depth; // when we found the goal
                 }
             }
@@ -438,100 +440,77 @@ public class DecisionTree : MonoBehaviour
         {
             return false;
         }
-        if (y == 1)
-        {
-            return true;
-        }
-        else if (y == 2)
-        {
-            if (x == 0 || x == 4 || x == 8 || x == 12 || x == 16 || x == 20)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 3)
-        {
-            return true;
-        }
-        else if (y == 4 || y == 5)
-        {
-            if (x == 2 || x == 6 || x == 10 || x == 14 || x == 18)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 6)
-        {
-            if (x >= 2 && x <= 18)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 7)
-        {
-            if (x == 4 || x == 8 || x == 12 || x == 16)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 8)
-        {
-            if (x >= 4 && x <= 16)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 9 || y == 10)
-        {
-            if (x == 6 || x == 14)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 11)
-        {
-            if (x >= 6 && x <= 14)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 12)
-        {
-            if (x == 8 || x == 12)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 13)
-        {
-            if (x >= 8 && x <= 12)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 14)
-        {
-            if (x == 10)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 15)
-        {
-            if (x >= 4 && x <= 16)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 16 || y == 17 || y == 18)
-        {
-            if (x == 4 || x == 16)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 19)
-        {
+		if (y == 1) {
+			return true;
+		} else if (y == 2) {
+			if (x == 0 || x == 4 || x == 8 || x == 12 || x == 16 || x == 20)
+				return true;
+			else
+				return false;
+		} else if (y == 3) {
+			return true;
+		} else if (y == 4 || y == 5) {
+			if (x == 2 || x == 6 || x == 10 || x == 14 || x == 18)
+				return true;
+			else
+				return false;
+		} else if (y == 6) {
+			if (x >= 2 && x <= 18)
+				return true;
+			else
+				return false;
+		} else if (y == 7) {
+			if (x == 4 || x == 8 || x == 12 || x == 16)
+				return true;
+			else
+				return false;
+		} else if (y == 8) {
+			if (x >= 4 && x <= 16)
+				return true;
+			else
+				return false;
+		} else if (y == 9 || y == 10) {
+			if (x == 6 || x == 14)
+				return true;
+			else
+				return false;
+		} else if (y == 11) {
+			if (x >= 6 && x <= 14)
+				return true;
+			else
+				return false;
+		} else if (y == 12) {
+			if (x == 8 || x == 12)
+				return true;
+			else
+				return false;
+		} else if (y == 13) {
+			if (x >= 8 && x <= 12)
+				return true;
+			else
+				return false;
+		} else if (y == 14) {
+			if (x == 10)
+				return true;
+			else
+				return false;
+		} else if (y == 15) {
+			if (x >= 4 && x <= 16)
+				return true;
+			else
+				return false;
+		} else if (y == 16 || y == 17) {
+			if (x == 4 || x == 16)
+				return true;
+			else
+				return false;
+		} else if (y == 18) {
+			if (x == 4 || x == 16 || x == 10)
+				return true;
+			else
+				return false;
+		}
+        else if (y == 19) {
             if (x >= 4 && x <= 16)
                 return true;
             else

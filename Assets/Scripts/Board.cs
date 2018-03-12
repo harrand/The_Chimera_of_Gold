@@ -353,7 +353,7 @@ public class Board : MonoBehaviour
                 j++;
 
             }
-            if (this.Tiles[i].PositionTileSpace.y == 17 && this.Tiles[i].PositionTileSpace.x == 10)
+            if (this.Tiles[i].PositionTileSpace.y == 18 && this.Tiles[i].PositionTileSpace.x == 10)
             {
                 goalTile = Tiles[i];
             }
@@ -511,15 +511,16 @@ public class Board : MonoBehaviour
         {
             Player aiPlayer = null;
             uint count = 0;
-            do
-            {
-                if (++count > 5)
-                    break;
-                int index = new System.Random().Next() % 5;
-                aiPlayer = this.CampTurn.TeamPlayers[index++];
-                if (index > 5)
-                    index = 0;
-            } while (aiPlayer == null);
+//            do
+//            {
+//                if (++count > 5)
+//                    break;
+//                int index = new System.Random().Next() % 5;
+//                aiPlayer = this.CampTurn.TeamPlayers[index++];
+//                if (index > 5)
+//                    index = 0;
+//            } while (aiPlayer == null);
+			aiPlayer = this.CampTurn.TeamPlayers[0];
 			// pan camera to the ai's chosen player.
 			this.GetComponent<InputController>().LastClickedPlayer = aiPlayer;
             Tile previousLocation = aiPlayer.GetOccupiedTile();
