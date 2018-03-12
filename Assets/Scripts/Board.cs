@@ -206,13 +206,7 @@ public class Board : MonoBehaviour
     */
     public Tile GetGoalTile()
     {
-        Tile max = this.Tiles[0];
-        foreach(Tile t in this.Tiles)
-        {
-            if (max.gameObject.transform.position.y < t.gameObject.transform.position.y)
-                max = t;
-        }
-        return max;
+        return this.GetTileByTileSpace(new Vector2(10, 18));
     }
 
     /**

@@ -128,6 +128,16 @@ public class CameraControl : MonoBehaviour
         //Keeps camera behind the object it follows. Useful for the test doll.
         Vector3 negativeDist = new Vector3(0f, 0f, -distance);
         Vector3 position = currentTarget.position + (rotation * negativeDist);
+
+        if (position.x <= -20)
+            position.x = -20;
+        else if (position.x > 220)
+            position.x = 220;
+
+        if (position.z >= 230)
+            position.z = 230;
+        else if (position.z <= -10)
+            position.z = -10;
             
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 3.0f);
         transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * 1.5f);
