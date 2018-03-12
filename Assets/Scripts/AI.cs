@@ -116,16 +116,16 @@ public class DecisionTree : MonoBehaviour
     */
     void ObstacleEasyMovement(Obstacle obstacle)
     {
-        Vector2 posi = new Vector2(Random.Range(0, 20), Random.Range(1, 18));
+        Vector2 posi = new Vector2(Random.Range(0, 20), Random.Range(2, 19));
         while (true)
         {
             // should check if there is an obstacle or a player pawn on the tile.
-            if (isvalid(posi) && !board.TileOccupiedByObstacle(posi) && !board.TileOccupiedByPlayerPawn(posi))
+			if (isvalid(posi) && !board.TileOccupiedByObstacle(posi) && !board.TileOccupiedByPlayerPawn(posi) && !isgoal(posi))
             {
                 obstacle.transform.position = board.GetTileByTileSpace(posi).transform.position;
                 break;
             }
-            posi = new Vector2(Random.Range(0, 20), Random.Range(1, 18));
+            posi = new Vector2(Random.Range(0, 20), Random.Range(2, 19));
         }
 
     }
@@ -209,7 +209,7 @@ public class DecisionTree : MonoBehaviour
         {
             posi.x = pawnPosition.x + dir[j, 0]; //search the neighbour node 
             posi.y = pawnPosition.y + dir[j, 1];
-            if (board.GetObstacleByTileSpace(posi) == null && isvalid(posi) && !board.TileOccupiedByPlayerPawn(posi))
+			if (board.GetObstacleByTileSpace(posi) == null && isvalid(posi) && !board.TileOccupiedByPlayerPawn(posi) && !isgoal(posi) && posi.y != 1)
             {
                 return posi;
             }
@@ -540,4 +540,13 @@ public class DecisionTree : MonoBehaviour
         else
             return false;
     }
+
+	public bool isgoal(Vector2 posi)
+	{
+		if ((int)posi.x == 10 && (int)posi.y == 18)
+			return true;
+		else
+			return false;
+	}
+
 }
