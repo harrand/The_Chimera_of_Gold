@@ -51,8 +51,13 @@ public class WinnerScreen : MonoBehaviour
         title.text = ("Congratulations, player " + PlayerData.winnerNumber + ", you found the Chimera of Gold!");
         firstPlayer.text = ("Player " + PlayerData.winnerNumber);
         firstPlayer.color = PlayerData.winnerColour;
+        //secondPlayer.text = Howvever 2nd place is stored
+        //if (thirdPlayer.enabled)
+        //{
+            //thirdPlayer.text = Howvever 3rd place is stored
+        //}
         //etc
-	}
+    }
 
     /**
      * Returns the user from the winner screen to the start menu

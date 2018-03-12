@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 /**
 * Board Event handles any changes that take place on the board - for example if a player makes a move
@@ -114,6 +115,7 @@ public class BoardEvent
             {
                 playerLost.GetComponent<Renderer>().material.color = Color.gray;
             }
+        SceneManager.LoadScene("Finit");
     }
 
     /**

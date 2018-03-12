@@ -137,7 +137,7 @@ public class InputController : MonoBehaviour
 		foreach(Camp camp in this.boardScript.Camps)
 		{
 			foreach(Player player in camp.TeamPlayers)
-				if(player.gameObject == this.GetMousedGameObject())
+				if(player != null && player.gameObject == this.GetMousedGameObject())
 					return player;
 		}
 		return null;
