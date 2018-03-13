@@ -37,7 +37,7 @@ public class Dice : MonoBehaviour
 		this.gameObject.SetActive(true);
         Vector3 cameraPosition = Camera.main.gameObject.transform.position;
         this.gameObject.transform.position = desiredPosition;
-		this.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+		this.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, -1, 0);
         this.gameObject.transform.rotation = Quaternion.Euler(new Vector3(new System.Random().Next(-180, 180), new System.Random().Next(-180, 180), new System.Random().Next(-180, 180)));
     }
 

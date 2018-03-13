@@ -12,7 +12,7 @@ public class InputController : MonoBehaviour
      * LastClickedX represents the object that was last clicked in 3D space. 
      */
 	public Tile LastClickedTile{get; private set;}
-	public Player LastClickedPlayer{get; private set;}
+	public Player LastClickedPlayer{get; set;}
 	public Obstacle LastClickedObstacle{get; private set;}
 	//public Camp LastClickedCamp{get; private set;}
 
@@ -56,7 +56,7 @@ public class InputController : MonoBehaviour
                 }
             }
             else
-                new PlayerControl(this.LastClickedPlayer).HighlightPossibleMoves(board.GetDice.NumberFaceUp(), Color.green);
+				new PlayerControl(this.LastClickedPlayer).HighlightPossibleMoves(board.GetDice.NumberFaceUp(), Color.green, Color.blue, Color.red);
         }
     }
 
@@ -137,7 +137,7 @@ public class InputController : MonoBehaviour
 		foreach(Camp camp in this.boardScript.Camps)
 		{
 			foreach(Player player in camp.TeamPlayers)
-				if(player.gameObject == this.GetMousedGameObject())
+				if(player != null && player.gameObject == this.GetMousedGameObject())
 					return player;
 		}
 		return null;

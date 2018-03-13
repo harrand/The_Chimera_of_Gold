@@ -56,7 +56,6 @@ public class Board : MonoBehaviour
 			float xTile = i % board.GetWidthInTiles;
 			float zTile = i / board.GetWidthInTiles;
 			board.Tiles[i] = Tile.Create(board, xTile, zTile);
-            board.Tiles[i].InitialMaterial = Tile.PrefabMaterial();
 			GameObject tileObject = board.Tiles[i].gameObject;
 			Vector2 tileSize = Board.ExpectedTileSize(root, board.GetWidthInTiles, board.GetHeightInTiles);
 			tileObject.transform.position = Game.MinWorldSpace(root) + (new Vector3(xTile * tileSize.x, 0, zTile * tileSize.y)) + new Vector3(6,0,6);
@@ -64,7 +63,6 @@ public class Board : MonoBehaviour
 			tileObject.transform.localScale = new Vector3(tileSize.x, 1, tileSize.y);
 			tileObject.name = "Tile " + (i + 1);
 		}
-        board.Cull();
         /// Hardcode these; design changes did not allow these to vary.
         board.numberCamps = 5;
 		board.numberObstacles = 13;
@@ -107,6 +105,7 @@ public class Board : MonoBehaviour
 		board.Obstacles = new Obstacle[board.numberObstacles];
 		for (uint i = 0; i < board.numberObstacles; i++)
 			board.Obstacles[i] = Obstacle.Create(board, board.Tiles[i + 30]);
+		board.Cull();
 		return board;
 	}
 
@@ -207,13 +206,7 @@ public class Board : MonoBehaviour
     */
     public Tile GetGoalTile()
     {
-        Tile max = this.Tiles[0];
-        foreach(Tile t in this.Tiles)
-        {
-            if (max.gameObject.transform.position.y < t.gameObject.transform.position.y)
-                max = t;
-        }
-        return max;
+        return this.GetTileByTileSpace(new Vector2(10, 18));
     }
 
     /**
@@ -354,7 +347,7 @@ public class Board : MonoBehaviour
                 j++;
 
             }
-            if (this.Tiles[i].PositionTileSpace.y == 17 && this.Tiles[i].PositionTileSpace.x == 10)
+            if (this.Tiles[i].PositionTileSpace.y == 18 && this.Tiles[i].PositionTileSpace.x == 10)
             {
                 goalTile = Tiles[i];
             }
@@ -368,13 +361,29 @@ public class Board : MonoBehaviour
         {
             if (t != null)
             {
-                t.GetComponent<Renderer>().material = t.InitialMaterial;
                 t.gameObject.SetActive(true);
             }
         }
         goalTile.gameObject.SetActive(true);
-        goalTile.GetComponent<Renderer>().material.color = Color.yellow / 1.2f;
-        goalTile.InitialMaterial = goalTile.GetComponent<Renderer>().material;
+		goalTile.GetComponent<Renderer>().material.color = Tile.goalColour;
+		this.Obstacles[0].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(0, 3)).gameObject.transform.position;
+		this.Obstacles[1].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(4, 3)).gameObject.transform.position;
+		this.Obstacles[2].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(8, 3)).gameObject.transform.position;
+		this.Obstacles[3].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(12, 3)).gameObject.transform.position;
+		this.Obstacles[4].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(16, 3)).gameObject.transform.position;
+		this.Obstacles[5].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(20, 3)).gameObject.transform.position;
+
+		this.Obstacles[6].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(8, 8)).gameObject.transform.position;
+		this.Obstacles[7].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(12, 8)).gameObject.transform.position;
+
+		this.Obstacles[8].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(8, 11)).gameObject.transform.position;
+		this.Obstacles[9].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(12, 11)).gameObject.transform.position;
+
+		this.Obstacles[10].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(10, 13)).gameObject.transform.position;
+
+		this.Obstacles[11].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(10, 15)).gameObject.transform.position;
+
+		this.Obstacles[12].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(10, 19)).gameObject.transform.position;
     }
 
     /**
@@ -460,7 +469,7 @@ public class Board : MonoBehaviour
 		float s = (this.GetDice.transform.position - previousLocation.transform.position).magnitude;
 		float v = Mathf.Sqrt(2 * s * 9.81f);
 		float t = v / 9.81f;
-		yield return new WaitForSeconds(t + 1);
+		yield return new WaitUntil(()=> this.GetDice.GetComponent<Rigidbody>().velocity.magnitude < 0.01f);
 		int roll = (int) this.GetDice.NumberFaceUp();
         Tile tileDestination = this.CampTurn.ai.MovementTo(aiPlayer.GetOccupiedTile(), roll);
         aiPlayer.gameObject.transform.position = tileDestination.gameObject.transform.position + Player.POSITION_OFFSET;
@@ -492,20 +501,22 @@ public class Board : MonoBehaviour
         if (++campId >= this.Camps.Length)
             campId = 0;
         this.CampTurn = this.Camps[campId];
-
         if(this.CampTurn.isAI())
         {
             Player aiPlayer = null;
             uint count = 0;
-            do
-            {
-                if (++count > 5)
-                    break;
-                int index = new System.Random().Next() % 5;
-                aiPlayer = this.CampTurn.TeamPlayers[index++];
-                if (index > 5)
-                    index = 0;
-            } while (aiPlayer == null);
+//            do
+//            {
+//                if (++count > 5)
+//                    break;
+//                int index = new System.Random().Next() % 5;
+//                aiPlayer = this.CampTurn.TeamPlayers[index++];
+//                if (index > 5)
+//                    index = 0;
+//            } while (aiPlayer == null);
+			aiPlayer = this.CampTurn.TeamPlayers[0];
+			// pan camera to the ai's chosen player.
+			this.GetComponent<InputController>().LastClickedPlayer = aiPlayer;
             Tile previousLocation = aiPlayer.GetOccupiedTile();
 			this.GetDice.Roll(aiPlayer.gameObject.transform.position + new Vector3(0, 20, 0));
 			StartCoroutine(DelayAIMove(2, previousLocation, aiPlayer));
@@ -553,7 +564,12 @@ public class Board : MonoBehaviour
     {
         foreach (Tile tile in this.Tiles)
             if (tile != null && tile.gameObject.activeSelf)
-                tile.GetComponent<Renderer>().material = tile.InitialMaterial;
+			{
+				if(this.GetGoalTile() == tile)
+					tile.gameObject.GetComponent<Renderer>().material.color = Tile.goalColour;
+				else
+					tile.gameObject.GetComponent<Renderer>().material.color = Tile.defaultColour;
+			}
     }
 
 	/// Getters for width and height (in units of Tiles and pixels respectively)

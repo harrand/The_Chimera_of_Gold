@@ -116,16 +116,16 @@ public class DecisionTree : MonoBehaviour
     */
     void ObstacleEasyMovement(Obstacle obstacle)
     {
-        Vector2 posi = new Vector2(Random.Range(0, 20), Random.Range(1, 18));
+        Vector2 posi = new Vector2(Random.Range(0, 20), Random.Range(2, 19));
         while (true)
         {
             // should check if there is an obstacle or a player pawn on the tile.
-            if (isvalid(posi) && !board.TileOccupiedByObstacle(posi) && !board.TileOccupiedByPlayerPawn(posi))
+			if (isvalid(posi) && !board.TileOccupiedByObstacle(posi) && !board.TileOccupiedByPlayerPawn(posi) && !isgoal(posi))
             {
                 obstacle.transform.position = board.GetTileByTileSpace(posi).transform.position;
                 break;
             }
-            posi = new Vector2(Random.Range(0, 20), Random.Range(1, 18));
+            posi = new Vector2(Random.Range(0, 20), Random.Range(2, 19));
         }
 
     }
@@ -209,7 +209,7 @@ public class DecisionTree : MonoBehaviour
         {
             posi.x = pawnPosition.x + dir[j, 0]; //search the neighbour node 
             posi.y = pawnPosition.y + dir[j, 1];
-            if (board.GetObstacleByTileSpace(posi) == null && isvalid(posi) && !board.TileOccupiedByPlayerPawn(posi))
+			if (board.GetObstacleByTileSpace(posi) == null && isvalid(posi) && !board.TileOccupiedByPlayerPawn(posi) && !isgoal(posi) && posi.y != 1)
             {
                 return posi;
             }
@@ -341,6 +341,7 @@ public class DecisionTree : MonoBehaviour
 			distence_to_goal = BFS_Assese_Value(tmpPosition);
 
 			score = distence_to_goal;
+			Debug.Log ("Path score: " + score);
 
 			if (distence_to_goal == -1)
 			{
@@ -414,6 +415,7 @@ public class DecisionTree : MonoBehaviour
 
                 if (neighbour.Getposition() == goalposition)
                 {
+					Debug.Log ("In asses neighbour score: " + neighbour.depth);
                     return neighbour.depth; // when we found the goal
                 }
             }
@@ -438,100 +440,77 @@ public class DecisionTree : MonoBehaviour
         {
             return false;
         }
-        if (y == 1)
-        {
-            return true;
-        }
-        else if (y == 2)
-        {
-            if (x == 0 || x == 4 || x == 8 || x == 12 || x == 16 || x == 20)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 3)
-        {
-            return true;
-        }
-        else if (y == 4 || y == 5)
-        {
-            if (x == 2 || x == 6 || x == 10 || x == 14 || x == 18)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 6)
-        {
-            if (x >= 2 && x <= 18)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 7)
-        {
-            if (x == 4 || x == 8 || x == 12 || x == 16)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 8)
-        {
-            if (x >= 4 && x <= 16)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 9 || y == 10)
-        {
-            if (x == 6 || x == 14)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 11)
-        {
-            if (x >= 6 && x <= 14)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 12)
-        {
-            if (x == 8 || x == 12)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 13)
-        {
-            if (x >= 8 && x <= 12)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 14)
-        {
-            if (x == 10)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 15)
-        {
-            if (x >= 4 && x <= 16)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 16 || y == 17 || y == 18)
-        {
-            if (x == 4 || x == 16)
-                return true;
-            else
-                return false;
-        }
-        else if (y == 19)
-        {
+		if (y == 1) {
+			return true;
+		} else if (y == 2) {
+			if (x == 0 || x == 4 || x == 8 || x == 12 || x == 16 || x == 20)
+				return true;
+			else
+				return false;
+		} else if (y == 3) {
+			return true;
+		} else if (y == 4 || y == 5) {
+			if (x == 2 || x == 6 || x == 10 || x == 14 || x == 18)
+				return true;
+			else
+				return false;
+		} else if (y == 6) {
+			if (x >= 2 && x <= 18)
+				return true;
+			else
+				return false;
+		} else if (y == 7) {
+			if (x == 4 || x == 8 || x == 12 || x == 16)
+				return true;
+			else
+				return false;
+		} else if (y == 8) {
+			if (x >= 4 && x <= 16)
+				return true;
+			else
+				return false;
+		} else if (y == 9 || y == 10) {
+			if (x == 6 || x == 14)
+				return true;
+			else
+				return false;
+		} else if (y == 11) {
+			if (x >= 6 && x <= 14)
+				return true;
+			else
+				return false;
+		} else if (y == 12) {
+			if (x == 8 || x == 12)
+				return true;
+			else
+				return false;
+		} else if (y == 13) {
+			if (x >= 8 && x <= 12)
+				return true;
+			else
+				return false;
+		} else if (y == 14) {
+			if (x == 10)
+				return true;
+			else
+				return false;
+		} else if (y == 15) {
+			if (x >= 4 && x <= 16)
+				return true;
+			else
+				return false;
+		} else if (y == 16 || y == 17) {
+			if (x == 4 || x == 16)
+				return true;
+			else
+				return false;
+		} else if (y == 18) {
+			if (x == 4 || x == 16 || x == 10)
+				return true;
+			else
+				return false;
+		}
+        else if (y == 19) {
             if (x >= 4 && x <= 16)
                 return true;
             else
@@ -540,4 +519,13 @@ public class DecisionTree : MonoBehaviour
         else
             return false;
     }
+
+	public bool isgoal(Vector2 posi)
+	{
+		if ((int)posi.x == 10 && (int)posi.y == 18)
+			return true;
+		else
+			return false;
+	}
+
 }

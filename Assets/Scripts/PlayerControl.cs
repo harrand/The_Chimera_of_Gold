@@ -27,13 +27,19 @@ public class PlayerControl
         Board parentBoard = this.GetPlayer.GetCamp().GetParent();
         Obstacle[] obstacles = parentBoard.Obstacles;
         List<Tile> possibleMoves = new List<Tile>();
-        foreach(Tile adjacentTile in previousTile.AdjacentTiles(diceRoll))
+		Tile[] adjacents = previousTile.AdjacentTiles(diceRoll);
+		Tile[] adjacentsIgnoreRules = previousTile.AdjacentTilesNoObstacles(diceRoll);
+        foreach(Tile adjacentTile in adjacents)
         {
             bool isOnCamp = false;
             foreach (Camp camp in parentBoard.Camps)
                 if (camp.GetOccupiedTile() == adjacentTile)
                     isOnCamp = true;
-            if (adjacentTile.DistanceFrom(previousTile) == diceRoll && !isOnCamp)
+			bool allNeighboursAccountedFor = true;
+			foreach(Tile neighbour in adjacentTile.AdjacentTilesNoObstacles(1))
+				if(Array.IndexOf(adjacentsIgnoreRules, neighbour) == -1)
+					allNeighboursAccountedFor = false;
+			if (!allNeighboursAccountedFor && !isOnCamp)
                 possibleMoves.Add(adjacentTile);
         }
         return possibleMoves.ToArray();
@@ -45,9 +51,16 @@ public class PlayerControl
      * @param diceRoll the move that has been done, therefore checking any possible tiles that can be visited within that number
      * @param highlightColour changes the colour of all of the available tiles to move to under the current move
      */
-    public void HighlightPossibleMoves(uint diceRoll, Color highlightColour)
+	public void HighlightPossibleMoves(uint diceRoll, Color moveHighlightColour, Color obstacleHighlightColour, Color takeoverHighlightColour)
     {
         foreach (Tile tile in this.PossibleMoves(diceRoll))
-            tile.GetComponent<Renderer>().material.color = new Color(highlightColour.r, highlightColour.g, highlightColour.b, highlightColour.a);
+		{
+			if(tile.BlockedByObstacle())
+				tile.GetComponent<Renderer>().material.color = obstacleHighlightColour;
+			else if(tile.GetOccupant() != null && tile.GetOccupant().GetComponent<Player>() != null)
+				tile.GetComponent<Renderer>().material.color = takeoverHighlightColour;
+			else
+				tile.GetComponent<Renderer>().material.color = moveHighlightColour;
+		}
     }
 }

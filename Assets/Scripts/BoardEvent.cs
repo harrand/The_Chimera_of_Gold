@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 /**
 * Board Event handles any changes that take place on the board - for example if a player makes a move
@@ -31,7 +33,7 @@ public class BoardEvent
 	{
         if(player.GetCamp().GetParent().CampTurn != player.GetCamp())
         {
-            Debug.Log("fuck off its not your turn");
+            Debug.Log("It is not this Pawn's turn!");
             return;
         }
         if (player == null)
@@ -104,12 +106,16 @@ public class BoardEvent
     public void OnWinEvent(Camp winner)
     {
         Debug.Log(winner + " has reached the Chimera of Gold and won the game! Congratulations!");
+        PlayerData.winnerColour = winner.TeamColor;
+        int winnerIndex = Array.IndexOf(this.parent.Camps, winner);
+        PlayerData.winnerNumber = winnerIndex + 1;
         winner.TeamColor = Color.yellow / 1.2f;
         foreach (Camp playerLost in winner.GetParent().Camps)
             if (playerLost != winner)
             {
                 playerLost.GetComponent<Renderer>().material.color = Color.gray;
             }
+        SceneManager.LoadScene("Finit");
     }
 
     /**
