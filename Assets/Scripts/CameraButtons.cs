@@ -50,4 +50,23 @@ public class CameraButtons : MonoBehaviour {
     void Update () {
 		
 	}
+
+	public void SetCameraForPlayer1(){
+		Debug.Log (playerOne.value);
+//		Debug.Log (GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().Camps[0].TeamPlayers[0].name);
+		GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().LastClickedPlayer = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<Board>().Camps[0].TeamPlayers[playerOne.value];
+		Debug.Log (GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().LastClickedPlayer.name);
+	}
+	public void SetCameraForPlayer2(){
+
+	}
+	public void SetCameraForPlayer3(){
+
+	}
+	public void SetCameraForPlayer4(){
+
+	}
+	public void SetCameraForPlayer5(){
+
+	}
 }
