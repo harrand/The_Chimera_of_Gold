@@ -121,7 +121,7 @@ public class BoardEvent
 	 * @author Harry Hollands
 	 * @param player The player that is taking over another player
 	 */
-    private void HandleTakeovers(Player player)
+    public void HandleTakeovers(Player player)
 	{
 		Camp friendlyCamp = player.GetCamp();
 		foreach(Camp camp in this.parent.Camps)

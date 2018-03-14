@@ -79,19 +79,19 @@ public class QuitButtons : MonoBehaviour
     }
 
     /**
-     * YayPress() Allows you to quit the game
+     * YesPress() Allows you to quit the game
      * @author Lawrence Howes-Yarlett
      */
-    public void YayPress()
+    public void YesPress()
     {
         Application.Quit();
     }
 
    /**
-	* NayPress() Allows you to return to the main menu
+	* NoPress() Allows you to return to the main menu
 	* @author Lawrnce Howes-Yarlett
 	*/
-    public void NayPress()
+    public void NoPress()
     {
         quitMenu.enabled = false;
         if (start != null)
@@ -113,18 +113,18 @@ public class QuitButtons : MonoBehaviour
     }
 
     /**
-     * YayMenu() Allows you to quit the game to the main menu
+     * YesMenu() Allows you to quit the game to the main menu
      * @author Lawrence Howes-Yarlett
      */
-    public void YayMenu()
+    public void YesMenu()
     {
         SceneManager.LoadScene("StartMenu");
     }
 	/**
-	 * NayMenu() Allows you to return to the game
+	 * NoMenu() Allows you to return to the game
 	 * @author Lawrence Howes-Yarlett
 	 */
-    public void NayMenu()
+    public void NoMenu()
     {
         quitToMenuMenu.enabled = false;
         if (start != null)

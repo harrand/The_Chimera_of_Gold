@@ -7,7 +7,6 @@ using UnityEngine;
 * @author Aswin Mathew
 */
 public class CameraControl : MonoBehaviour
-
 {
     private bool playerSel = false, tileSel = false; //Helps movement of players. playerSel set when first player is selected. tileSel true if current is a tile;   
     private GameObject[] menus;
@@ -26,20 +25,19 @@ public class CameraControl : MonoBehaviour
     //!(minY doesn't do anything. I don't know why. I've temporarily hardcoded the value in SetCameraPosition and commented out the variable line.)!
 
     //Used for angles
-    private float x =0, y=0;
+    private float x = 0, y = 0;
     
     // Use this for initialization
-	void Start ()
+	void Start()
     {
-        Ethan = GameObject.FindGameObjectWithTag("Player");             //The test dummy
+        Ethan = GameObject.FindGameObjectWithTag("Player");//The test dummy
         //angles to be used for the rotation
         Vector3 angles = transform.eulerAngles;
         y = angles.y;
         x = angles.x;
 
-
         menus = GameObject.FindGameObjectsWithTag("Menu");
-        for(int i = 0; i < menus.Length; i++)
+        for(uint i = 0; i < menus.Length; i++)
             menus[i].GetComponent<Canvas>().enabled = false;
 
         Menu = GameObject.FindGameObjectWithTag("MainMenu").GetComponent<Canvas>();
@@ -59,20 +57,20 @@ public class CameraControl : MonoBehaviour
 			return null;
 		}
         //Searchs for the board, and checks what was clicked last. Then puts it into current
-        if (GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 1)
+        if(GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 1)
         {
             current = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().LastClickedTile.transform;
             tileSel = true;
             //Debug.Log("Tile");
         }
-        else if (GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 2)
+        else if(GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 2)
         {
             current = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().LastClickedPlayer.transform;
             playerSel = true;
             tileSel = false;
             //Debug.Log("player");
         }
-        else if (GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 3)
+        else if(GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 3)
         {
             current = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().LastClickedObstacle.transform;
             tileSel = false;
@@ -98,21 +96,22 @@ public class CameraControl : MonoBehaviour
      */
     private float ClampAngle(float angle, float min, float max)
     {
-        if (angle < -360f)
+        if(angle < -360f)
             angle += 360f;
-        if (angle > 360f)
+        if(angle > 360f)
             angle -= 360f;
         return Mathf.Clamp(angle, min, max);
     }
+
     /**
-     * rotates the camera around the currently selected object. 
+     * Rotates the camera around the currently selected object. 
      * @author Aswin Mathew
      * @param currentTarget the thing that is currently being looked at
      */
     public void SetCameraPosition(Transform currentTarget)
     {   
         //Only allows rotation if right mouse is held down. (It was difficult to click on other objects when the camera kept moving)
-        if (Input.GetMouseButton(1))
+        if(Input.GetMouseButton(1))
         {
             //Debug.Log("DOWN");
             x += Input.GetAxis("Mouse X") * speed;
@@ -129,26 +128,30 @@ public class CameraControl : MonoBehaviour
         Vector3 negativeDist = new Vector3(0f, 0f, -distance);
         Vector3 position = currentTarget.position + (rotation * negativeDist);
 
-        if (position.x <= -20)
+        if(position.x <= -20)
             position.x = -20;
-        else if (position.x > 220)
+        else if(position.x > 220)
             position.x = 220;
 
         if (position.z >= 230)
             position.z = 230;
-        else if (position.z <= -10)
+        else if(position.z <= -10)
             position.z = -10;
             
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 3.0f);
         transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * 1.5f);
         
     }
-    // Update is called once per frame
-    void LateUpdate ()
+
+    /**
+     * Invokes every tick
+     * @author Aswin Mathew
+     */
+    void LateUpdate()
     {
         current = GetLastClicked();
 
-        if (current != null && Input.GetKey(KeyCode.LeftShift) && playerSel && tileSel)
+        if(current != null && Input.GetKey(KeyCode.LeftShift) && playerSel && tileSel)
         {
             //offset from tile
             GameObject boardObject = GameObject.FindGameObjectWithTag("GameBoard");
@@ -157,7 +160,7 @@ public class CameraControl : MonoBehaviour
 			boardObject.GetComponent<Board>().Event.OnPlayerMove(boardObject.GetComponent<InputController>().LastClickedPlayer, current.position);
             //Debug.Log(tileSel);
         }
-        else if (current != null)
+        else if(current != null)
         { 
             SetCameraPosition(current);
             //Debug.Log("Should rotate around selected");
@@ -168,10 +171,10 @@ public class CameraControl : MonoBehaviour
             //Debug.Log("Should Follow Ethan ");
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
             Menu.enabled = !Menu.enabled;
-            for (int i = 0; i < menus.Length; i++)
+            for(int i = 0; i < menus.Length; i++)
                 menus[i].GetComponent<Canvas>().enabled = false;
         }
 
