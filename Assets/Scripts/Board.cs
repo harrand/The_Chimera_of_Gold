@@ -69,7 +69,7 @@ public class Board : MonoBehaviour
 
         /// Allocate and assign Camps.
 		board.Camps = new Camp[PlayerData.numberOfPlayers];
-        for (uint i = 0; i < PlayerData.numberOfPlayers; i++)
+        for(uint i = 0; i < PlayerData.numberOfPlayers; i++)
         {
             Color color = Color.black;
             switch (i % 5)
@@ -90,7 +90,7 @@ public class Board : MonoBehaviour
                     color = Color.magenta;
                     break;
             }
-            if (PlayerData.isAIPlayer[i])
+            if(PlayerData.isAIPlayer[i])
             {
                 board.Camps[i] = Camp.CreateAICamp(board, board.Tiles[(4 * i) + 2], color, PlayerData.isHardAI[i]);
             }
@@ -103,7 +103,7 @@ public class Board : MonoBehaviour
         }
         /// Allocate and assign Obstacles.
 		board.Obstacles = new Obstacle[board.numberObstacles];
-		for (uint i = 0; i < board.numberObstacles; i++)
+		for(uint i = 0; i < board.numberObstacles; i++)
 			board.Obstacles[i] = Obstacle.Create(board, board.Tiles[i + 30]);
 		board.Cull();
 		return board;
@@ -153,7 +153,7 @@ public class Board : MonoBehaviour
 		board.numberObstacles = 13;
 
 		board.Camps = new Camp[board.numberCamps];
-        for (uint i = 0; i < board.numberCamps; i++)
+        for(uint i = 0; i < board.numberCamps; i++)
         {
             Color color = Color.black;
             switch (i % 4)
@@ -177,7 +177,7 @@ public class Board : MonoBehaviour
             board.Camps[i] = Camp.Create(board, board.Tiles[i], color);
         }
         board.Obstacles = new Obstacle[board.numberObstacles];
-		for (uint i = 0; i < board.numberObstacles; i++)
+		for(uint i = 0; i < board.numberObstacles; i++)
 			board.Obstacles[i] = Obstacle.Create(board, board.Tiles[i]);
 		return board;
 	}
@@ -226,101 +226,101 @@ public class Board : MonoBehaviour
             else
                 return false;
         }
-        else if (y == 1)
+        else if(y == 1)
         {
             return true;
         }
-        else if (y == 2)
+        else if(y == 2)
         {
-            if (x == 0 || x == 4 || x == 8 || x == 12 || x == 16 || x == 20)
+            if(x == 0 || x == 4 || x == 8 || x == 12 || x == 16 || x == 20)
                 return true;
             else
                 return false;
         }
-        else if (y == 3)
+        else if(y == 3)
         {
             return true;
         }
-        else if (y == 4 || y == 5)
+        else if(y == 4 || y == 5)
         {
-            if (x == 2 || x == 6 || x == 10 || x == 14 || x == 18)
+            if(x == 2 || x == 6 || x == 10 || x == 14 || x == 18)
                 return true;
             else
                 return false;
         }
-        else if (y == 6)
+        else if(y == 6)
         {
-            if (x >= 2 && x <= 18)
+            if(x >= 2 && x <= 18)
                 return true;
             else
                 return false;
         }
-        else if (y == 7)
+        else if(y == 7)
         {
-            if (x == 4 || x == 8 || x == 12 || x == 16)
+            if(x == 4 || x == 8 || x == 12 || x == 16)
                 return true;
             else
                 return false;
         }
-        else if (y == 8)
+        else if(y == 8)
         {
-            if (x >= 4 && x <= 16)
+            if(x >= 4 && x <= 16)
                 return true;
             else
                 return false;
         }
-        else if (y == 9 || y == 10)
+        else if(y == 9 || y == 10)
         {
-            if (x == 6 || x == 14)
+            if(x == 6 || x == 14)
                 return true;
             else
                 return false;
         }
-        else if (y == 11)
+        else if(y == 11)
         {
-            if (x >= 6 && x <= 14)
+            if(x >= 6 && x <= 14)
                 return true;
             else
                 return false;
         }
-        else if (y == 12)
+        else if(y == 12)
         {
-            if (x == 8 || x == 12)
+            if(x == 8 || x == 12)
                 return true;
             else
                 return false;
         }
-        else if (y == 13)
+        else if(y == 13)
         {
-            if (x >= 8 && x <= 12)
+            if(x >= 8 && x <= 12)
                 return true;
             else
                 return false;
         }
-        else if (y == 14)
+        else if(y == 14)
         {
-            if (x == 10)
+            if(x == 10)
                 return true;
             else
                 return false;
         }
-        else if (y == 15)
+        else if(y == 15)
         {
-            if (x >= 4 && x <= 16)
+            if(x >= 4 && x <= 16)
                 return true;
             else
                 return false;
         }
-        else if (y == 16 || y == 17 || y == 18)
+        else if(y == 16 || y == 17 || y == 18)
         {
-            if (x == 4 || x == 16)
+            if(x == 4 || x == 16)
                 return true;
             else
                 return false;
         }
-        else if (y == 19)
+        else if(y == 19)
         {
-            if (x >= 4 && x <= 16)
+            if(x >= 4 && x <= 16)
                 return true;
             else
                 return false;
@@ -339,20 +339,19 @@ public class Board : MonoBehaviour
         Tile[] gameTiles = new Tile[151];
 		Tile goalTile = null;
         int j = 0;
-        for (int i = 0; i < this.Tiles.Length; i++)
+        for(int i = 0; i < this.Tiles.Length; i++)
         {
-            if (CheckTile(this.Tiles[i].PositionTileSpace.x, this.Tiles[i].PositionTileSpace.y))
+            if(CheckTile(this.Tiles[i].PositionTileSpace.x, this.Tiles[i].PositionTileSpace.y))
             {
                 gameTiles[j] = this.Tiles[i];
                 j++;
-
             }
-            if (this.Tiles[i].PositionTileSpace.y == 18 && this.Tiles[i].PositionTileSpace.x == 10)
+            if(this.Tiles[i].PositionTileSpace.y == 18 && this.Tiles[i].PositionTileSpace.x == 10)
             {
                 goalTile = Tiles[i];
             }
         }
-        foreach (Tile t in Tiles)
+        foreach(Tile t in Tiles)
         {
             if (t != null)
                 t.gameObject.SetActive(false);
@@ -394,7 +393,7 @@ public class Board : MonoBehaviour
      */
     public Tile GetTileByTileSpace(Vector2 positionTileSpace)
     {
-        foreach (Tile t in this.Tiles)
+        foreach(Tile t in this.Tiles)
             if (t.PositionTileSpace == positionTileSpace)
                 return t;
         return null;
@@ -416,8 +415,8 @@ public class Board : MonoBehaviour
      */
     public bool TileOccupiedByObstacle(Vector2 tilePosition)
     {
-        foreach (Obstacle obstacle in this.Obstacles)
-            if (obstacle.CurrentTile.PositionTileSpace == tilePosition)
+        foreach(Obstacle obstacle in this.Obstacles)
+            if(obstacle.CurrentTile.PositionTileSpace == tilePosition)
                 return true;
         return false;
     }
@@ -431,12 +430,12 @@ public class Board : MonoBehaviour
     public bool TileOccupiedByPlayerPawn(Vector2 tilePosition)
     {
         Camp tempCamp = null;
-        foreach (Camp myCamp in this.Camps)
+        foreach(Camp myCamp in this.Camps)
         {
             tempCamp = myCamp;
-            foreach (Player myPlayer in tempCamp.TeamPlayers)
+            foreach(Player myPlayer in tempCamp.TeamPlayers)
             {
-                if (myPlayer.GetOccupiedTile().transform.position == GetTileByTileSpace(tilePosition).transform.position)
+                if(myPlayer.GetOccupiedTile().transform.position == GetTileByTileSpace(tilePosition).transform.position)
                     return true;
             }
         }
@@ -455,25 +454,23 @@ public class Board : MonoBehaviour
 	/**
 	 * Dice is already being rolled when this is invoked. Causes the AI Player to perform its movement functionality approximately one second after the dice is predicted to hit the ground.
 	 */
-	private IEnumerator DelayAIMove(float seconds, Tile previousLocation, Player aiPlayer)
+	private IEnumerator DelayAIMove(Tile previousLocation, Player aiPlayer)
 	{
-		// s = ut + 0.5a(t^2)
-		// v^2 = u^2 + 2as
-		// v = u + at
-		// at = v - u
-		// t = (v - u) / a
-		// a = -9.81 units per second^2
-		// u = 0
-		// s = distance between ground and dice position
-		// v= sqrt(u^2 + 2 * a * s)
-		float s = (this.GetDice.transform.position - previousLocation.transform.position).magnitude;
-		float v = Mathf.Sqrt(2 * s * 9.81f);
-		float t = v / 9.81f;
 		yield return new WaitUntil(()=> this.GetDice.GetComponent<Rigidbody>().velocity.magnitude < 0.01f);
 		int roll = (int) this.GetDice.NumberFaceUp();
+        Camp aiCamp = this.CampTurn;
+        foreach(Obstacle obstacle in this.Obstacles)
+        {
+            if(obstacle.GetOccupiedTile().DistanceFrom(aiPlayer.GetOccupiedTile()) < roll)
+            {
+                int index = Array.IndexOf(aiCamp.TeamPlayers, aiPlayer);
+                aiPlayer = aiCamp.TeamPlayers[++index >=5 ? 0 : index];
+            }
+        }
         Tile tileDestination = this.CampTurn.ai.MovementTo(aiPlayer.GetOccupiedTile(), roll);
         aiPlayer.gameObject.transform.position = tileDestination.gameObject.transform.position + Player.POSITION_OFFSET;
 		this.CampTurn.ai.MoveObstacle (tileDestination, aiPlayer);
+        this.Event.HandleTakeovers(aiPlayer);
 		this.NextTurn();
 	}
 
@@ -486,9 +483,9 @@ public class Board : MonoBehaviour
         this.obstacleControlFlag = false;
         int campId = -1;
         // Set campId and playerId to the corresponding indices for the current Player
-        for (int campCounter = 0; campCounter < this.Camps.Length; campCounter++)
+        for(int campCounter = 0; campCounter < this.Camps.Length; campCounter++)
         {
-            if (this.CampTurn == this.Camps[campCounter])
+            if(this.CampTurn == this.Camps[campCounter])
             {
                 campId = campCounter;
             }
@@ -498,28 +495,18 @@ public class Board : MonoBehaviour
             Debug.Log("NextTurn failed -- CampTurn is not a valid reference to a Board camp.");
             return;
         }
-        if (++campId >= this.Camps.Length)
+        if(++campId >= this.Camps.Length)
             campId = 0;
         this.CampTurn = this.Camps[campId];
         if(this.CampTurn.isAI())
         {
             Player aiPlayer = null;
-            uint count = 0;
-//            do
-//            {
-//                if (++count > 5)
-//                    break;
-//                int index = new System.Random().Next() % 5;
-//                aiPlayer = this.CampTurn.TeamPlayers[index++];
-//                if (index > 5)
-//                    index = 0;
-//            } while (aiPlayer == null);
-			aiPlayer = this.CampTurn.TeamPlayers[0];
+			aiPlayer = this.CampTurn.TeamPlayers[(5 - this.CampTurn.GetNumberOfPlayers())];
 			// pan camera to the ai's chosen player.
 			this.GetComponent<InputController>().LastClickedPlayer = aiPlayer;
             Tile previousLocation = aiPlayer.GetOccupiedTile();
 			this.GetDice.Roll(aiPlayer.gameObject.transform.position + new Vector3(0, 20, 0));
-			StartCoroutine(DelayAIMove(2, previousLocation, aiPlayer));
+			StartCoroutine(DelayAIMove(previousLocation, aiPlayer));
         }
         this.RemoveTileHighlights();
         //consider highlighting something in some way to display the colour of the current camp turn

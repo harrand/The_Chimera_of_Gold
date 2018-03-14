@@ -42,6 +42,7 @@ public class InputController : MonoBehaviour
 		{
 			this.UpdateLastClickedObjects();
 		}
+
         if (Input.GetKeyDown("m") && this.LastClickedPlayer != null)
         {
             // highlight possible moves
