@@ -22,6 +22,6 @@ public class TextSwirl : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void PlayGame()
     {
-        SceneManager.LoadScene("GameModeSelect");
+        SceneManager.LoadScene("OfflineMenu");
     }
 }
