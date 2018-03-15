@@ -11,7 +11,7 @@ public class InputController : MonoBehaviour
     /**
      * LastClickedX represents the object that was last clicked in 3D space. 
      */
-	public Tile LastClickedTile{get; private set;}
+	public Tile LastClickedTile{get;  set;}
 	public Player LastClickedPlayer{get; set;}
 	public Obstacle LastClickedObstacle{get; private set;}
 	//public Camp LastClickedCamp{get; private set;}
@@ -19,7 +19,7 @@ public class InputController : MonoBehaviour
     /**
      * Decides what to focus the camera on. Basically last clicked object
      */
-    public int CurrentSelected { get; private set; }
+    public int CurrentSelected { get;  set; }
     /**
     * SelectedX represents the Player/Obstacle which should be able to move.
     */
