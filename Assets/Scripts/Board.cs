@@ -92,12 +92,12 @@ public class Board : MonoBehaviour
             }
             if(PlayerData.isAIPlayer[i])
             {
-                board.Camps[i] = Camp.CreateAICamp(board, board.Tiles[(4 * i) + 2], color, PlayerData.isHardAI[i]);
+                board.Camps[i] = Camp.CreateAICamp(board, board.Tiles[(4 * i) + 2], color, PlayerData.isHardAI[i], i);
             }
             else
 			{
-                // we want Tile 4*i + 2
-                board.Camps[i] = Camp.Create(board, board.Tiles[(4 * i) + 2], color);
+                // we want Tile 4*i + 2         *Aswin: Also pass in the camp position in array as a makeshift playerId
+                board.Camps[i] = Camp.Create(board, board.Tiles[(4 * i) + 2], color, i);
 			}
             board.ResetTurns();
         }
@@ -174,7 +174,7 @@ public class Board : MonoBehaviour
                     color = Color.magenta;
                     break;
             }
-            board.Camps[i] = Camp.Create(board, board.Tiles[i], color);
+            board.Camps[i] = Camp.Create(board, board.Tiles[i], color, i);
         }
         board.Obstacles = new Obstacle[board.numberObstacles];
 		for(uint i = 0; i < board.numberObstacles; i++)
