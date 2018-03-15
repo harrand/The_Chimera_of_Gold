@@ -110,6 +110,16 @@ public class BoardEvent
         int winnerIndex = Array.IndexOf(this.parent.Camps, winner);
         PlayerData.winnerNumber = winnerIndex + 1;
         winner.TeamColor = Color.yellow / 1.2f;
+        /*
+         * 1st place is trivial
+         * second place will have the fewest pawns and reminaing pawns closest to the goal tile.
+         * and so forth
+         * 
+         * heuristics needed:
+         * distance from pawn to goal
+         * pawns remaining (which we have)
+        */
+        PlayerData.winners = this.parent.GetOrderedCamps();
         foreach (Camp playerLost in winner.GetParent().Camps)
             if (playerLost != winner)
             {

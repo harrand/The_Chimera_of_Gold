@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -60,6 +61,11 @@ public class Player :  NetworkBehaviour
         }
         Destroy(this.gameObject);
         this.GetCamp().TeamPlayers[thisIndex] = null;
+    }
+
+    public uint GoalScore()
+    {
+        return Convert.ToUInt32(this.GetOccupiedTile().PositionTileSpace.y);
     }
 
     /**
