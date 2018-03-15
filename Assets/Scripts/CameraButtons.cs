@@ -54,7 +54,7 @@ public class CameraButtons : MonoBehaviour {
 	public void SetCameraForPlayer1(){
 		if (GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().Camps [0].TeamPlayers [playerOne.value] == null) {
 			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().LastClickedTile = GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().GetGoalTile ();
-			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().CurrentSelected = 2;
+			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().CurrentSelected = 1;
 		} else {
 			GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().LastClickedPlayer = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<Board>().Camps[0].TeamPlayers[playerOne.value];
 			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().CurrentSelected = 2;
@@ -62,9 +62,9 @@ public class CameraButtons : MonoBehaviour {
 	}
 
 	public void SetCameraForPlayer2(){
-		if (GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().Camps [1].TeamPlayers [playerOne.value] == null) {
+		if (GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().Camps [1].TeamPlayers [playerTwo.value] == null) {
 			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().LastClickedTile = GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().GetGoalTile ();
-			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().CurrentSelected = 2;
+			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().CurrentSelected = 1;
 		} else {
 			GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().LastClickedPlayer = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<Board>().Camps[1].TeamPlayers[playerTwo.value];
 			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().CurrentSelected = 2;
@@ -72,9 +72,9 @@ public class CameraButtons : MonoBehaviour {
 	}
 
 	public void SetCameraForPlayer3(){
-		if (GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().Camps [2].TeamPlayers [playerOne.value] == null) {
+		if (GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().Camps [2].TeamPlayers [playerThree.value] == null) {
 			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().LastClickedTile = GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().GetGoalTile ();
-			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().CurrentSelected = 2;
+			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().CurrentSelected = 1;
 		} else {
 			GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().LastClickedPlayer = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<Board>().Camps[2].TeamPlayers[playerThree.value];
 			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().CurrentSelected = 2;
@@ -82,9 +82,9 @@ public class CameraButtons : MonoBehaviour {
 	}
 
 	public void SetCameraForPlayer4(){
-		if (GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().Camps [3].TeamPlayers [playerOne.value] == null) {
+		if (GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().Camps [3].TeamPlayers [playerFour.value] == null) {
 			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().LastClickedTile = GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().GetGoalTile ();
-			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().CurrentSelected = 2;
+			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().CurrentSelected = 1;
 		} else {
 			GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().LastClickedPlayer = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<Board>().Camps[3].TeamPlayers[playerFour.value];
 			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().CurrentSelected = 2;
@@ -92,9 +92,9 @@ public class CameraButtons : MonoBehaviour {
 	}
 
 	public void SetCameraForPlayer5(){
-		if (GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().Camps [4].TeamPlayers [playerOne.value] == null) {
+		if (GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().Camps [4].TeamPlayers [playerFive.value] == null) {
 			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().LastClickedTile = GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().GetGoalTile ();
-			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().CurrentSelected = 2;
+			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().CurrentSelected = 1;
 		} else {
 			GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().LastClickedPlayer = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<Board>().Camps[4].TeamPlayers[playerFive.value];
 			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().CurrentSelected = 2;
