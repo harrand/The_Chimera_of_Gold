@@ -517,6 +517,7 @@ public class Board : MonoBehaviour
 			aiPlayer = this.CampTurn.TeamPlayers[0];
 			// pan camera to the ai's chosen player.
 			this.GetComponent<InputController>().LastClickedPlayer = aiPlayer;
+			this.GetComponent<InputController>().CurrentSelected = 2;
             Tile previousLocation = aiPlayer.GetOccupiedTile();
 			this.GetDice.Roll(aiPlayer.gameObject.transform.position + new Vector3(0, 20, 0));
 			StartCoroutine(DelayAIMove(2, previousLocation, aiPlayer));
