@@ -13,6 +13,7 @@ TagManager:
   - GameBoard
   - Menu
   - MainMenu
+  - CameraButton
   layers:
   - Default
   - TransparentFX
