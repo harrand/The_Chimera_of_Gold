@@ -43,6 +43,14 @@ public class InputController : MonoBehaviour
 			this.UpdateLastClickedObjects();
 		}
 
+        if (Input.GetKeyDown("c") && this.LastClickedPlayer != null)
+        {
+            this.LastClickedPlayer.transform.position = this.boardScript.GetGoalTile().transform.position + Player.POSITION_OFFSET;
+            this.boardScript.Event.OnPlayerGoalEvent(this.LastClickedPlayer);
+            this.LastClickedPlayer = null;
+            this.CurrentSelected = 1;
+        }
+
         if (Input.GetKeyDown("m") && this.LastClickedPlayer != null)
         {
             // highlight possible moves

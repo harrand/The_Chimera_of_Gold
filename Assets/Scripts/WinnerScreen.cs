@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -16,6 +17,9 @@ public class WinnerScreen : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
+        //Debug.Log(PlayerData.winners.Length);
+        //Debug.Log(PlayerData.winners[0]);
+        //Board board = PlayerData.winners[0].GetParent();
         if (PlayerData.numberOfPlayers == 2)
         {
             firstPlayer.enabled = true;
@@ -51,12 +55,46 @@ public class WinnerScreen : MonoBehaviour
         title.text = ("Congratulations, player " + PlayerData.winnerNumber + ", you found the Chimera of Gold!");
         firstPlayer.text = ("Player " + PlayerData.winnerNumber);
         firstPlayer.color = PlayerData.winnerColour;
-        //secondPlayer.text = Howvever 2nd place is stored
-        //if (thirdPlayer.enabled)
-        //{
-            //thirdPlayer.text = Howvever 3rd place is stored
-        //}
-        //etc
+        /*
+        int secondPos = Array.IndexOf(board.Camps, PlayerData.winners[1]) + 1;
+        secondPlayer.text = ("Player " + secondPos);
+        secondPlayer.color = PlayerData.winners[1].TeamColor;
+        if (thirdPlayer.enabled)
+        {
+            int thirdPos = Array.IndexOf(board.Camps, PlayerData.winners[2]) + 1;
+            thirdPlayer.text = ("Player " + thirdPos);
+            thirdPlayer.color = PlayerData.winners[2].TeamColor;
+        }
+        if (fourthPlayer.enabled)
+        {
+            int fourthPos = Array.IndexOf(board.Camps, PlayerData.winners[3]) + 1;
+            fourthPlayer.text = ("Player " + fourthPos);
+            fourthPlayer.color = PlayerData.winners[3].TeamColor;
+        }
+        if (fifthPlayer.enabled)
+        {
+            int fifthPos = Array.IndexOf(board.Camps, PlayerData.winners[4]) + 1;
+            fifthPlayer.text = ("Player " + fifthPos);
+            fifthPlayer.color = PlayerData.winners[4].TeamColor;
+        }
+        */
+        secondPlayer.text = ("Player " + PlayerData.secondNumber);
+        secondPlayer.color = PlayerData.secondColour;
+        if (thirdPlayer.enabled)
+        {
+            thirdPlayer.text = ("Player " + PlayerData.thirdNumber);
+            thirdPlayer.color = PlayerData.thirdColour;
+        }
+        if (fourthPlayer.enabled)
+        {
+            fourthPlayer.text = ("Player " + PlayerData.fourthNumber);
+            fourthPlayer.color = PlayerData.fourthColour;
+        }
+        if (fifthPlayer.enabled)
+        {
+            fifthPlayer.text = ("Player " + PlayerData.fifthNumber);
+            fifthPlayer.color = PlayerData.fifthColour;
+        }
     }
 
     /**

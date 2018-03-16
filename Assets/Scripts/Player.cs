@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -10,7 +11,7 @@ using UnityEngine.Networking;
 public class Player :  NetworkBehaviour
 
 {
-	public static Vector3 POSITION_OFFSET = new Vector3(0, 3, 0);
+	public static Vector3 POSITION_OFFSET = new Vector3(0, 0.6f, 0);
 	private Board parent;
 
     /**
@@ -53,14 +54,13 @@ public class Player :  NetworkBehaviour
      */
     public void Kill()
     {
-        uint thisIndex = 0;
-        for(uint index = 0; index < 5; index++)
-        {
-            if (this.GetCamp().TeamPlayers[index] == this)
-                thisIndex = index;
-        }
+        this.GetCamp().TeamPlayers[Array.IndexOf(this.GetCamp().TeamPlayers, this)] = null;
         Destroy(this.gameObject);
-        this.GetCamp().TeamPlayers[thisIndex] = null;
+    }
+
+    public uint GoalScore()
+    {
+        return Convert.ToUInt32(this.GetOccupiedTile().PositionTileSpace.y);
     }
 
     /**

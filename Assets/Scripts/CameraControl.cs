@@ -59,9 +59,12 @@ public class CameraControl : MonoBehaviour
         //Searchs for the board, and checks what was clicked last. Then puts it into current
         if(GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 1)
         {
-            current = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().LastClickedTile.transform;
-            tileSel = true;
-            //Debug.Log("Tile");
+            if (GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().LastClickedTile != null)
+            {
+                current = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().LastClickedTile.transform;
+                tileSel = true;
+                //Debug.Log("Tile");
+            }
         }
         else if(GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 2)
         {
@@ -149,9 +152,15 @@ public class CameraControl : MonoBehaviour
      */
     void LateUpdate()
     {
+        if(GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 0)
+        {
+            SetCameraPosition(Ethan.transform);
+            return;
+        }
+
         current = GetLastClicked();
 
-        if(current != null && Input.GetKey(KeyCode.LeftShift) && playerSel && tileSel)
+        if (current != null && Input.GetKey(KeyCode.LeftShift) && playerSel && tileSel)
         {
             //offset from tile
             GameObject boardObject = GameObject.FindGameObjectWithTag("GameBoard");

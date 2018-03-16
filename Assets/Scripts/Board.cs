@@ -595,4 +595,14 @@ public class Board : MonoBehaviour
 		float deltaX = max.x - min.x, deltaZ = max.z - min.z;
 		return new Vector2(deltaX / widthTiles, deltaZ / heightTiles);
 	}
+
+    public Camp[] GetOrderedCamps()
+    {
+        Camp[] ordered = new Camp[PlayerData.numberOfPlayers];
+        Debug.Log("camps length = " + this.Camps.Length);
+        for (uint i = 0; i < this.Camps.Length; i++)
+            ordered[i] = this.Camps[i];
+        Array.Sort(ordered, (campX, campY) => campX.GetTotalScore() > campY.GetTotalScore() ? -1 : 1);
+        return ordered;
+    }
 }

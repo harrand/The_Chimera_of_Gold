@@ -96,6 +96,7 @@ public class BoardEvent
         if(player.GetCamp().GetNumberOfPlayers() <= 1)
             OnWinEvent(player.GetCamp());
         player.Kill();
+        this.parent.GetComponent<InputController>().CurrentSelected = 0;
     }
 
 	/**
@@ -109,7 +110,40 @@ public class BoardEvent
         PlayerData.winnerColour = winner.TeamColor;
         int winnerIndex = Array.IndexOf(this.parent.Camps, winner);
         PlayerData.winnerNumber = winnerIndex + 1;
+        Camp[] winners = new Camp[5];
+        winners = this.parent.GetOrderedCamps();
+        Debug.Log(winners[0]);
+        Debug.Log("scores");
+        foreach (Camp camp in this.parent.Camps)
+            Debug.Log(camp.GetTotalScore());
+        PlayerData.secondColour = winners[1].TeamColor;
+        PlayerData.secondNumber = Array.IndexOf(this.parent.Camps, winners[1]) + 1;
+        if (PlayerData.numberOfPlayers >= 3)
+        {
+            PlayerData.thirdColour = winners[2].TeamColor;
+            PlayerData.thirdNumber = Array.IndexOf(this.parent.Camps, winners[2]) + 1;
+        }
+        if (PlayerData.numberOfPlayers >= 4)
+        {
+            PlayerData.fourthColour = winners[3].TeamColor;
+            PlayerData.fourthNumber = Array.IndexOf(this.parent.Camps, winners[3]) + 1;
+        }
+        if (PlayerData.numberOfPlayers >= 5)
+        {
+            PlayerData.fifthColour = winners[4].TeamColor;
+            PlayerData.fifthNumber = Array.IndexOf(this.parent.Camps, winners[4]) + 1;
+        }
         winner.TeamColor = Color.yellow / 1.2f;
+        /*
+         * 1st place is trivial
+         * second place will have the fewest pawns and reminaing pawns closest to the goal tile.
+         * and so forth
+         * 
+         * heuristics needed:
+         * distance from pawn to goal
+         * pawns remaining (which we have)
+        */
+        //PlayerData.winners = this.parent.GetOrderedCamps();
         foreach (Camp playerLost in winner.GetParent().Camps)
             if (playerLost != winner)
             {
@@ -131,7 +165,7 @@ public class BoardEvent
 			if(camp == friendlyCamp)
 				continue;
 			foreach(Player enemy in camp.TeamPlayers)
-				if(enemy.GetOccupiedTile() == player.GetOccupiedTile()) // Player landed on another player and enemy should be sent back to their camp.
+				if(enemy != null && enemy.GetOccupiedTile() == player.GetOccupiedTile()) // Player landed on another player and enemy should be sent back to their camp.
 				{
 					enemy.transform.position = camp.GetOccupiedTile().gameObject.transform.position + Player.POSITION_OFFSET;
 				}

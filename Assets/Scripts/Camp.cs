@@ -85,6 +85,21 @@ public class Camp : NetworkBehaviour
         return counter;
     }
 
+    public uint GetTotalScore()
+    {
+        uint score = 0;
+        foreach (Player p in this.TeamPlayers)
+        {
+            if (p != null)
+            {
+                score += p.GoalScore();
+            }
+            else
+                score += 20;
+        }
+        return score;
+    }
+
 	/**
 	 * This spawn a player under the current camp, checking if the max number has been exceeded
 	 * @author Harry Hollands
