@@ -120,7 +120,7 @@ public class DecisionTree : MonoBehaviour
         while (true)
         {
             // should check if there is an obstacle or a player pawn on the tile.
-			if (isvalid(posi) && !board.TileOccupiedByObstacle(posi) && !board.TileOccupiedByPlayerPawn(posi) && !isgoal(posi))
+			if (isvalid(posi) && !board.TileOccupiedByObstacle(posi) && !board.TileOccupiedByPlayerPawn(posi) && !isgoal(posi) && posi.y != 1)
             {
                 obstacle.transform.position = board.GetTileByTileSpace(posi).transform.position;
                 break;
@@ -174,11 +174,16 @@ public class DecisionTree : MonoBehaviour
             if(aiPlayer.GetCamp() == playerPawns[k].GetCamp())
             {
                 continue;
-            }else if (CheckAdjacentObstacles(playerPawns[k]) != invalidPosition)
+            }
+            else if (CheckAdjacentObstacles(playerPawns[k]) != invalidPosition)
             {
                 posi = CheckAdjacentObstacles(playerPawns[k]);
 				obstacle.transform.position = board.GetTileByTileSpace (posi).transform.position;
                 return;
+            }
+            else if(CheckAdjacentObstacles(playerPawns[k]) == invalidPosition)
+            {
+                ObstacleEasyMovement(obstacle);
             }
         }
         Debug.Log("Can't move the obstacle (hard mode)");
@@ -211,6 +216,7 @@ public class DecisionTree : MonoBehaviour
             posi.y = pawnPosition.y + dir[j, 1];
 			if (board.GetObstacleByTileSpace(posi) == null && isvalid(posi) && !board.TileOccupiedByPlayerPawn(posi) && !isgoal(posi) && posi.y != 1)
             {
+                //Debug.Log("Hard mode obstacle work successfully! " + posi.x + ", " + posi.y);
                 return posi;
             }
             else
@@ -218,6 +224,7 @@ public class DecisionTree : MonoBehaviour
                 continue;
             }
         }
+        //Debug.Log("Hard mode obstacle problem!!");
         return invalidPosition;
     }
 
