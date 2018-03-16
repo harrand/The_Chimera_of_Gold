@@ -96,6 +96,7 @@ public class BoardEvent
         if(player.GetCamp().GetNumberOfPlayers() <= 1)
             OnWinEvent(player.GetCamp());
         player.Kill();
+        this.parent.GetComponent<InputController>().CurrentSelected = 0;
     }
 
 	/**

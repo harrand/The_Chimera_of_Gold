@@ -19,7 +19,7 @@ public class InputController : MonoBehaviour
     /**
      * Decides what to focus the camera on. Basically last clicked object
      */
-    public int CurrentSelected { get; private set; }
+    public int CurrentSelected { get; set; }
     /**
     * SelectedX represents the Player/Obstacle which should be able to move.
     */
@@ -42,6 +42,14 @@ public class InputController : MonoBehaviour
 		{
 			this.UpdateLastClickedObjects();
 		}
+
+        if (Input.GetKeyDown("c") && this.LastClickedPlayer != null)
+        {
+            this.LastClickedPlayer.transform.position = this.boardScript.GetGoalTile().transform.position + Player.POSITION_OFFSET;
+            this.boardScript.Event.OnPlayerGoalEvent(this.LastClickedPlayer);
+            this.LastClickedPlayer = null;
+            this.CurrentSelected = 1;
+        }
 
         if (Input.GetKeyDown("m") && this.LastClickedPlayer != null)
         {
