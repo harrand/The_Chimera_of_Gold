@@ -583,11 +583,11 @@ public class Board : MonoBehaviour
 
     public Camp[] GetOrderedCamps()
     {
-        Camp[] ordered = new Camp[5];
+        Camp[] ordered = new Camp[PlayerData.numberOfPlayers];
         Debug.Log("camps length = " + this.Camps.Length);
         for (uint i = 0; i < this.Camps.Length; i++)
             ordered[i] = this.Camps[i];
-        Array.Sort(ordered, (campX, campY) => campX == null || campY == null ? 0 : (campX.GetTotalScore() > campY.GetTotalScore() ? 1 : 0));
+        Array.Sort(ordered, (campX, campY) => campX.GetTotalScore() > campY.GetTotalScore() ? -1 : 1);
         return ordered;
     }
 }
