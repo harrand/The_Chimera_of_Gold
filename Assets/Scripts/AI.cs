@@ -282,7 +282,7 @@ public class DecisionTree : MonoBehaviour
                         {
                             if (!path.Contains(current.Getposition()))
                             {
-                                path.Add(current.Getposition());
+                                //path.Add(current.Getposition());
                             }
                             continue;
                         }
