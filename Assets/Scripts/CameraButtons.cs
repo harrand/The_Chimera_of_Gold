@@ -47,8 +47,31 @@ public class CameraButtons : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
-		
+    void Update () 
+	{
+		if (GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().CurrentSelected == 2) {
+			Player currentPlayer = GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().LastClickedPlayer;
+			int indexOfPlayer = currentPlayer.GetPlayerIndex ();
+			int indexOfCamp = currentPlayer.GetCamp ().GetCampIndex ();
+			switch (indexOfCamp)
+			{
+			case 0:
+				playerOne.value = indexOfPlayer;
+				break;
+			case 1:
+				playerTwo.value = indexOfPlayer;
+				break;
+			case 2:
+				playerThree.value = indexOfPlayer;
+				break;
+			case 3:
+				playerFour.value = indexOfPlayer;
+				break;
+			case 4:
+				playerFive.value = indexOfPlayer;
+				break;
+			}
+		}
 	}
 
 	public void SetCameraForPlayer1(){

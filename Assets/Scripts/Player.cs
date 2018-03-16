@@ -97,4 +97,21 @@ public class Player :  NetworkBehaviour
                 return obst;
         return null;
     }
+
+	/**
+    * Returns an index of this Player in its camp.
+    * @author Zibo Zhang
+    * @return - index of the player to the parent Camp.
+    */
+	public int GetPlayerIndex()
+	{
+		int count = 0;
+		foreach (Player player in this.GetCamp().TeamPlayers) 
+		{
+			if (player == this)
+				return count;
+			count++;
+		}
+		return -1;
+	}
 }
