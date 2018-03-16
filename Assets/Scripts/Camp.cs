@@ -121,4 +121,22 @@ public class Camp : NetworkBehaviour
     {
         return this.parent;
     }
+
+	/**
+	 * This returns the index of the camp in its parent board
+	 * @author Zibo Zhang
+	 * @return the camp index of the board
+	 */
+	public int GetCampIndex()
+	{
+		int count = 0;
+		foreach(Camp camp in this.parent.Camps)
+		{
+			if(camp == this)
+				return count;
+			
+			count++;
+		}
+		return -1;
+	}
 }
