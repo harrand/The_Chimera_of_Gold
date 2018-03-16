@@ -22,8 +22,9 @@ GameObject:
   - component: {fileID: 33385225628270682}
   - component: {fileID: 23178280718773616}
   - component: {fileID: 95577377209190952}
+  - component: {fileID: 65943412542587016}
   m_Layer: 0
-  m_Name: flower
+  m_Name: obstacle0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,6 +84,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1138483837474982}
   m_Mesh: {fileID: 4300000, guid: 6ea648520a1f8ed4e88ff0373e170292, type: 3}
+--- !u!65 &65943412542587016
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1138483837474982}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.3890462, y: 4.437309, z: 1.912395}
+  m_Center: {x: -0.02434099, y: 2.2186544, z: 0.17331052}
 --- !u!95 &95577377209190952
 Animator:
   serializedVersion: 3

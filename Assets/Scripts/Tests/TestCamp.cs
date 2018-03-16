@@ -27,7 +27,7 @@ public class TestCamp : TestBase
 	 */
     public bool TestSpawnPlayer(Player expected)
     {
-        return this.campScript.SpawnPlayer() == expected;
+        return this.campScript.SpawnPlayer(1) == expected;
     }
 
 	/**

@@ -20,9 +20,10 @@ public class Player :  NetworkBehaviour
      * @param tilePosition - Reference to the Tile to create the Player unto.
      * @return - Reference to the Player created.
      */
-    public static Player Create(Board parent, Tile tilePosition)
+    public static Player Create(Board parent, Tile tilePosition, uint playerId)
     {
-        GameObject playerObject = Instantiate(Resources.Load("Prefabs/Player")) as GameObject;
+        Debug.Log(playerId);
+        GameObject playerObject = Instantiate(Resources.Load("Prefabs/pawn"+ playerId)) as GameObject;
         Player playerScript = playerObject.AddComponent<Player>();
         playerScript.parent = parent;
 		playerObject.transform.position = tilePosition.gameObject.transform.position + Player.POSITION_OFFSET;

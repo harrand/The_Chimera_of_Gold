@@ -16,6 +16,7 @@ public class Camp : NetworkBehaviour
 	public Player[] TeamPlayers{get; private set;}
     public Color TeamColor { get; set; }
     public DecisionTree ai { get; private set; }
+    public bool rolled = false;
 
     /**
      * Pseudo-constructor which uses the Prefabs/Camp prefab in the project tree.
@@ -23,11 +24,12 @@ public class Camp : NetworkBehaviour
      * @param parent holds the parent board to be edited
      * @param tile holds the current tile to create a camp and players for that camp
      * @param teamColour The colour to set the camp and its players to initially
+     * @param playerId Used to figure out which player the camp belongs to
      * @return the camp created 
      */
-    public static Camp Create(Board parent, Tile tile, Color teamColour)
+    public static Camp Create(Board parent, Tile tile, Color teamColour, uint playerId)
     {
-        GameObject campObject = Instantiate(Resources.Load("Prefabs/Camp")) as GameObject;
+        GameObject campObject = Instantiate(Resources.Load("Prefabs/camp1")) as GameObject;
         Camp campScript = campObject.AddComponent<Camp>();
         campScript.TeamColor = teamColour;
         campScript.gameObject.GetComponent<Renderer>().material.color = campScript.TeamColor;
@@ -42,14 +44,14 @@ public class Camp : NetworkBehaviour
         // Instantiate all Players in the camp.
         for (uint i = 0; i < campScript.numberPlayers; i++)
         {
-            campScript.SpawnPlayer();
+            campScript.SpawnPlayer(playerId);
         }
         return campScript;
     }
 
-    public static Camp CreateAICamp(Board parent, Tile tile, Color teamColour, bool hardMode)
+    public static Camp CreateAICamp(Board parent, Tile tile, Color teamColour, bool hardMode, uint playerId)
     {
-        Camp camp = Camp.Create(parent, tile, teamColour);
+        Camp camp = Camp.Create(parent, tile, teamColour, playerId);
         //camp.ai = camp.gameObject.AddComponent<DecisionTree>();
         camp.ai = DecisionTree.Create(parent, camp, hardMode);
         camp.ai.board = camp.GetParent();
@@ -88,11 +90,11 @@ public class Camp : NetworkBehaviour
 	 * @author Harry Hollands
 	 * @return the player that has been created
 	 */
-    public Player SpawnPlayer()
+    public Player SpawnPlayer(uint playerId)
 	{
         if(this.GetNumberOfPlayers() < this.numberPlayers)
         {
-            this.TeamPlayers[this.GetNumberOfPlayers()] = Player.Create(this.parent, this.tile);
+            this.TeamPlayers[this.GetNumberOfPlayers()] = Player.Create(this.parent, this.tile, playerId);
             return this.TeamPlayers[this.GetNumberOfPlayers() - 1];
         }
         Debug.Log("Camp tried to spawn Player but already has the maximum number of spawned players active.");

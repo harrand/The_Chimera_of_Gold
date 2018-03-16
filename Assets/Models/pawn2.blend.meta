@@ -19,18 +19,22 @@ ModelImporter:
     2100002: Material_64
     2100004: Material_63
     2100006: Material_62
+    2100008: Material_51
     2300000: node_id38
     2300002: node_id40
     2300004: node_id42
     2300006: node_id44
+    2300008: //RootNode
     3300000: node_id38
     3300002: node_id40
     3300004: node_id42
     3300006: node_id44
+    3300008: //RootNode
     4300000: node_id44
     4300002: node_id42
     4300004: node_id40
     4300006: node_id38
+    4300008: node_id29
     7400000: Default Take
     9500000: //RootNode
   externalObjects: {}

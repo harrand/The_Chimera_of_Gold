@@ -18,7 +18,7 @@ public class CameraControl : MonoBehaviour
     private float speed = 15.0f;
     //Default distance and Distance limits. So you can't zoom out forever...
     private float distance = 5.0f;
-    private float minDist = 1.0f, maxDist = 35.0f;
+    private float minDist = 1.0f, maxDist = 100.0f;
 
     //Needed to Limit rotation. Limits clipping with terrain somewhat. 
     private float minY = 10.0f, maxY = 80.0f;
