@@ -497,8 +497,11 @@ public class Board : MonoBehaviour
         }
         if(++campId >= this.Camps.Length)
             campId = 0;
+
+        this.CampTurn.rolled = false;
         this.CampTurn = this.Camps[campId];
-        if(this.CampTurn.isAI())
+        
+        if (this.CampTurn.isAI())
         {
             Player aiPlayer = null;
 			aiPlayer = this.CampTurn.TeamPlayers[(5 - this.CampTurn.GetNumberOfPlayers())];

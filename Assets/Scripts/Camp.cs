@@ -16,6 +16,7 @@ public class Camp : NetworkBehaviour
 	public Player[] TeamPlayers{get; private set;}
     public Color TeamColor { get; set; }
     public DecisionTree ai { get; private set; }
+    public bool rolled = false;
 
     /**
      * Pseudo-constructor which uses the Prefabs/Camp prefab in the project tree.
@@ -28,7 +29,7 @@ public class Camp : NetworkBehaviour
      */
     public static Camp Create(Board parent, Tile tile, Color teamColour, uint playerId)
     {
-        GameObject campObject = Instantiate(Resources.Load("Prefabs/Camp")) as GameObject;
+        GameObject campObject = Instantiate(Resources.Load("Prefabs/camp1")) as GameObject;
         Camp campScript = campObject.AddComponent<Camp>();
         campScript.TeamColor = teamColour;
         campScript.gameObject.GetComponent<Renderer>().material.color = campScript.TeamColor;

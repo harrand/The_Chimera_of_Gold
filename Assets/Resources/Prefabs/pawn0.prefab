@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33620213797857550}
   - component: {fileID: 23860642817305622}
   - component: {fileID: 95941515867714526}
-  - component: {fileID: 64200130722169250}
+  - component: {fileID: 65452146402804600}
   m_Layer: 0
   m_Name: pawn0
   m_TagString: Untagged
@@ -84,8 +84,8 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1956415807694238}
   m_Mesh: {fileID: 4300000, guid: 1788078ae13d1824882fe33e779a2948, type: 3}
---- !u!64 &64200130722169250
-MeshCollider:
+--- !u!65 &65452146402804600
+BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -93,11 +93,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300000, guid: 1788078ae13d1824882fe33e779a2948, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 678.92236, y: 1195.1892, z: 452.114}
+  m_Center: {x: -0.061569214, y: 597.59326, z: 0.04753001}
 --- !u!95 &95941515867714526
 Animator:
   serializedVersion: 3

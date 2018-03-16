@@ -50,13 +50,26 @@ public class Game : MonoBehaviour
 
     public void DiceRoll()
     {
+        bool currentTurn = false;
+
         Player last = this.board.gameObject.GetComponent<InputController>().LastClickedPlayer;
-        if (last != null)
-            this.board.GetDice.Roll(last.transform.position + new Vector3(0, 20, 0));
-        else
-            this.board.GetDice.Roll(Camera.main.transform.position + new Vector3(0, 20, 0));
+        Camp currentCamp = this.board.CampTurn;
+
+        Debug.Log(currentCamp);
+        if (last.GetCamp() == currentCamp)
+        {
+            currentTurn = true;
+        }
+
+        if (currentTurn && !currentCamp.rolled)
+        {
+            currentCamp.rolled = true;
+            if (last != null)
+                this.board.GetDice.Roll(last.transform.position + new Vector3(0, 20, 0));
+            else
+                this.board.GetDice.Roll(Camera.main.transform.position + new Vector3(0, 20, 0));
+        }
     }
-    
 
     void OnDestroy()
 	{
