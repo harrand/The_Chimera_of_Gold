@@ -68,7 +68,7 @@ public class Tile : MonoBehaviour
             if (camp.gameObject.transform.position == this.gameObject.transform.position)
                 return camp.gameObject;
             foreach (Player player in camp.TeamPlayers)
-                if (player.gameObject.transform.position - Player.POSITION_OFFSET == this.gameObject.transform.position)
+                if (player != null && player.gameObject.transform.position - Player.POSITION_OFFSET == this.gameObject.transform.position)
                     return player.gameObject;
         }
 		foreach(Obstacle obst in this.parent.Obstacles)

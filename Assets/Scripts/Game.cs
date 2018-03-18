@@ -48,6 +48,22 @@ public class Game : MonoBehaviour
         }*/
     }
 
+	private IEnumerator DelayHighlightMoves()
+	{
+		yield return new WaitUntil(()=>this.board.GetDice.GetComponent<Rigidbody>().velocity.magnitude < 0.01f);
+		InputController input = this.board.GetComponent<InputController>();
+		if (input.LastClickedPlayer.HasControlledObstacle())
+		{
+			foreach (Tile tile in this.board.Tiles)
+			{
+				if (!tile.HasOccupant())
+					tile.gameObject.GetComponent<Renderer>().material.color = Color.green;
+			}
+		}
+		else
+			new PlayerControl(input.LastClickedPlayer).HighlightPossibleMoves(board.GetDice.NumberFaceUp(), Color.green, Color.blue, Color.red);
+	}
+
     public void DiceRoll()
     {
         bool currentTurn = false;
@@ -69,6 +85,7 @@ public class Game : MonoBehaviour
             else
                 this.board.GetDice.Roll(Camera.main.transform.position + new Vector3(0, 20, 0));
         }
+		StartCoroutine(DelayHighlightMoves());
     }
 
     void OnDestroy()

@@ -435,7 +435,7 @@ public class Board : MonoBehaviour
             tempCamp = myCamp;
             foreach(Player myPlayer in tempCamp.TeamPlayers)
             {
-                if(myPlayer.GetOccupiedTile().transform.position == GetTileByTileSpace(tilePosition).transform.position)
+                if(myPlayer != null && myPlayer.GetOccupiedTile().transform.position == GetTileByTileSpace(tilePosition).transform.position)
                     return true;
             }
         }

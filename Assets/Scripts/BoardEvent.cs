@@ -50,11 +50,7 @@ public class BoardEvent
 		bool validMove = false;
         foreach (Tile allowedDestination in new PlayerControl(this.parent.gameObject.GetComponent<InputController>().LastClickedPlayer).PossibleMoves(diceRoll))
             if (allowedDestination.transform.position == moveTarget)
-            {
                 validMove = true;
-                if (allowedDestination == this.parent.GetGoalTile())
-                    this.OnPlayerGoalEvent(player);
-            }
 		if (!validMove)
 			return;
 		player.gameObject.transform.position = moveTarget + Player.POSITION_OFFSET;
@@ -63,6 +59,8 @@ public class BoardEvent
 		this.HandleTakeovers(player);
 		// Disable the dice so the same roll cannot be used twice.
 		this.parent.GetDice.gameObject.SetActive(false);
+		if (moveTarget == this.parent.GetGoalTile().transform.position)
+			this.OnPlayerGoalEvent(player);
 	}
 
     /**
