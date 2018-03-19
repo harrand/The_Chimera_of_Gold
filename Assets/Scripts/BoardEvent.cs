@@ -42,7 +42,7 @@ public class BoardEvent
 			return;
         if(player.HasControlledObstacle())
         {
-            this.OnObstacleMove(player.GetControlledObstacle(), player, moveTarget);
+            this.OnObstacleMove(player.GetControlledObstacle(), player, moveTarget + Obstacle.POSITION_OFFSET);
             return;
         }
 		uint diceRoll = this.parent.GetDice.NumberFaceUp();

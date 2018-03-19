@@ -104,7 +104,7 @@ public class Board : MonoBehaviour
         /// Allocate and assign Obstacles.
 		board.Obstacles = new Obstacle[board.numberObstacles];
 		for(uint i = 0; i < board.numberObstacles; i++)
-			board.Obstacles[i] = Obstacle.Create(board, board.Tiles[i + 30]);
+			board.Obstacles[i] = Obstacle.Create(board, board.Tiles[i + 30], i);
 		board.Cull();
 		return board;
 	}
@@ -178,7 +178,7 @@ public class Board : MonoBehaviour
         }
         board.Obstacles = new Obstacle[board.numberObstacles];
 		for(uint i = 0; i < board.numberObstacles; i++)
-			board.Obstacles[i] = Obstacle.Create(board, board.Tiles[i]);
+			board.Obstacles[i] = Obstacle.Create(board, board.Tiles[i], i);
 		return board;
 	}
 
@@ -365,24 +365,24 @@ public class Board : MonoBehaviour
         }
         goalTile.gameObject.SetActive(true);
 		goalTile.GetComponent<Renderer>().material.color = Tile.goalColour;
-		this.Obstacles[0].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(0, 3)).gameObject.transform.position;
-		this.Obstacles[1].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(4, 3)).gameObject.transform.position;
-		this.Obstacles[2].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(8, 3)).gameObject.transform.position;
-		this.Obstacles[3].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(12, 3)).gameObject.transform.position;
-		this.Obstacles[4].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(16, 3)).gameObject.transform.position;
-		this.Obstacles[5].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(20, 3)).gameObject.transform.position;
+		this.Obstacles[0].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(0, 3)).gameObject.transform.position + Obstacle.POSITION_OFFSET;
+		this.Obstacles[1].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(4, 3)).gameObject.transform.position + Obstacle.POSITION_OFFSET;
+		this.Obstacles[2].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(8, 3)).gameObject.transform.position + Obstacle.POSITION_OFFSET;
+		this.Obstacles[3].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(12, 3)).gameObject.transform.position + Obstacle.POSITION_OFFSET;
+		this.Obstacles[4].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(16, 3)).gameObject.transform.position + Obstacle.POSITION_OFFSET;
+		this.Obstacles[5].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(20, 3)).gameObject.transform.position + Obstacle.POSITION_OFFSET;
 
-		this.Obstacles[6].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(8, 8)).gameObject.transform.position;
-		this.Obstacles[7].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(12, 8)).gameObject.transform.position;
+		this.Obstacles[6].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(8, 8)).gameObject.transform.position + Obstacle.POSITION_OFFSET;
+		this.Obstacles[7].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(12, 8)).gameObject.transform.position + Obstacle.POSITION_OFFSET;
 
-		this.Obstacles[8].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(8, 11)).gameObject.transform.position;
-		this.Obstacles[9].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(12, 11)).gameObject.transform.position;
+		this.Obstacles[8].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(8, 11)).gameObject.transform.position + Obstacle.POSITION_OFFSET;
+		this.Obstacles[9].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(12, 11)).gameObject.transform.position + Obstacle.POSITION_OFFSET;
 
-		this.Obstacles[10].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(10, 13)).gameObject.transform.position;
+		this.Obstacles[10].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(10, 13)).gameObject.transform.position + Obstacle.POSITION_OFFSET;
 
-		this.Obstacles[11].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(10, 15)).gameObject.transform.position;
+		this.Obstacles[11].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(10, 15)).gameObject.transform.position + Obstacle.POSITION_OFFSET;
 
-		this.Obstacles[12].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(10, 19)).gameObject.transform.position;
+		this.Obstacles[12].gameObject.transform.position = this.GetTileByTileSpace(new Vector2(10, 19)).gameObject.transform.position + Obstacle.POSITION_OFFSET;
     }
 
     /**

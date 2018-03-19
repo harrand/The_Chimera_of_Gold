@@ -36,7 +36,7 @@ public class Camp : NetworkBehaviour
         campScript.parent = parent;
         campScript.tile = tile;
         campScript.PositionTileSpace = tile.PositionTileSpace;
-		campObject.transform.position = tile.gameObject.transform.position;
+		campObject.transform.position = tile.gameObject.transform.position - new Vector3(0, 0, Board.ExpectedTileSize(parent.gameObject, parent.GetWidthInTiles, parent.GetHeightInTiles).magnitude / 3);
         campScript.ai = null;
         // Define Player array size.
         campScript.numberPlayers = 5;

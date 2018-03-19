@@ -9,7 +9,8 @@ using UnityEngine;
  */
 public class Obstacle : MonoBehaviour 
 {
-	private Board parent;
+    public static Vector3 POSITION_OFFSET = new Vector3(0, 1.35f, 0);
+    private Board parent;
     public Tile CurrentTile { get; private set; }
 
     /**
@@ -19,14 +20,14 @@ public class Obstacle : MonoBehaviour
      * @param tilePosition the position that the player should be placed at
      * @return the obstacle that has been created
      */
-    public static Obstacle Create(Board parent, Tile tilePosition)
+    public static Obstacle Create(Board parent, Tile tilePosition, uint obstacleID)
     {
-        GameObject obstacleObject = Instantiate(Resources.Load("Prefabs/obstacle" + (new System.Random().Next(0, 3)).ToString())) as GameObject;
+        GameObject obstacleObject = Instantiate(Resources.Load("Prefabs/obstacle" + (obstacleID%3).ToString())) as GameObject;
         Obstacle obstacleScript = obstacleObject.AddComponent<Obstacle>();
         obstacleScript.parent = parent;
         obstacleScript.CurrentTile = tilePosition;
         // Unity transform parent system does not deliver the desired result. Therefore manually assigning the position to be equal to the parent.
-        obstacleObject.transform.position = tilePosition.gameObject.transform.position;
+        obstacleObject.transform.position = tilePosition.gameObject.transform.position + Obstacle.POSITION_OFFSET;
         return obstacleScript;
     }
 
