@@ -53,7 +53,7 @@ public class WinnerScreen : MonoBehaviour
             fifthPlayer.enabled = true;
         }
         title.text = ("Congratulations, player " + PlayerData.winnerNumber + ", you found the Chimera of Gold!");
-        firstPlayer.text = ("Player " + PlayerData.winnerNumber);
+        firstPlayer.text = ("1. Player " + PlayerData.winnerNumber);
         firstPlayer.color = PlayerData.winnerColour;
         /*
         int secondPos = Array.IndexOf(board.Camps, PlayerData.winners[1]) + 1;
@@ -78,21 +78,21 @@ public class WinnerScreen : MonoBehaviour
             fifthPlayer.color = PlayerData.winners[4].TeamColor;
         }
         */
-        secondPlayer.text = ("Player " + PlayerData.secondNumber);
+        secondPlayer.text = ("2. Player " + PlayerData.secondNumber);
         secondPlayer.color = PlayerData.secondColour;
         if (thirdPlayer.enabled)
         {
-            thirdPlayer.text = ("Player " + PlayerData.thirdNumber);
+            thirdPlayer.text = ("3. Player " + PlayerData.thirdNumber);
             thirdPlayer.color = PlayerData.thirdColour;
         }
         if (fourthPlayer.enabled)
         {
-            fourthPlayer.text = ("Player " + PlayerData.fourthNumber);
+            fourthPlayer.text = ("4. Player " + PlayerData.fourthNumber);
             fourthPlayer.color = PlayerData.fourthColour;
         }
         if (fifthPlayer.enabled)
         {
-            fifthPlayer.text = ("Player " + PlayerData.fifthNumber);
+            fifthPlayer.text = ("5. Player " + PlayerData.fifthNumber);
             fifthPlayer.color = PlayerData.fifthColour;
         }
     }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.28195184, g: 0.3417449, b: 0.38271683, a: 1}
+  m_IndirectSpecularColor: {r: 0.2818472, g: 0.341351, b: 0.38245812, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -16309,7 +16309,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 85780216}
-        m_MethodName: YayMenu
+        m_MethodName: YesMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
