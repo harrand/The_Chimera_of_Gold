@@ -1,26 +1,16 @@
 fileFormatVersion: 2
 guid: 08b6e0f61f895554cabc7a8103ea3ca6
-timeCreated: 1521465080
+timeCreated: 1521468656
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: node_id100
-    100002: node_id96
-    100004: node_id98
-    100006: //RootNode
-    400000: node_id100
-    400002: node_id96
-    400004: node_id98
-    400006: //RootNode
-    2100000: Material_132
-    2100002: Material_133
-    2300000: node_id96
-    2300002: node_id98
-    3300000: node_id96
-    3300002: node_id98
-    4300000: node_id96
-    4300002: node_id98
+    100000: //RootNode
+    400000: //RootNode
+    2100000: Material_144
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: node_id106
   externalObjects: {}
   materials:
     importMaterials: 1

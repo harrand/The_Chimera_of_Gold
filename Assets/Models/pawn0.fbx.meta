@@ -1,20 +1,15 @@
 fileFormatVersion: 2
-guid: 8ddd829ff8283294f88aaa56b307f474
-timeCreated: 1521465089
+guid: d1471ee6cd38fec4196d76825d0df997
+timeCreated: 1521468825
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: node_id29
-    100002: //RootNode
-    400000: node_id29
-    400002: //RootNode
+    100000: //RootNode
+    400000: //RootNode
     2100000: Material_51
-    2100002: Material_51.002
-    2300000: node_id29
-    2300002: //RootNode
-    3300000: node_id29
-    3300002: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
     4300000: node_id29
   externalObjects: {}
   materials:

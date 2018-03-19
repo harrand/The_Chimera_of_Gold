@@ -1,18 +1,16 @@
 fileFormatVersion: 2
 guid: dac19bed807e8ba419a6eb173377ace1
-timeCreated: 1521465091
+timeCreated: 1521468658
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: node_id106
-    100002: //RootNode
-    400000: node_id106
-    400002: //RootNode
-    2100000: Material_144
-    2300000: node_id106
-    3300000: node_id106
-    4300000: node_id106
+    100000: //RootNode
+    400000: //RootNode
+    2100000: Material_121
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: node_id87
   externalObjects: {}
   materials:
     importMaterials: 1

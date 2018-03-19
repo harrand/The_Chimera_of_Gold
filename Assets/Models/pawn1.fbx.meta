@@ -1,27 +1,16 @@
 fileFormatVersion: 2
-guid: d1471ee6cd38fec4196d76825d0df997
-timeCreated: 1521465090
+guid: 7eeee928819087345b26d761009733a2
+timeCreated: 1521468823
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: node_id29
-    100002: //RootNode
-    100004: Camera
-    100006: Lamp
-    400000: node_id29
-    400002: //RootNode
-    400004: Camera
-    400006: Lamp
-    2000000: Camera
+    100000: //RootNode
+    400000: //RootNode
     2100000: Material_51
-    2100002: Material_51.003
-    2300000: node_id29
-    2300002: //RootNode
-    3300000: node_id29
-    3300002: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
     4300000: node_id29
-    10800000: Lamp
   externalObjects: {}
   materials:
     importMaterials: 1
