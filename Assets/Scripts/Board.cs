@@ -464,7 +464,18 @@ public class Board : MonoBehaviour
             if(obstacle.GetOccupiedTile().DistanceFrom(aiPlayer.GetOccupiedTile()) < roll)
             {
                 int index = Array.IndexOf(aiCamp.TeamPlayers, aiPlayer);
-                aiPlayer = aiCamp.TeamPlayers[++index >= 5 ? 0 : index];
+                int count = 0;
+                foreach(Player ai in aiCamp.TeamPlayers)
+                {
+                    if (ai == null)
+                        count++;
+                }
+                if(count != 4)
+                {
+                    aiPlayer = aiCamp.TeamPlayers[++index >= 5 ? 0 : index];
+                    if(aiPlayer == null)
+                        aiPlayer = aiCamp.TeamPlayers[++index >= 5 ? 0 : index];
+                }
                 this.GetComponent<InputController>().LastClickedPlayer = aiPlayer;
                 this.GetComponent<InputController>().CurrentSelected = 2;
             }
@@ -475,13 +486,14 @@ public class Board : MonoBehaviour
         {
             this.GetComponent<InputController>().LastClickedTile = this.GetGoalTile();
             this.GetComponent<InputController>().CurrentSelected = 1;
-            aiPlayer.Kill();
+            this.Event.OnPlayerGoalEvent(aiPlayer);
         }
         else
         {
             this.CampTurn.ai.MoveObstacle(tileDestination, aiPlayer);
             this.Event.HandleTakeovers(aiPlayer);
-        }      
+        }
+        // winner
 		this.NextTurn();
 	}
 
