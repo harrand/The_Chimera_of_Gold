@@ -74,7 +74,7 @@ public class BoardEvent
     {
         Vector3 previousLocation = obstacle.gameObject.transform.position;
         obstacle.gameObject.transform.position = moveTarget;
-        if (obstacle.GetOccupiedTile() == controller.GetCamp().GetParent().GetGoalTile())
+        if (obstacle.GetOccupiedTile() == controller.GetCamp().GetParent().GetGoalTile() || obstacle.GetOccupiedTile().PositionTileSpace.y <= 1)
         {
             obstacle.gameObject.transform.position = previousLocation;
             return;
