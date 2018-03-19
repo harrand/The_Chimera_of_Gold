@@ -22,7 +22,7 @@ public class Obstacle : MonoBehaviour
      */
     public static Obstacle Create(Board parent, Tile tilePosition, uint obstacleID)
     {
-        GameObject obstacleObject = Instantiate(Resources.Load("Prefabs/obstacle" + (obstacleID%3).ToString())) as GameObject;
+        GameObject obstacleObject = Instantiate(Resources.Load("Prefabs/obstacle" + (obstacleID % 5).ToString())) as GameObject;
         Obstacle obstacleScript = obstacleObject.AddComponent<Obstacle>();
         obstacleScript.parent = parent;
         obstacleScript.CurrentTile = tilePosition;
