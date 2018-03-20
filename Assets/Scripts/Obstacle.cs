@@ -45,7 +45,7 @@ public class Obstacle : MonoBehaviour
     public Tile GetOccupiedTile()
     {
 		foreach(Tile tile in this.parent.Tiles)
-			if(tile.gameObject.transform.position == this.gameObject.transform.position)
+			if(tile.gameObject.transform.position == this.gameObject.transform.position - Obstacle.POSITION_OFFSET)
 				return tile;
 		return null;
     }
