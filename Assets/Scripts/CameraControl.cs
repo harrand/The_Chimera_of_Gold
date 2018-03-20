@@ -154,7 +154,7 @@ public class CameraControl : MonoBehaviour
     {
         if(GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 0)
         {
-            SetCameraPosition(Ethan.transform);
+            SetCameraPosition(GameObject.FindGameObjectWithTag("GameBoard").transform);
             return;
         }
 
