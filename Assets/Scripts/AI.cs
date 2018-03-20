@@ -28,13 +28,6 @@ public class DecisionTree : MonoBehaviour
         tree.HardMode = hardMode;
         return tree;
     }
-    /*
-    public DecisionTree(Board board, bool hardMode)
-    {
-        this.board = board;
-        this.HardMode = HardMode;
-    }
-    */
 
 	/**
     * This is a class which is the used to store the information of BFS search tree.

@@ -19,7 +19,6 @@ public class CameraButtons : MonoBehaviour {
     public GameObject player5;
     public Dropdown[] playerButtons = new Dropdown[5];
     public GameObject[] players = new GameObject[5];
-    //GameObject boardObject = GameObject.FindGameObjectWithTag("GameBoard");
 
     // Use this for initialization
     void Start () {
@@ -34,16 +33,6 @@ public class CameraButtons : MonoBehaviour {
         players[3] = player4;
         players[4] = player5;
         DisableSome();
-    }
-
-    public void DisableSome()
-    {
-        //int playerNumbers = boardObject.GetComponents<Board>().
-        for (int i = 0; i < 5 - PlayerData.numberOfPlayers; i++)
-        {
-            playerButtons[4 - i].enabled = false;
-            players[4 - i].SetActive(false);
-        }
     }
 
     // Update is called once per frame
@@ -74,7 +63,25 @@ public class CameraButtons : MonoBehaviour {
 		}
 	}
 
-	public void SetCameraForPlayer1(){
+    /**
+    * Disable unnecessary buttons
+    * @author Zibo Zhang and Yutian Xue
+    */
+    public void DisableSome()
+    {
+        //int playerNumbers = boardObject.GetComponents<Board>().
+        for (int i = 0; i < 5 - PlayerData.numberOfPlayers; i++)
+        {
+            playerButtons[4 - i].enabled = false;
+            players[4 - i].SetActive(false);
+        }
+    }
+
+    /**
+    * Set the camera to player-one's pawns
+    * @author Zibo Zhang and Yutian Xue
+    */
+    public void SetCameraForPlayer1(){
 		if (GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().Camps [0].TeamPlayers [playerOne.value] == null) {
 			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().LastClickedTile = GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().GetGoalTile ();
 			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().CurrentSelected = 1;
@@ -84,7 +91,11 @@ public class CameraButtons : MonoBehaviour {
 		}
 	}
 
-	public void SetCameraForPlayer2(){
+    /**
+    * Set the camera to player-two's pawns
+    * @author Zibo Zhang and Yutian Xue
+    */
+    public void SetCameraForPlayer2(){
 		if (GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().Camps [1].TeamPlayers [playerTwo.value] == null) {
 			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().LastClickedTile = GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().GetGoalTile ();
 			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().CurrentSelected = 1;
@@ -94,7 +105,11 @@ public class CameraButtons : MonoBehaviour {
 		}
 	}
 
-	public void SetCameraForPlayer3(){
+    /**
+    * Set the camera to player-three's pawns
+    * @author Zibo Zhang and Yutian Xue
+    */
+    public void SetCameraForPlayer3(){
 		if (GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().Camps [2].TeamPlayers [playerThree.value] == null) {
 			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().LastClickedTile = GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().GetGoalTile ();
 			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().CurrentSelected = 1;
@@ -104,7 +119,11 @@ public class CameraButtons : MonoBehaviour {
 		}
 	}
 
-	public void SetCameraForPlayer4(){
+    /**
+    * Set the camera to player-four's pawns
+    * @author Zibo Zhang and Yutian Xue
+    */
+    public void SetCameraForPlayer4(){
 		if (GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().Camps [3].TeamPlayers [playerFour.value] == null) {
 			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().LastClickedTile = GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().GetGoalTile ();
 			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().CurrentSelected = 1;
@@ -114,7 +133,11 @@ public class CameraButtons : MonoBehaviour {
 		}
 	}
 
-	public void SetCameraForPlayer5(){
+    /**
+    * Set the camera to player-five's pawns
+    * @author Zibo Zhang and Yutian Xue
+    */
+    public void SetCameraForPlayer5(){
 		if (GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().Camps [4].TeamPlayers [playerFive.value] == null) {
 			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().LastClickedTile = GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<Board> ().GetGoalTile ();
 			GameObject.FindGameObjectWithTag ("GameBoard").GetComponent<InputController> ().CurrentSelected = 1;
