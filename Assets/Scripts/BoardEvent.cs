@@ -42,7 +42,12 @@ public class BoardEvent
 			return;
         if(player.HasControlledObstacle())
         {
-            this.OnObstacleMove(player.GetControlledObstacle(), player, moveTarget + Obstacle.POSITION_OFFSET);
+            bool shouldMove = false;
+            foreach (Tile tile in this.parent.Tiles)
+                if (tile.transform.position == moveTarget && !tile.BlockedByObstacle())
+                    shouldMove = true;
+            if(shouldMove)
+                this.OnObstacleMove(player.GetControlledObstacle(), player, moveTarget + Obstacle.POSITION_OFFSET);
             return;
         }
 		uint diceRoll = this.parent.GetDice.NumberFaceUp();
@@ -74,7 +79,7 @@ public class BoardEvent
     {
         Vector3 previousLocation = obstacle.gameObject.transform.position;
         obstacle.gameObject.transform.position = moveTarget;
-        if (obstacle.GetOccupiedTile() == controller.GetCamp().GetParent().GetGoalTile() || obstacle.GetOccupiedTile().PositionTileSpace.y <= 1)
+        if (obstacle.GetOccupiedTile() == controller.GetCamp().GetParent().GetGoalTile() || obstacle.GetOccupiedTile().PositionTileSpace.y <= 2)
         {
             obstacle.gameObject.transform.position = previousLocation;
             return;

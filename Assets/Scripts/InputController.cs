@@ -60,7 +60,7 @@ public class InputController : MonoBehaviour
             {
                 foreach (Tile tile in this.boardScript.Tiles)
                 {
-                    if (!tile.HasOccupant() && tile.PositionTileSpace.y > 1)
+                    if (!tile.HasOccupant() && tile.PositionTileSpace.y > 2 && !tile.BlockedByObstacle() && tile != this.boardScript.GetGoalTile())
                         tile.gameObject.GetComponent<Renderer>().material.color = Color.green;
                 }
             }
