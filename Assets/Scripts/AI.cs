@@ -115,7 +115,7 @@ public class DecisionTree : MonoBehaviour
             // should check if there is an obstacle or a player pawn on the tile.
 			if (isvalid(posi) && !board.TileOccupiedByObstacle(posi) && !board.TileOccupiedByPlayerPawn(posi) && !isgoal(posi) && posi.y != 1)
             {
-                obstacle.transform.position = board.GetTileByTileSpace(posi).transform.position;
+                obstacle.transform.position = board.GetTileByTileSpace(posi).transform.position + Obstacle.POSITION_OFFSET;
                 break;
             }
             posi = new Vector2(Random.Range(0, 20), Random.Range(2, 19));
@@ -171,7 +171,7 @@ public class DecisionTree : MonoBehaviour
             else if (CheckAdjacentObstacles(playerPawns[k]) != invalidPosition)
             {
                 posi = CheckAdjacentObstacles(playerPawns[k]);
-				obstacle.transform.position = board.GetTileByTileSpace (posi).transform.position;
+				obstacle.transform.position = board.GetTileByTileSpace (posi).transform.position + Obstacle.POSITION_OFFSET;
                 return;
             }
             else if(CheckAdjacentObstacles(playerPawns[k]) == invalidPosition)
