@@ -11,10 +11,6 @@ public class Settings : MonoBehaviour
 {
     //Variables assigned in the unity editor
     public Canvas settingsMenu;
-    public Button start;
-    public Button cont;
-    public Button settings;
-    public Button quit;
     public Dropdown resolution;
     public Toggle fullScreen;
     public Slider volumeSlider;
@@ -29,22 +25,6 @@ public class Settings : MonoBehaviour
         settingsMenu.enabled = false;
         isFullScreen = Screen.fullScreen;
         fullScreen.isOn = isFullScreen;
-        if (start != null)
-        {
-            start.enabled = true;
-        }
-        if (cont != null)
-        { 
-            cont.enabled = true;
-        }
-        if (settings != null)
-        {
-            settings.enabled = true;
-        }
-        if (quit != null)
-        {
-            quit.enabled = true;
-        }
     }
 
     /**
@@ -54,22 +34,6 @@ public class Settings : MonoBehaviour
     public void SettingsPress()
     {
         settingsMenu.enabled = true;
-        if(start != null)
-        {
-            start.enabled = false;
-        }
-        if (cont != null)
-        {
-            cont.enabled = false;
-        }
-        if (settings != null)
-        {
-            settings.enabled = false;
-        }
-        if (quit != null)
-        {
-            quit.enabled = false;
-        }
     }
 
     /**
@@ -79,22 +43,6 @@ public class Settings : MonoBehaviour
     public void BackPress()
     {
         settingsMenu.enabled = false;
-        if (start != null)
-        {
-            start.enabled = true;
-        }
-        if (cont != null)
-        {
-            cont.enabled = true;
-        }
-        if (settings != null)
-        {
-            settings.enabled = true;
-        }
-        if (quit != null)
-        {
-            quit.enabled = true;
-        }
     }
 
     /**

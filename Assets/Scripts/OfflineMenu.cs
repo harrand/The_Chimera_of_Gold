@@ -145,7 +145,7 @@ public class OfflineMenu : MonoBehaviour
      */
     public void BackToModeSelect()
     {
-        SceneManager.LoadScene("GameModeSelect");
+        SceneManager.LoadScene("StartMenu");
     }
 
     /**

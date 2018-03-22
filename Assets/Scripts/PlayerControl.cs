@@ -55,6 +55,7 @@ public class PlayerControl
     {
         foreach (Tile tile in this.PossibleMoves(diceRoll))
 		{
+            Debug.Log("Tile: " + tile);
 			if(tile.BlockedByObstacle())
 				tile.GetComponent<Renderer>().material.color = obstacleHighlightColour;
 			else if(tile.GetOccupant() != null && tile.GetOccupant().GetComponent<Player>() != null)
