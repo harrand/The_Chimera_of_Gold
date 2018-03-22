@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Networking;
 /**
 * Game contains static functions and constant expressions such as:
@@ -15,6 +16,7 @@ public class Game : MonoBehaviour
     public const uint NUMBER_CAMPS = 5;
     public const uint PLAYERS_PER_CAMP = 5;
     public int currentPlayer = 1;
+    public Button roll;
 
     // These are edited in Unity Component settings; 5 is just the default.
 	public uint tileWidth = 5, tileHeight = 5;
@@ -85,6 +87,7 @@ public class Game : MonoBehaviour
             else
                 this.board.GetDice.Roll(Camera.main.transform.position + new Vector3(0, 20, 0));
         }
+        roll.enabled = false;
 		StartCoroutine(DelayHighlightMoves());
     }
 
@@ -132,5 +135,6 @@ public class Game : MonoBehaviour
     public void BoardNextTurn()
     {
         this.board.NextTurn();
+        roll.enabled = true;
     }
 }
