@@ -390,10 +390,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsMenu: {fileID: 1192019792}
-  start: {fileID: 0}
-  cont: {fileID: 0}
-  settings: {fileID: 1841987683}
-  quit: {fileID: 796120581}
   resolution: {fileID: 158317683}
   fullScreen: {fileID: 482344515}
   volumeSlider: {fileID: 1703215467}
@@ -17532,6 +17528,27 @@ Prefab:
       propertyPath: popUp
       value: 
       objectReference: {fileID: 1238493041}
+    - target: {fileID: 114077890938509120, guid: e4cd490ba5e694d4b9eb895511c5a2a5,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: fdde44076fd3da3409ef17b448bd4ccd,
+        type: 3}
+    - target: {fileID: 114077890938509120, guid: e4cd490ba5e694d4b9eb895511c5a2a5,
+        type: 2}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224085288990246980, guid: e4cd490ba5e694d4b9eb895511c5a2a5,
+        type: 2}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 224085288990246980, guid: e4cd490ba5e694d4b9eb895511c5a2a5,
+        type: 2}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e4cd490ba5e694d4b9eb895511c5a2a5, type: 2}
   m_IsPrefabParent: 0
@@ -17569,6 +17586,34 @@ RectTransform:
   m_AnchoredPosition: {x: -1.000061, y: -108.3}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1363562121
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 610743556}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1363562122}
+  m_Layer: 0
+  m_Name: Missing Prefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1363562122
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 610743556}
+  m_GameObject: {fileID: 1363562121}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1367093998
 GameObject:
   m_ObjectHideFlags: 0
