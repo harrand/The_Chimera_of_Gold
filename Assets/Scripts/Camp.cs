@@ -124,7 +124,7 @@ public class Camp : NetworkBehaviour
     public Tile GetOccupiedTile()
     {
 		foreach(Tile tile in this.parent.Tiles)
-			if(tile.gameObject.transform.position == this.gameObject.transform.position)
+			if(tile.gameObject.transform.position == this.gameObject.transform.position + new Vector3(0, 0, Board.ExpectedTileSize(parent.gameObject, parent.GetWidthInTiles, parent.GetHeightInTiles).magnitude / 3))
 				return tile;
 		return null;
     }
