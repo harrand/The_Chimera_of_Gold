@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/StartMenu.unity
     guid: 8ebc377744eb80a44916b480b49f23b7
   - enabled: 1
+    path: Assets/TutorialLand.unity
+    guid: c1bb93f22f889d041a0a3ffc57ffc5d8
+  - enabled: 1
     path: Assets/GameModeSelect.unity
     guid: 172f51ca2ef73f04bae341d0deae1202
   - enabled: 1

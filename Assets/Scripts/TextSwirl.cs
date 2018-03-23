@@ -20,6 +20,11 @@ public class TextSwirl : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         this.GetComponentInChildren<Text>().text = text;
     }
 
+    public void TutorialClick()
+    {
+        SceneManager.LoadScene("TutorialLand");
+    }
+
     public void PlayGame()
     {
         SceneManager.LoadScene("OfflineMenu");
