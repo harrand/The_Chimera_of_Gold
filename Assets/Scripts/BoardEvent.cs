@@ -66,6 +66,7 @@ public class BoardEvent
 		this.parent.GetDice.gameObject.SetActive(false);
 		if (moveTarget == this.parent.GetGoalTile().transform.position)
 			this.OnPlayerGoalEvent(player);
+        this.parent.gameObject.GetComponent<Game>().endTurn.enabled = true;
 	}
 
     /**

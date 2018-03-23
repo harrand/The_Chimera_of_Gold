@@ -53,6 +53,7 @@ public class PlayerControl
      */
 	public void HighlightPossibleMoves(uint diceRoll, Color moveHighlightColour, Color obstacleHighlightColour, Color takeoverHighlightColour)
     {
+        this.GetPlayer.GetCamp().GetParent().RemoveTileHighlights();
         foreach (Tile tile in this.PossibleMoves(diceRoll))
 		{
             Debug.Log("Tile: " + tile);

@@ -16,7 +16,7 @@ public class Game : MonoBehaviour
     public const uint NUMBER_CAMPS = 5;
     public const uint PLAYERS_PER_CAMP = 5;
     public int currentPlayer = 1;
-    public Button roll;
+    public Button roll, endTurn;
 
     // These are edited in Unity Component settings; 5 is just the default.
 	public uint tileWidth = 5, tileHeight = 5;
@@ -35,7 +35,8 @@ public class Game : MonoBehaviour
         
 		// Create a normal Board with Input attached. Both Board and InputController are attached to the root GameObject (this).
 		this.board = Board.Create(this.gameObject, tileWidth, tileHeight);
-		this.board.gameObject.AddComponent<InputController>();   
+		this.board.gameObject.AddComponent<InputController>();
+        this.endTurn.enabled = false;
         /*if(isServer)
         {
             NetworkServer.Spawn(this.board.gameObject);
@@ -136,5 +137,6 @@ public class Game : MonoBehaviour
     {
         this.board.NextTurn();
         roll.enabled = true;
+        endTurn.enabled = false;
     }
 }
