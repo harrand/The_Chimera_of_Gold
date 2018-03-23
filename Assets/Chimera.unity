@@ -38,7 +38,8 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.28195184, g: 0.3417449, b: 0.38271683, a: 1}
+
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -28696,5 +28697,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentPlayer: 1
   roll: {fileID: 1899596855}
+  endTurn: {fileID: 678324035}
   tileWidth: 21
   tileHeight: 20
