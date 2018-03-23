@@ -17,15 +17,15 @@ public class CameraControl : MonoBehaviour
     //Speed multiplier for camera movement
     private float speed = 15.0f;
     //Default distance and Distance limits. So you can't zoom out forever...
-    private float distance = 5.0f;
-    private float minDist = 1.0f, maxDist = 100.0f;
+    private float distance = 100.0f;
+    private float minDist = 10.0f, maxDist = 150.0f;
 
     //Needed to Limit rotation. Limits clipping with terrain somewhat. 
-    private float minY = 10.0f, maxY = 80.0f;
+    private float minY = 10.0f, maxY = 100.0f;
     //!(minY doesn't do anything. I don't know why. I've temporarily hardcoded the value in SetCameraPosition and commented out the variable line.)!
 
     //Used for angles
-    private float x = 0, y = 0;
+    private float x = 0, y = -90;
     
     // Use this for initialization
 	void Start()
@@ -125,21 +125,21 @@ public class CameraControl : MonoBehaviour
         Quaternion rotation = Quaternion.Euler(y, x, 0);
             
         //Travel distance from object. Scroll in and out to move the camera back and forth. (Also clamped between limits)
-        distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel")*5, minDist,maxDist);
+        distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel")*50, minDist,maxDist);
                         
         //Keeps camera behind the object it follows. Useful for the test doll.
         Vector3 negativeDist = new Vector3(0f, 0f, -distance);
         Vector3 position = currentTarget.position + (rotation * negativeDist);
 
-        if(position.x <= -20)
-            position.x = -20;
-        else if(position.x > 220)
-            position.x = 220;
+        if(position.x <= -90)
+            position.x = -90;
+        else if(position.x > 290)
+            position.x = 290;
 
-        if (position.z >= 230)
-            position.z = 230;
-        else if(position.z <= -10)
-            position.z = -10;
+        if (position.z >= 290)
+            position.z = 290;
+        else if(position.z <= -90)
+            position.z = -90;
             
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 3.0f);
         transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * 1.5f);
@@ -154,7 +154,7 @@ public class CameraControl : MonoBehaviour
     {
         if(GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 0)
         {
-            SetCameraPosition(GameObject.FindGameObjectWithTag("GameBoard").transform);
+            SetCameraPosition(GameObject.FindGameObjectWithTag("Overview").transform);
             return;
         }
 
@@ -171,6 +171,7 @@ public class CameraControl : MonoBehaviour
         }
         else if(current != null)
         { 
+            //Ethan no longer exists, should throw an error if this ever runs
             SetCameraPosition(current);
             //Debug.Log("Should rotate around selected");
         }

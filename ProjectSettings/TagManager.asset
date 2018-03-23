@@ -15,6 +15,7 @@ TagManager:
   - MainMenu
   - CameraButton
   - ToolTip
+  - Overview
   layers:
   - Default
   - TransparentFX
