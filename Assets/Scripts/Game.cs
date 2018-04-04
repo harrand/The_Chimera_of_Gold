@@ -74,21 +74,29 @@ public class Game : MonoBehaviour
         Player last = this.board.gameObject.GetComponent<InputController>().LastClickedPlayer;
         Camp currentCamp = this.board.CampTurn;
 
+        
+
         Debug.Log(currentCamp);
         if (last.GetCamp() == currentCamp)
         {
             currentTurn = true;
         }
 
-        if (currentTurn && !currentCamp.rolled)
+        if (!currentCamp.rolled)
         {
             currentCamp.rolled = true;
-            if (last != null)
+            if (last != null && last.GetCamp().GetParent().CampTurn == currentCamp)
+            {
                 this.board.GetDice.Roll(last.transform.position + new Vector3(0, 20, 0));
+            }
             else
+            {
                 this.board.GetDice.Roll(Camera.main.transform.position + new Vector3(0, 20, 0));
+
+            }
+            roll.enabled = false;
         }
-        roll.enabled = false;
+        
 		StartCoroutine(DelayHighlightMoves());
     }
 

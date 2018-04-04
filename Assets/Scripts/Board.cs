@@ -540,6 +540,24 @@ public class Board : MonoBehaviour
 			this.GetDice.Roll(aiPlayer.gameObject.transform.position + new Vector3(0, 20, 0));
 			StartCoroutine(DelayAIMove(previousLocation, aiPlayer));
         }
+        else
+        {
+            Player randomTeamPawn = null;
+            int i = 0;
+            while (randomTeamPawn == null)
+            {
+                Debug.Log("choosing first non null pawn");
+                i++;
+                randomTeamPawn = this.CampTurn.TeamPlayers[i];
+                if (i > 5)
+                    break;
+            }
+
+            //pan camera to the current player's pawn?
+            this.GetComponent<InputController>().LastClickedPlayer = randomTeamPawn;
+            this.GetComponent<InputController>().CurrentSelected = 2;
+
+        }
         this.RemoveTileHighlights();
         //consider highlighting something in some way to display the colour of the current camp turn
         //this.GetDice.GetComponent<Renderer>().material.color = this.CampTurn.TeamColor;

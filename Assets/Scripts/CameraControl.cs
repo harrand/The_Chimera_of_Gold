@@ -22,10 +22,9 @@ public class CameraControl : MonoBehaviour
 
     //Needed to Limit rotation. Limits clipping with terrain somewhat. 
     private float minY = 10.0f, maxY = 100.0f;
-    //!(minY doesn't do anything. I don't know why. I've temporarily hardcoded the value in SetCameraPosition and commented out the variable line.)!
 
     //Used for angles
-    private float x = 0, y = -90;
+    private float x = 0, y = 0;
     
     // Use this for initialization
 	void Start()
@@ -33,8 +32,10 @@ public class CameraControl : MonoBehaviour
         Ethan = GameObject.FindGameObjectWithTag("Player");//The test dummy
         //angles to be used for the rotation
         Vector3 angles = transform.eulerAngles;
-        y = angles.y;
-        x = angles.x;
+        //y = angles.y;
+        //x = angles.x;
+        y = 90;
+        x = 0;
 
         menus = GameObject.FindGameObjectsWithTag("Menu");
         for(uint i = 0; i < menus.Length; i++)
@@ -171,12 +172,12 @@ public class CameraControl : MonoBehaviour
         }
         else if(current != null)
         { 
-            //Ethan no longer exists, should throw an error if this ever runs
             SetCameraPosition(current);
             //Debug.Log("Should rotate around selected");
         }
         else
         {
+            //Ethan no longer exists, should throw an error if this ever runs
             SetCameraPosition(Ethan.transform);
             //Debug.Log("Should Follow Ethan ");
         }
