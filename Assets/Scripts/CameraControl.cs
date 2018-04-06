@@ -34,7 +34,7 @@ public class CameraControl : MonoBehaviour
         Vector3 angles = transform.eulerAngles;
         //y = angles.y;
         //x = angles.x;
-        y = 90;
+        y = 10;
         x = 0;
 
         menus = GameObject.FindGameObjectsWithTag("Menu");
