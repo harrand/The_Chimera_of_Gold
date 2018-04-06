@@ -68,4 +68,12 @@ public class Dice : MonoBehaviour
         else
             return 0;
     }
+
+    private void Update()
+    {
+        if(this.transform.position.y < - 10)
+        {
+            this.transform.position = new Vector3(20,20,0);
+        }
+    }
 }

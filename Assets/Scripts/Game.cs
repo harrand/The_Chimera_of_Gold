@@ -69,18 +69,8 @@ public class Game : MonoBehaviour
 
     public void DiceRoll()
     {
-        bool currentTurn = false;
-
         Player last = this.board.gameObject.GetComponent<InputController>().LastClickedPlayer;
         Camp currentCamp = this.board.CampTurn;
-
-        
-
-        Debug.Log(currentCamp);
-        if (last.GetCamp() == currentCamp)
-        {
-            currentTurn = true;
-        }
 
         if (!currentCamp.rolled)
         {

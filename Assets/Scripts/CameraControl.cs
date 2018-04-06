@@ -153,9 +153,21 @@ public class CameraControl : MonoBehaviour
      */
     void LateUpdate()
     {
-        if(GameObject.FindGameObjectWithTag("GameBoard").GetComponent<InputController>().CurrentSelected == 0)
+        GameObject boardObject = GameObject.FindGameObjectWithTag("GameBoard");
+        if (boardObject.GetComponent<InputController>().CurrentSelected == 0)
         {
-            SetCameraPosition(GameObject.FindGameObjectWithTag("Overview").transform);
+            Player randomTeamPawn = null;
+            int i = 0;
+            while (randomTeamPawn == null)
+            {
+                Debug.Log("choosing first non null pawn");
+                i++;
+                randomTeamPawn = boardObject.GetComponent<Board>().CampTurn.TeamPlayers[i];
+                if (i > 5)
+                    break;
+            }
+            SetCameraPosition(randomTeamPawn.transform);
+            boardObject.GetComponent<InputController>().LastClickedPlayer = randomTeamPawn;
             return;
         }
 
@@ -164,7 +176,7 @@ public class CameraControl : MonoBehaviour
         if (current != null && Input.GetKey(KeyCode.LeftShift) && playerSel && tileSel)
         {
             //offset from tile
-            GameObject boardObject = GameObject.FindGameObjectWithTag("GameBoard");
+
             SetCameraPosition(current);
             // after moving the player, remove all board highlights.
 			boardObject.GetComponent<Board>().Event.OnPlayerMove(boardObject.GetComponent<InputController>().LastClickedPlayer, current.position);
