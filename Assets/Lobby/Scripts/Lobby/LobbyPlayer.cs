@@ -29,6 +29,8 @@ namespace Prototype.NetworkLobby
         public string playerName = "";
         [SyncVar(hook = "OnMyColor")]
         public Color playerColor = Color.white;
+        [SyncVar]
+        public int playerPosition = 0;
 
         public Color OddRowColor = new Color(250.0f / 255.0f, 250.0f / 255.0f, 250.0f / 255.0f, 1.0f);
         public Color EvenRowColor = new Color(180.0f / 255.0f, 180.0f / 255.0f, 180.0f / 255.0f, 1.0f);
@@ -119,6 +121,9 @@ namespace Prototype.NetworkLobby
             if (playerName == "")
                 CmdNameChanged("Player" + (LobbyPlayerList._instance.playerListContentTransform.childCount-1));
 
+            //should help decide where to spawn the each player
+            if (playerPosition == 0)
+                CmdPositionChanged(LobbyPlayerList._instance.playerListContentTransform.childCount - 1);
             //we switch from simple name display to name input
             colorButton.interactable = true;
             nameInput.interactable = true;
@@ -291,6 +296,11 @@ namespace Prototype.NetworkLobby
             playerName = name;
         }
 
+        [Command]
+        public void CmdPositionChanged(int position)
+        {
+            playerPosition = position;
+        }
         //Cleanup thing when get destroy (which happen when client kick or disconnect)
         public void OnDestroy()
         {
