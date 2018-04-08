@@ -13,7 +13,7 @@ public class NetBehaviour : NetworkBehaviour{
         int Position = this.GetComponentInParent<NetSetup>().playerPosition;
 
         rb = this.GetComponent<Rigidbody>();
-        this.transform.position = new Vector3(10 * Position ,20,10);
+        //this.transform.position = new Vector3(15 * (Position-1) ,10,5);
         
 	}
 

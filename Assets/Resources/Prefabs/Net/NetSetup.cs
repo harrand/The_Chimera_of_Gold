@@ -10,20 +10,44 @@ public class NetSetup : NetworkBehaviour {
 
     [SyncVar]
     public int playerPosition = 0;
+
+    private Camp parent;
     // Use this for initialization
     void Start()
     {
         if (isLocalPlayer)
         {
+            
+
             NetBehaviour[] cons = GetComponentsInChildren<NetBehaviour>();
             foreach(NetBehaviour n in cons)
                 n.enabled = true;
+
+        
         }
+
+        Rigidbody[] models = this.GetComponentsInChildren<Rigidbody>();
+        for (int i = 0; i < models.Length / 5; i++)
+        {
+            if (playerPosition - 1 != i)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    int pawn = j + (i*5);
+                    models[pawn].gameObject.SetActive(false);
+                }
+                Debug.Log("Activating " + i);
+            }
+        }
+
         //Color for each pawn depends on what was chosen at the lobby
         Renderer[] rend = this.GetComponentsInChildren<Renderer>();
         foreach (Renderer r in rend) {
             r.material.color = playerColor;
+            
         }
+
+        
     }
     
 }

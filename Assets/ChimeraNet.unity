@@ -191,8 +191,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 516215166}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 103, y: -2.3, z: 117.67}
-  m_LocalScale: {x: 253.25955, y: 3.9858415, z: 270.5662}
+  m_LocalPosition: {x: 103, y: -2.3, z: 95.9}
+  m_LocalScale: {x: 253.25967, y: 3.9858415, z: 305.48438}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -213,7 +213,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!154 &1043487283
 TerrainCollider:
   m_ObjectHideFlags: 0
@@ -342,13 +342,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1155392899}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.17068028, y: -0, z: -0, w: 0.9853265}
+  m_LocalPosition: {x: 109, y: 104, z: -141}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 19.655, y: 0, z: 0}
 --- !u!1 &1615800217
 GameObject:
   m_ObjectHideFlags: 0
