@@ -16,7 +16,7 @@ TagManager:
   - CameraButton
   - ToolTip
   - Overview
-  - Multiplayer
+  - LocalMultiplayer
   layers:
   - Default
   - TransparentFX

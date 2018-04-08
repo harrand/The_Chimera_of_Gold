@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.Networking;
+using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.Networking;
 public class NetGame : Game {
 
     
-    private Board board;
+    private NetBoard board;
 
     void Start()
     {
@@ -26,5 +26,27 @@ public class NetGame : Game {
         {
             NetworkServer.Spawn(this.board.gameObject);
         }*/
+    }
+    public void NetDiceRoll()
+    {
+        Debug.Log("Rolling");
+        NetPlayer last = this.board.gameObject.GetComponent<NetInputController>().LastClickedPlayer;
+
+        Camp currentCamp = this.board.CampTurn;
+
+        //if (!currentCamp.rolled)
+        //{
+        //    currentCamp.rolled = true;
+        if (last != null )//&& last.GetCamp().GetParent().CampTurn == currentCamp)
+        {
+            this.board.GetDice.Roll(last.transform.position + new Vector3(0, 20, 0));
+        }
+        else
+        {
+            this.board.GetDice.Roll(Camera.main.transform.position + new Vector3(0, 20, 0));
+
+        }
+        //    roll.enabled = false;
+        //}*/
     }
 }

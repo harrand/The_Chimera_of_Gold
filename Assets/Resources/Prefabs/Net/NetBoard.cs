@@ -34,6 +34,7 @@ public class NetBoard : Board {
         root.tag = "GameBoard";
         root.name += " (Board)";
         netBoard.GetDice = Dice.Create(netBoard.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1));
+        Debug.Log(netBoard.GetDice);
         netBoard.Event = new BoardEvent(netBoard);
         netBoard.GetWidthInTiles = Convert.ToUInt32(tilesWidth);
         netBoard.GetHeightInTiles = Convert.ToUInt32(tilesHeight);
@@ -61,14 +62,7 @@ public class NetBoard : Board {
         /// Hardcode these; design changes did not allow these to vary.
         //board.numberCamps = 5;
         netBoard.numberObstacles = 13;
-
-        //Assign Clickable Players for each client. (They can click their own pawns)
-        foreach(GameObject gO in GameObject.FindGameObjectsWithTag("Multiplayer"))
-        {
-            if (gO.GetComponent<NetworkIdentity>().isLocalPlayer)
-                netBoard.NetPlayers = gO.GetComponentsInChildren<NetPlayer>();
-        }
-
+        
         /*/// Allocate and assign Obstacles.
         netBoard.Obstacles = new Obstacle[netBoard.numberObstacles];
         for (uint i = 0; i < netBoard.numberObstacles; i++)
@@ -78,6 +72,15 @@ public class NetBoard : Board {
         return netBoard;
     }
 
+    /**Can't put this in Create because the tags aren't set until after that function runs which causes errors and this is the awful fix ...I'm so sorry*/
+    public void AssignPlayers()
+    {
+        //Assign Clickable Players for each client. (They can click their own pawns)
+        GameObject go = GameObject.FindGameObjectWithTag("LocalMultiplayer");
+        GetComponent<NetBoard>().NetPlayers = go.GetComponentsInChildren<NetPlayer>();
+
+        Debug.Log(GetComponent<NetBoard>().NetPlayers);
+    }
     /**
      * This removes all of the Tiles that do not actually belong to the game board. 
      * This transforms a grid of Tiles to the actual Chimera of Gold game board.

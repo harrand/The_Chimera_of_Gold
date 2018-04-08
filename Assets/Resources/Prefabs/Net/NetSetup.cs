@@ -10,9 +10,9 @@ public class NetSetup : NetworkBehaviour {
 
     [SyncVar]
     public int playerPosition = 0;
+    
 
-    private Camp parent;
-    // Use this for initialization
+
     void Start()
     {
         if (isLocalPlayer)
@@ -20,10 +20,15 @@ public class NetSetup : NetworkBehaviour {
             
 
             NetBehaviour[] cons = GetComponentsInChildren<NetBehaviour>();
-            foreach(NetBehaviour n in cons)
+            foreach (NetBehaviour n in cons)
+            {
                 n.enabled = true;
+            }
+            this.gameObject.tag = "LocalMultiplayer";
+            Debug.Log("Setting tag");
 
-        
+            NetBoard netBoard = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<NetBoard>();
+            netBoard.AssignPlayers();
         }
 
         BoxCollider[] models = this.GetComponentsInChildren<BoxCollider>();
@@ -36,7 +41,7 @@ public class NetSetup : NetworkBehaviour {
                     int pawn = j + (i*5);
                     models[pawn].gameObject.SetActive(false);
                 }
-                Debug.Log("Activating " + i);
+                Debug.Log("De-Activating " + i);
             }
         }
 

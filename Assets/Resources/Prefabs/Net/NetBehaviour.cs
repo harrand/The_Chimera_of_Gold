@@ -9,9 +9,27 @@ public class NetBehaviour : NetworkBehaviour{
 	// Use this for initialization
 	void Start () {
         int Position = this.GetComponentInParent<NetSetup>().playerPosition;
-
+        NetBoard netBoard = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<NetBoard>();
         //rb = this.GetComponent<Rigidbody>();
-        this.transform.position = new Vector3(Position * 10 + 10,5,0);
+        switch(Position)
+        {
+            case 1:
+                transform.position = netBoard.Tiles[2].transform.position;
+                break;
+            case 2:
+                transform.position = netBoard.Tiles[6].transform.position;
+                break;
+            case 3:
+                transform.position = netBoard.Tiles[10].transform.position;
+                break;
+            case 4:
+                transform.position = netBoard.Tiles[14].transform.position;
+                break;
+            case 5:
+                transform.position = netBoard.Tiles[18].transform.position;
+                break;
+        }
+        //this.transform.position = new Vector3(Position * 10 + 10,5,0);
 
 
         menu = GameObject.FindGameObjectWithTag("MainMenu").GetComponent<Canvas>();

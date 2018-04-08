@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 public class NetPlayer : NetworkBehaviour {
     public static Vector3 POSITION_OFFSET = new Vector3(0, 0.6f, 0);
-    private NetBoard parent;
+    public NetBoard parent;
 
     private void Start()
     {
