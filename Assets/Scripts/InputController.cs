@@ -13,7 +13,7 @@ public class InputController : MonoBehaviour
      */
 	public Tile LastClickedTile{get;  set;}
 	public Player LastClickedPlayer{get; set;}
-	public Obstacle LastClickedObstacle{get; private set;}
+	public Obstacle LastClickedObstacle{get; set;}
 	//public Camp LastClickedCamp{get; private set;}
 
     /**
@@ -29,7 +29,10 @@ public class InputController : MonoBehaviour
 	void Start ()
     {
         this.boardScript = this.GetComponent<Board>();
-		this.LastClickedTile = null;
+
+        Debug.Log(boardScript.Tiles);
+
+        this.LastClickedTile = null;
 		this.LastClickedPlayer = null;
 		this.LastClickedObstacle = null;
         this.SelectedPlayer = null;
@@ -130,6 +133,7 @@ public class InputController : MonoBehaviour
      */
     private Tile GetMousedTile()
     {
+        
 		foreach(Tile tile in this.boardScript.Tiles)
 			if(tile.gameObject == this.GetMousedGameObject())
 				return tile;
@@ -142,16 +146,15 @@ public class InputController : MonoBehaviour
      * @return the player that is currently moused over
      */
     private Player GetMousedPlayer()
-	{
-		foreach(Camp camp in this.boardScript.Camps)
-		{
-			foreach(Player player in camp.TeamPlayers)
-				if(player != null && player.gameObject == this.GetMousedGameObject())
-					return player;
-		}
-		return null;
-	}
-
+    {
+        foreach (Camp camp in this.boardScript.Camps)
+        {
+            foreach (Player player in camp.TeamPlayers)
+                if (player != null && player.gameObject == this.GetMousedGameObject())
+                    return player;
+        }
+        return null;
+    }
     /**
      * Returns the obstacle that is GetMousedGameObject. If that is not a obstacle, returns null.
      * @author Harry Hollands, Aswin Mathew
@@ -164,4 +167,5 @@ public class InputController : MonoBehaviour
 				return obstacle;
 		return null;
 	}
+    
 }

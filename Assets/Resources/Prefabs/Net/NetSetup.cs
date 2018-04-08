@@ -26,7 +26,7 @@ public class NetSetup : NetworkBehaviour {
         
         }
 
-        Rigidbody[] models = this.GetComponentsInChildren<Rigidbody>();
+        BoxCollider[] models = this.GetComponentsInChildren<BoxCollider>();
         for (int i = 0; i < models.Length / 5; i++)
         {
             if (playerPosition - 1 != i)

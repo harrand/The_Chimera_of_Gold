@@ -9,13 +9,13 @@ using UnityEngine.Networking;
 * Board is a container for Camps (and their respective Players), all Tiles and Obstacles. Also handles turns, tile-highlighting and game rule enforcement.
 * @author Harry Hollands, Ciara O'Brien, Aswin Mathew
 */
-public class Board : MonoBehaviour
+public class Board : NetworkBehaviour
 {
     /// width and height use number of Tiles as units.
     private uint numberCamps, numberObstacles;
     private float width, height;
     public bool obstacleControlFlag;
-    public Tile[] Tiles { get; private set; }
+    public Tile[] Tiles { get;  private set; }
 	public Obstacle[] Obstacles { get; private set; }
 	public Camp[] Camps { get; private set; }
     public Dice GetDice { get; private set; }
@@ -217,7 +217,7 @@ public class Board : MonoBehaviour
      * @param y - y-coordinate of the theoretical Tile.
      * @return - boolean which returns whether the theoretical Tile should exist on the game board or not.
      */
-    private bool CheckTile(float x, float y)
+    public bool CheckTile(float x, float y)
     {
         if(y == 0)
         {

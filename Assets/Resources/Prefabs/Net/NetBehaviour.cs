@@ -5,16 +5,17 @@ using UnityEngine.Networking;
 
 public class NetBehaviour : NetworkBehaviour{
 
-    public float speed = 30.0F;
-    private Rigidbody rb;
-    
+    private Canvas menu;
 	// Use this for initialization
 	void Start () {
         int Position = this.GetComponentInParent<NetSetup>().playerPosition;
 
-        rb = this.GetComponent<Rigidbody>();
-        //this.transform.position = new Vector3(15 * (Position-1) ,10,5);
-        
+        //rb = this.GetComponent<Rigidbody>();
+        this.transform.position = new Vector3(Position * 10 + 10,5,0);
+
+
+        menu = GameObject.FindGameObjectWithTag("MainMenu").GetComponent<Canvas>();
+        menu.enabled = false;
 	}
 
 	// Update is called once per frame
@@ -24,6 +25,6 @@ public class NetBehaviour : NetworkBehaviour{
 
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
 
-        rb.AddForce(movement * speed);
+        //rb.AddForce(movement * speed);
     }
 }

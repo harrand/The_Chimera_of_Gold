@@ -17,5 +17,6 @@ public class NetworkLobbyHook : LobbyHook
             player.playerColor = lobby.playerColor;
             player.playerPosition = lobby.playerPosition;
         }
+        
     }
 }
