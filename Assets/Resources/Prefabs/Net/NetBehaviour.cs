@@ -6,10 +6,14 @@ using UnityEngine.Networking;
 public class NetBehaviour : NetworkBehaviour{
 
     private Canvas menu;
-	// Use this for initialization
-	void Start () {
+    private int debugPos = -1;
+    private Color dbc;
+    NetSetup local = null;
+    // Use this for initialization
+    void Start () {
         int Position = this.GetComponentInParent<NetSetup>().playerPosition;
         NetBoard netBoard = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<NetBoard>();
+        GlobalNet sky = GameObject.FindGameObjectWithTag("SkyNet").GetComponent<GlobalNet>();
         //rb = this.GetComponent<Rigidbody>();
         switch(Position)
         {
@@ -29,11 +33,23 @@ public class NetBehaviour : NetworkBehaviour{
                 transform.position = netBoard.Tiles[18].transform.position;
                 break;
         }
-        //this.transform.position = new Vector3(Position * 10 + 10,5,0);
+        Debug.Log("Pos: "+ Position + "Turn: "+ sky.GlobalTurn );
+        
+        if(this.GetComponentInParent<NetSetup>().gameObject.tag.Equals("LocalMultiplayer"))
+            local = this.GetComponentInParent<NetSetup>();
 
+
+        if (local != null && local.playerPosition == sky.GlobalTurn)
+            GameObject.FindGameObjectWithTag("GameBoard").GetComponent<NetGame>().roll.enabled = true;
+        else
+            GameObject.FindGameObjectWithTag("GameBoard").GetComponent<NetGame>().roll.enabled = false;
 
         menu = GameObject.FindGameObjectWithTag("MainMenu").GetComponent<Canvas>();
         menu.enabled = false;
+
+
+        debugPos = Position;
+        dbc = this.gameObject.GetComponent<Renderer>().material.color;
 	}
 
 	// Update is called once per frame
@@ -43,6 +59,8 @@ public class NetBehaviour : NetworkBehaviour{
 
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
 
+        //////Each NetworkPlayer clone prints out so it looks like The player2 (StandAlones) are printing to console. 
+        //////This is such bullshit I don't even remember what the fuck I was trying to fix in the first place...
         //rb.AddForce(movement * speed);
     }
 }

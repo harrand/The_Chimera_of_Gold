@@ -10,12 +10,13 @@ public class NetworkLobbyHook : LobbyHook
         LobbyPlayer lobby = lobbyPlayer.GetComponent<LobbyPlayer>();
 
         NetSetup[] localPlayer = gamePlayer.GetComponentsInChildren<NetSetup>();
-
+        int numberOfPlayers = manager.GetComponent<LobbyManager>()._playerNumber;
 
         foreach (NetSetup player in localPlayer)
         {
             player.playerColor = lobby.playerColor;
             player.playerPosition = lobby.playerPosition;
+            player.numberOfPlayers = numberOfPlayers;
         }
         
     }

@@ -8,6 +8,9 @@ public class NetGame : Game {
     
     private NetBoard board;
 
+    //[SyncVar]
+    //public int NumberOfPlayers = 0;
+
     void Start()
     {
         /*
@@ -22,31 +25,50 @@ public class NetGame : Game {
         this.board = NetBoard.NetCreate(this.gameObject, tileWidth, tileHeight);
         this.board.gameObject.AddComponent<NetInputController>();
         this.endTurn.enabled = false;
-        /*if(isServer)
+        this.roll.enabled = false;
+        /*
+        if (ishH)
         {
-            NetworkServer.Spawn(this.board.gameObject);
-        }*/
+            NumberOfPlayers = Network.connections.Length;
+            //NetworkServer.Spawn(this.board.gameObject);
+        }
+        Debug.Log(NumberOfPlayers);
+        */
     }
     public void NetDiceRoll()
     {
         Debug.Log("Rolling");
         NetPlayer last = this.board.gameObject.GetComponent<NetInputController>().LastClickedPlayer;
 
-        Camp currentCamp = this.board.CampTurn;
+        NetSetup currentCamp = GameObject.FindGameObjectWithTag("LocalMultiplayer").GetComponent<NetSetup>();
 
-        //if (!currentCamp.rolled)
-        //{
-        //    currentCamp.rolled = true;
-        if (last != null )//&& last.GetCamp().GetParent().CampTurn == currentCamp)
+        if (!currentCamp.rolled)
         {
-            this.board.GetDice.Roll(last.transform.position + new Vector3(0, 20, 0));
-        }
-        else
-        {
-            this.board.GetDice.Roll(Camera.main.transform.position + new Vector3(0, 20, 0));
+            GameObject GO = GameObject.FindGameObjectWithTag("SkyNet");
+            //GO.GetComponent<GlobalNet>().CmdNextTurn();
+            Debug.Log("ROLL " + GO.GetComponent<GlobalNet>().GlobalTurn);
 
+            currentCamp.rolled = true;
+            if (last != null && last.parent.CampTurn== currentCamp)
+            {
+                this.board.GetDice.Roll(last.transform.position + new Vector3(0, 20, 0));
+            }
+            else
+            {
+                this.board.GetDice.Roll(Camera.main.transform.position + new Vector3(0, 20, 0));
+
+            }
+            roll.enabled = false;
+            endTurn.enabled = true;///////TEMPORARY DO NOT LEAVE THIS IN
         }
-        //    roll.enabled = false;
-        //}*/
+    }
+    public void NetBoardNextTurn()
+    {
+        if (board.GameTurn == GameObject.FindGameObjectWithTag("LocalMultiplayer").GetComponent<NetSetup>().playerPosition)
+        {
+            this.board.NetNextTurn();
+            roll.enabled = true;
+            endTurn.enabled = false;
+        }
     }
 }

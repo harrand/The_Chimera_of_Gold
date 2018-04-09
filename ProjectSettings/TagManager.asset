@@ -17,6 +17,9 @@ TagManager:
   - ToolTip
   - Overview
   - LocalMultiplayer
+  - Multiplayer
+  - SkyNet
+  - SkyNetLocal
   layers:
   - Default
   - TransparentFX

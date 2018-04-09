@@ -10,15 +10,16 @@ public class NetSetup : NetworkBehaviour {
 
     [SyncVar]
     public int playerPosition = 0;
-    
 
+    [SyncVar]
+    public int numberOfPlayers = 0;
+
+    public bool rolled = false;
 
     void Start()
     {
         if (isLocalPlayer)
         {
-            
-
             NetBehaviour[] cons = GetComponentsInChildren<NetBehaviour>();
             foreach (NetBehaviour n in cons)
             {
@@ -29,6 +30,18 @@ public class NetSetup : NetworkBehaviour {
 
             NetBoard netBoard = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<NetBoard>();
             netBoard.AssignPlayers();
+            Debug.Log("Number of players: " + numberOfPlayers);
+            if (netBoard.GameTurn != playerPosition)
+                rolled = true;
+        }
+        Debug.Log(playerPosition);
+        if(playerPosition == 1 && isServer)
+        {
+            Debug.Log("Becoming Self-Aware " + playerPosition);
+            GameObject SkyNet = Instantiate(Resources.Load("Prefabs/SkyNet")) as GameObject;
+            SkyNet.AddComponent<SkyRecon>();
+            //ClientScene.RegisterPrefab(SkyNet);
+            NetworkServer.Spawn(SkyNet);
         }
 
         BoxCollider[] models = this.GetComponentsInChildren<BoxCollider>();

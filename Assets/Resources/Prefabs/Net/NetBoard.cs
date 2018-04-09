@@ -15,6 +15,9 @@ public class NetBoard : Board {
     new public Dice GetDice { get; private set; }
     new public BoardEvent Event { get; private set; }
 
+    [SyncVar]
+    public int GameTurn = 1;
+
     /**
     * This is to be used to create a new Board when the root GameObject has a terrain component (interpolating instead of taking dimensions as parameters).
     * This is currently used for the network game board. However, it is not used for the Board unit test.
@@ -121,12 +124,35 @@ public class NetBoard : Board {
 
     }
 
-     /**
-     * Gets the Tile at a specific Vector2 position. Returns null if there is no such Tile.
-     * @author Harry Hollands
-     * @param positionTileSpace - The position of the desired Tile.
-     * @return - Reference to the Tile at the position given.
-     */
+    /**
+ * Simulates the end of the current turn and sets Board::PlayerTurn to the "next" player accordingly.
+ * Also handles the AI Player's turn instantaneously and then passes over to the next player's turn.
+ */
+    public void NetNextTurn()
+    {
+        this.netObstacleControlFlag = false;
+
+        CampTurn = GameObject.FindGameObjectWithTag("LocalMultiplayer").GetComponent<NetSetup>();
+        GlobalNet sky = GameObject.FindGameObjectWithTag("SkyNet").GetComponent<GlobalNet>();
+        /*if (++GameTurn >= CampTurn.numberOfPlayers)
+            GameTurn = 1;
+        else
+            GameTurn++;*/
+        //Debug.Log(GameTurn +"    "+ ++GameTurn +"    "+GameTurn++);
+
+        this.CampTurn.rolled = false;
+        sky.CmdNextTurn();
+        //this.RemoveTileHighlights();
+        //consider highlighting something in some way to display the colour of the current camp turn
+        //this.GetDice.GetComponent<Renderer>().material.color = this.CampTurn.TeamColor;
+    }
+
+    /**
+    * Gets the Tile at a specific Vector2 position. Returns null if there is no such Tile.
+    * @author Harry Hollands
+    * @param positionTileSpace - The position of the desired Tile.
+    * @return - Reference to the Tile at the position given.
+    */
     new public Tile GetTileByTileSpace(Vector2 positionTileSpace)
     {
         foreach (Tile t in this.Tiles)
@@ -138,6 +164,6 @@ public class NetBoard : Board {
     new public uint GetHeightInTiles { get; private set; }
     new public float GetWidthInPixels { get { return this.GetWidthInTiles * Board.ExpectedTileSize(this.gameObject, this.GetWidthInTiles, this.GetHeightInTiles).x; } }
     new public float GetHeightInPixels { get { return this.GetHeightInTiles * Board.ExpectedTileSize(this.gameObject, this.GetWidthInTiles, this.GetHeightInTiles).y; } }
-    new public Camp CampTurn { get; private set; }
+    new public NetSetup CampTurn { get; private set; }
 
 }

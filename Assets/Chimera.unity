@@ -43,7 +43,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -3672,7 +3672,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 150978694
+  randomSeed: 88226719
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -7887,7 +7887,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -485144588
+  randomSeed: 1886288246
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -18832,7 +18832,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1458493963
+  randomSeed: -537868882
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -25019,7 +25019,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -814153557
+  randomSeed: 1609281345
   InitialModule:
     serializedVersion: 3
     enabled: 1
