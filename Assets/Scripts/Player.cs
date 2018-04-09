@@ -13,6 +13,8 @@ public class Player :  NetworkBehaviour
 {
 	public static Vector3 POSITION_OFFSET = new Vector3(0, 0.6f, 0);
 	private Board parent;
+    //Aswin- Soz, plaster to get a smooth pawn movement transition
+    public Vector3 origin, current;
 
     /**
      * Pseudo-constructor which uses the Prefabs/Player prefab in the project tree.
@@ -28,10 +30,22 @@ public class Player :  NetworkBehaviour
         Player playerScript = playerObject.AddComponent<Player>();
         playerScript.parent = parent;
 		playerObject.transform.position = tilePosition.gameObject.transform.position + Player.POSITION_OFFSET;
-        
+
+        playerScript.origin = playerObject.transform.position;
+        playerScript.current = playerScript.origin;
+
         return playerScript;
     }
-
+    private void Update()
+    {
+        if(current != origin)
+            Move();
+    }
+    public void Move()
+    {
+        this.gameObject.transform.position = Vector3.Lerp(current, origin, Time.deltaTime * 1.5f);
+        current = this.gameObject.transform.position;
+    }
     /**
     * Returns a reference to the Camp which holds this Player.
     * @author Harry Hollands
@@ -70,7 +84,7 @@ public class Player :  NetworkBehaviour
     */
     public Tile GetOccupiedTile()
     {
-        Vector3 noOffset = this.gameObject.transform.position - Player.POSITION_OFFSET;
+        Vector3 noOffset = this.origin - Player.POSITION_OFFSET;
         foreach (Tile tile in this.parent.Tiles)
             if (tile.gameObject.transform.position == noOffset)
                 return tile;

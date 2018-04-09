@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 public class BoardEvent
 {
 	private Board parent;
-
+    private Vector3 Pfrom, Pto;
 	/**
 	 * BoardEvent Constructor - sets the inputed board to be the board currently running
 	 * @author Harry Hollands
@@ -58,7 +58,10 @@ public class BoardEvent
                 validMove = true;
 		if (!validMove)
 			return;
-		player.gameObject.transform.position = moveTarget + Player.POSITION_OFFSET;
+        player.origin = moveTarget + Player.POSITION_OFFSET;
+        //player.target = player.origin;
+        //player.gameObject.transform.position = player.origin;// Vector3.Lerp(player.gameObject.transform.position, moveTarget + Player.POSITION_OFFSET, Time.deltaTime * 1.5f);
+
         player.GetCamp().GetParent().obstacleControlFlag = true;
 		//this.parent.RemoveTileHighlights();
 		this.HandleTakeovers(player);
@@ -171,8 +174,9 @@ public class BoardEvent
 			foreach(Player enemy in camp.TeamPlayers)
 				if(enemy != null && enemy.GetOccupiedTile() == player.GetOccupiedTile()) // Player landed on another player and enemy should be sent back to their camp.
 				{
-					enemy.transform.position = camp.GetOccupiedTile().gameObject.transform.position + Player.POSITION_OFFSET;
-				}
+                    //enemy.transform.position = camp.GetOccupiedTile().gameObject.transform.position + Player.POSITION_OFFSET;
+                    OnPlayerMove(enemy, camp.GetOccupiedTile().gameObject.transform.position + Player.POSITION_OFFSET);
+                }
 		}
 	}
 
