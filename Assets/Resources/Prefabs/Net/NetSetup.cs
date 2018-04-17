@@ -63,6 +63,17 @@ public class NetSetup : NetworkBehaviour {
                 {
                     int pawn = j + (i * 5);
                     models[pawn].gameObject.SetActive(false);
+                    models[pawn].GetComponent<NetBehaviour>().enabled = false;
+                    models[pawn].GetComponent<NetPlayer>().enabled = false;
+                }
+            }
+            else
+            {
+                for(int j = 0; j < 5; j++)
+                {
+                    int pawn = j + (i * 5);
+                    models[pawn].GetComponent<NetPlayer>().parent = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<NetBoard>();
+                    models[pawn].gameObject.transform.position = new Vector3(0, 0, 0);
                 }
             }
         }

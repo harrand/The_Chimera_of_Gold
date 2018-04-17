@@ -9,11 +9,11 @@ public class NetBoard : Board {
     private uint numberCamps, numberObstacles;
     private float width, height;
     public bool netObstacleControlFlag;
-    new public Tile[] Tiles { get; private set; }
-    new public Obstacle[] Obstacles { get; private set; }
+    new public NetTile[] Tiles { get; private set; }
+    new public NetObstacle[] Obstacles { get; private set; }
     public NetPlayer[] NetPlayers { get; private set; }
     new public Dice GetDice { get; private set; }
-    new public BoardEvent Event { get; private set; }
+    new public Yggdrasil Event { get; private set; }
 
     //[SyncVar]
     //public int GameTurn = 1;
@@ -38,7 +38,7 @@ public class NetBoard : Board {
         root.name += " (Board)";
         netBoard.GetDice = Dice.Create(netBoard.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1));
 
-        netBoard.Event = new BoardEvent(netBoard);
+        netBoard.Event = new Yggdrasil(netBoard);
         netBoard.GetWidthInTiles = Convert.ToUInt32(tilesWidth);
         netBoard.GetHeightInTiles = Convert.ToUInt32(tilesHeight);
 
@@ -48,12 +48,12 @@ public class NetBoard : Board {
         // Thus, the initialisation code MUST happen right here, despite being ugly.
 
         /// Allocate and assign Tiles (before culling).
-        netBoard.Tiles = new Tile[netBoard.GetWidthInTiles * netBoard.GetHeightInTiles];
+        netBoard.Tiles = new NetTile[netBoard.GetWidthInTiles * netBoard.GetHeightInTiles];
         for (uint i = 0; i < netBoard.Tiles.Length; i++)
         {
             float xTile = i % netBoard.GetWidthInTiles;
             float zTile = i / netBoard.GetWidthInTiles;
-            netBoard.Tiles[i] = Tile.Create(netBoard, xTile, zTile);
+            netBoard.Tiles[i] = NetTile.Create(netBoard, xTile, zTile);
             GameObject tileObject = netBoard.Tiles[i].gameObject;
             Vector2 tileSize = Board.ExpectedTileSize(root, netBoard.GetWidthInTiles, netBoard.GetHeightInTiles);
             tileObject.transform.position = Game.MinWorldSpace(root) + (new Vector3(xTile * tileSize.x, 0, zTile * tileSize.y)) + new Vector3(6, 0, 6);
@@ -92,8 +92,8 @@ public class NetBoard : Board {
     new public void Cull()
     {
         /// Packs the Board::Tiles array into the new gameTiles array.
-        Tile[] gameTiles = new Tile[151];
-        Tile goalTile = null;
+        NetTile[] gameTiles = new NetTile[151];
+        NetTile goalTile = null;
         int j = 0;
         for (int i = 0; i < this.Tiles.Length; i++)
         {
@@ -107,12 +107,12 @@ public class NetBoard : Board {
                 goalTile = Tiles[i];
             }
         }
-        foreach (Tile t in Tiles)
+        foreach (NetTile t in Tiles)
         {
             if (t != null)
                 t.gameObject.SetActive(false);
         }
-        foreach (Tile t in gameTiles)
+        foreach (NetTile t in gameTiles)
         {
             if (t != null)
             {
@@ -145,7 +145,7 @@ public class NetBoard : Board {
         ////Guess what! It didn't work...............................
 
         GameObject local = GameObject.FindGameObjectWithTag("LocalMultiplayer");                    //Two lines. 7 hours. May God have mercy on my soul
-        local.GetComponent<NetSetup>().NextTurn();
+        local.GetComponent<NetSetup>().NextTurn(); //Hours of blood, sweat and tears lead to this line's birth. If this ever breaks or becomes a hinderance, my heart will crumble like Babylon's walls.
 
         //sky.GetComponent<NetworkIdentity>().AssignClientAuthority(local.GetComponent<NetworkIdentity>().connectionToClient);
         //local.GetComponent<NetSetup>().CmdAssignAuthority(sky.gameObject);
@@ -164,9 +164,9 @@ public class NetBoard : Board {
     * @param positionTileSpace - The position of the desired Tile.
     * @return - Reference to the Tile at the position given.
     */
-    new public Tile GetTileByTileSpace(Vector2 positionTileSpace)
+    public NetTile GetNetTileByTileSpace(Vector2 positionTileSpace)
     {
-        foreach (Tile t in this.Tiles)
+        foreach (NetTile t in this.Tiles)
             if (t.PositionTileSpace == positionTileSpace)
                 return t;
         return null;

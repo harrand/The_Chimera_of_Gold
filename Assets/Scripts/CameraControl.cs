@@ -8,7 +8,7 @@ using UnityEngine;
 */
 public class CameraControl : MonoBehaviour
 {
-    private bool playerSel = false, tileSel = false; //Helps movement of players. playerSel set when first player is selected. tileSel true if current is a tile;   
+    public bool playerSel = false, tileSel = false; //Helps movement of players. playerSel set when first player is selected. tileSel true if current is a tile;   
     private GameObject[] menus;
     private Canvas Menu;
 

@@ -18,19 +18,19 @@ public class NetBehaviour : NetworkBehaviour{
         switch(Position)
         {
             case 1:
-                transform.position = netBoard.Tiles[2].transform.position;
+                transform.position = netBoard.Tiles[2].transform.position + NetPlayer.POSITION_OFFSET;
                 break;
             case 2:
-                transform.position = netBoard.Tiles[6].transform.position;
+                transform.position = netBoard.Tiles[6].transform.position + NetPlayer.POSITION_OFFSET;
                 break;
             case 3:
-                transform.position = netBoard.Tiles[10].transform.position;
+                transform.position = netBoard.Tiles[10].transform.position + NetPlayer.POSITION_OFFSET;
                 break;
             case 4:
-                transform.position = netBoard.Tiles[14].transform.position;
+                transform.position = netBoard.Tiles[14].transform.position + NetPlayer.POSITION_OFFSET;
                 break;
             case 5:
-                transform.position = netBoard.Tiles[18].transform.position;
+                transform.position = netBoard.Tiles[18].transform.position + NetPlayer.POSITION_OFFSET;
                 break;
         }
         

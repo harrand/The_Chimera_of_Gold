@@ -32,10 +32,10 @@ public class NetPlayer : NetworkBehaviour {
     * @author Harry Hollands
     * @return - Reference to the Tile on which this Player rests.
     */
-    public Tile GetOccupiedTile()
+    public NetTile GetOccupiedTile()
     {
         Vector3 noOffset = this.gameObject.transform.position - Player.POSITION_OFFSET;
-        foreach (Tile tile in this.parent.Tiles)
+        foreach (NetTile tile in this.parent.Tiles)
             if (tile.gameObject.transform.position == noOffset)
                 return tile;
         return null;
@@ -55,9 +55,12 @@ public class NetPlayer : NetworkBehaviour {
     * @author Harry Hollands
     * @return - Reference to the Obstacle that the player is controlling, or null if there is no such obstacle.
     */
-    public Obstacle GetControlledObstacle()
+    public NetObstacle GetControlledObstacle()
     {
-        foreach (Obstacle obst in this.parent.Obstacles)
+        if (this.parent.Obstacles == null)
+            return null;
+
+        foreach (NetObstacle obst in this.parent.Obstacles)
             if (obst.GetOccupiedTile() == this.GetOccupiedTile() && this.parent.netObstacleControlFlag)
                 return obst;
         return null;

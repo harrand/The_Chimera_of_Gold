@@ -12,9 +12,9 @@ public class NetInputController : NetworkBehaviour {
     /**
      * LastClickedX represents the object that was last clicked in 3D space. 
      */
-    public Tile LastClickedTile { get; set; }
+    public NetTile LastClickedTile { get; set; }
     public NetPlayer LastClickedPlayer { get; set; }
-    public Obstacle LastClickedObstacle { get; set; }
+    public NetObstacle LastClickedObstacle { get; set; }
     //public Camp LastClickedCamp{get; private set;}
 
     /**
@@ -81,7 +81,7 @@ public class NetInputController : NetworkBehaviour {
     {
         if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(-1))
             return;
-        Tile currentTile = this.GetMousedTile();
+        NetTile currentTile = this.GetMousedTile();
         if (currentTile != null)
         {
             if (this.LastClickedTile != null)
@@ -131,10 +131,10 @@ public class NetInputController : NetworkBehaviour {
      * @author Harry Hollands, Aswin Mathew
      * @return the tile that is currently moused over
      */
-    private Tile GetMousedTile()
+    private NetTile GetMousedTile()
     {
 
-        foreach (Tile tile in this.boardScript.Tiles)
+        foreach (NetTile tile in this.boardScript.Tiles)
             if (tile.gameObject == this.GetMousedGameObject())
                 return tile;
         return null;
