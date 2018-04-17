@@ -207,7 +207,7 @@ MonoBehaviour:
     i14: 145
     i15: 203
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &114240302654284712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -220,15 +220,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TransformSyncMode: 3
-  m_SendInterval: 0.06666667
+  m_SendInterval: 0.033333335
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_SyncSpin: 0
-  m_MovementTheshold: 0.7
+  m_MovementTheshold: 0.1
   m_VelocityThreshold: 0.1
-  m_SnapThreshold: 5.53
+  m_SnapThreshold: 14.92
   m_InterpolateRotation: 1
-  m_InterpolateMovement: 2
+  m_InterpolateMovement: 1.9
 --- !u!114 &114552867386566550
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -241,6 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GlobalTurn: 1
+  NumberOfPlayers: 0
 --- !u!198 &198065219687088514
 ParticleSystem:
   m_ObjectHideFlags: 1

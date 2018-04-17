@@ -19,7 +19,7 @@ TagManager:
   - LocalMultiplayer
   - Multiplayer
   - SkyNet
-  - SkyNetLocal
+  - WorldTree
   layers:
   - Default
   - TransparentFX

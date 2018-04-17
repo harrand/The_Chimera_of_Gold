@@ -8,15 +8,6 @@ public class GlobalNet : NetworkBehaviour {
     [SyncVar]
     public int GlobalTurn = 1;
 
-    [Command]
-    public void CmdNextTurn()
-    {
-        GlobalTurn++;
-    }
+    public int NumberOfPlayers;
 
-    [Command]
-    public void CmdFindSkyNet()
-    {
-        //this.gameObject;
-    }
 }

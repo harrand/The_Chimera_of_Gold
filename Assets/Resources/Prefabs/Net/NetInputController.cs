@@ -31,8 +31,6 @@ public class NetInputController : NetworkBehaviour {
     {
         this.boardScript = this.GetComponent<NetBoard>();
 
-        Debug.Log(boardScript.Tiles);
-
         this.LastClickedTile = null;
         this.LastClickedPlayer = null;
         this.LastClickedObstacle = null;

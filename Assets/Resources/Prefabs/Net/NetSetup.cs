@@ -14,7 +14,7 @@ public class NetSetup : NetworkBehaviour {
     [SyncVar]
     public int numberOfPlayers = 0;
 
-    public bool rolled = false;
+    //public bool rolled = false;
 
     void Start()
     {
@@ -28,22 +28,32 @@ public class NetSetup : NetworkBehaviour {
             this.gameObject.tag = "LocalMultiplayer";
             Debug.Log("Setting tag");
 
+            //Disable non-player pawns here
             NetBoard netBoard = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<NetBoard>();
             netBoard.AssignPlayers();
+
+            //Grow the world tree for each player
+            GameObject WorldTree = Instantiate(Resources.Load("Prefabs/WorldTree")) as GameObject;
+            WorldTree.transform.position = new Vector3(110,35,114);
+            WorldTree.AddComponent<Yggdrasil>();
+            WorldTree.GetComponent<Yggdrasil>().LocalTurn = playerPosition;
+            Debug.Log("Tree grown");
+
             Debug.Log("Number of players: " + numberOfPlayers);
-            if (netBoard.GameTurn != playerPosition)
-                rolled = true;
+           //if (netBoard.GameTurn != playerPosition)
+           //     rolled = true;
         }
-        Debug.Log(playerPosition);
-        if(playerPosition == 1 && isServer)
+
+        if(isServer && isLocalPlayer)
         {
             Debug.Log("Becoming Self-Aware " + playerPosition);
             GameObject SkyNet = Instantiate(Resources.Load("Prefabs/SkyNet")) as GameObject;
             SkyNet.AddComponent<SkyRecon>();
+            SkyNet.GetComponent<GlobalNet>().NumberOfPlayers = numberOfPlayers;
             //ClientScene.RegisterPrefab(SkyNet);
             NetworkServer.Spawn(SkyNet);
         }
-
+        
         BoxCollider[] models = this.GetComponentsInChildren<BoxCollider>();
         for (int i = 0; i < models.Length / 5; i++)
         {
@@ -51,10 +61,9 @@ public class NetSetup : NetworkBehaviour {
             {
                 for (int j = 0; j < 5; j++)
                 {
-                    int pawn = j + (i*5);
+                    int pawn = j + (i * 5);
                     models[pawn].gameObject.SetActive(false);
                 }
-                Debug.Log("De-Activating " + i);
             }
         }
 
@@ -68,4 +77,18 @@ public class NetSetup : NetworkBehaviour {
         
     }
     
+    public void NextTurn()
+    {
+        Debug.Log("Next Turn...");
+        
+        CmdNextPlayerTurn();
+    }
+    [Command]
+    public void CmdNextPlayerTurn()
+    {
+        GlobalNet sky = GameObject.FindGameObjectWithTag("SkyNet").GetComponent<GlobalNet>();
+        sky.GlobalTurn++;
+        if (sky.GlobalTurn > sky.NumberOfPlayers)
+            sky.GlobalTurn = 1;
+    }
 }

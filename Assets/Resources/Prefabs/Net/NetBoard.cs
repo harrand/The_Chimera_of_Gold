@@ -15,8 +15,8 @@ public class NetBoard : Board {
     new public Dice GetDice { get; private set; }
     new public BoardEvent Event { get; private set; }
 
-    [SyncVar]
-    public int GameTurn = 1;
+    //[SyncVar]
+    //public int GameTurn = 1;
 
     /**
     * This is to be used to create a new Board when the root GameObject has a terrain component (interpolating instead of taking dimensions as parameters).
@@ -37,7 +37,7 @@ public class NetBoard : Board {
         root.tag = "GameBoard";
         root.name += " (Board)";
         netBoard.GetDice = Dice.Create(netBoard.gameObject.transform.position, new Vector3(), new Vector3(1, 1, 1));
-        Debug.Log(netBoard.GetDice);
+
         netBoard.Event = new BoardEvent(netBoard);
         netBoard.GetWidthInTiles = Convert.ToUInt32(tilesWidth);
         netBoard.GetHeightInTiles = Convert.ToUInt32(tilesHeight);
@@ -125,14 +125,13 @@ public class NetBoard : Board {
     }
 
     /**
- * Simulates the end of the current turn and sets Board::PlayerTurn to the "next" player accordingly.
- * Also handles the AI Player's turn instantaneously and then passes over to the next player's turn.
- */
+    * Simulates the end of the current turn and sets Board::PlayerTurn to the "next" player accordingly.
+    */
     public void NetNextTurn()
     {
         this.netObstacleControlFlag = false;
 
-        CampTurn = GameObject.FindGameObjectWithTag("LocalMultiplayer").GetComponent<NetSetup>();
+        Yggdrasil tree = GameObject.FindGameObjectWithTag("WorldTree").GetComponent<Yggdrasil>();
         GlobalNet sky = GameObject.FindGameObjectWithTag("SkyNet").GetComponent<GlobalNet>();
         /*if (++GameTurn >= CampTurn.numberOfPlayers)
             GameTurn = 1;
@@ -140,8 +139,20 @@ public class NetBoard : Board {
             GameTurn++;*/
         //Debug.Log(GameTurn +"    "+ ++GameTurn +"    "+GameTurn++);
 
-        this.CampTurn.rolled = false;
-        sky.CmdNextTurn();
+        tree.Rolled = false;
+        Debug.Log("Next");
+        //Jesus wept... it's 3am, if this doesn't fucking work i'll cut myself
+        ////Guess what! It didn't work...............................
+
+        GameObject local = GameObject.FindGameObjectWithTag("LocalMultiplayer");                    //Two lines. 7 hours. May God have mercy on my soul
+        local.GetComponent<NetSetup>().NextTurn();
+
+        //sky.GetComponent<NetworkIdentity>().AssignClientAuthority(local.GetComponent<NetworkIdentity>().connectionToClient);
+        //local.GetComponent<NetSetup>().CmdAssignAuthority(sky.gameObject);
+        //sky.NextTurn();                                                 //I'm going to leave this here for future generations to mock my ineptitude.
+        //local.GetComponent<NetSetup>().NextTurn();
+        //local.GetComponent<NetSetup>().CmdRemoveAuthority(sky.gameObject);
+        //sky.GetComponent<NetworkIdentity>().RemoveClientAuthority(local.GetComponent<NetworkIdentity>().connectionToClient);
         //this.RemoveTileHighlights();
         //consider highlighting something in some way to display the colour of the current camp turn
         //this.GetDice.GetComponent<Renderer>().material.color = this.CampTurn.TeamColor;
@@ -164,6 +175,6 @@ public class NetBoard : Board {
     new public uint GetHeightInTiles { get; private set; }
     new public float GetWidthInPixels { get { return this.GetWidthInTiles * Board.ExpectedTileSize(this.gameObject, this.GetWidthInTiles, this.GetHeightInTiles).x; } }
     new public float GetHeightInPixels { get { return this.GetHeightInTiles * Board.ExpectedTileSize(this.gameObject, this.GetWidthInTiles, this.GetHeightInTiles).y; } }
-    new public NetSetup CampTurn { get; private set; }
+    //new public NetSetup CampTurn { get; private set; }
 
 }

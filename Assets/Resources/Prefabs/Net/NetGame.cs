@@ -7,7 +7,8 @@ public class NetGame : Game {
 
     
     private NetBoard board;
-
+    public Yggdrasil Yggdrasil;
+    private GlobalNet SkyNet;
     //[SyncVar]
     //public int NumberOfPlayers = 0;
 
@@ -19,13 +20,17 @@ public class NetGame : Game {
         new TestCamp();
         new TestPlayer();
         */
-
+        Yggdrasil = null;
+        SkyNet = null;
 
         // Create a normal Board with Input attached. Both Board and InputController are attached to the root GameObject (this).
         this.board = NetBoard.NetCreate(this.gameObject, tileWidth, tileHeight);
         this.board.gameObject.AddComponent<NetInputController>();
         this.endTurn.enabled = false;
         this.roll.enabled = false;
+
+        //this.Yggdrasil = GameObject.FindGameObjectWithTag("WorldTree").GetComponent<Yggdrasil>();
+        
         /*
         if (ishH)
         {
@@ -40,16 +45,18 @@ public class NetGame : Game {
         Debug.Log("Rolling");
         NetPlayer last = this.board.gameObject.GetComponent<NetInputController>().LastClickedPlayer;
 
-        NetSetup currentCamp = GameObject.FindGameObjectWithTag("LocalMultiplayer").GetComponent<NetSetup>();
+        if (Yggdrasil == null)
+            Yggdrasil = GameObject.FindGameObjectWithTag("WorldTree").GetComponent<Yggdrasil>();
+        if (SkyNet == null)
+            SkyNet = GameObject.FindGameObjectWithTag("SkyNet").GetComponent<GlobalNet>();
 
-        if (!currentCamp.rolled)
+        if (!Yggdrasil.Rolled)
         {
-            GameObject GO = GameObject.FindGameObjectWithTag("SkyNet");
-            //GO.GetComponent<GlobalNet>().CmdNextTurn();
-            Debug.Log("ROLL " + GO.GetComponent<GlobalNet>().GlobalTurn);
+            //GameObject GO = GameObject.FindGameObjectWithTag("SkyNet");
+            //GO.GetComponent<GlobalNet>().CmdNextTurn()
 
-            currentCamp.rolled = true;
-            if (last != null && last.parent.CampTurn== currentCamp)
+            Yggdrasil.Rolled = true;
+            if (last != null )
             {
                 this.board.GetDice.Roll(last.transform.position + new Vector3(0, 20, 0));
             }
@@ -58,16 +65,18 @@ public class NetGame : Game {
                 this.board.GetDice.Roll(Camera.main.transform.position + new Vector3(0, 20, 0));
 
             }
-            roll.enabled = false;
-            endTurn.enabled = true;///////TEMPORARY DO NOT LEAVE THIS IN
+            Yggdrasil.Rolled = true;
+            endTurn.enabled = true;
         }
     }
     public void NetBoardNextTurn()
     {
-        if (board.GameTurn == GameObject.FindGameObjectWithTag("LocalMultiplayer").GetComponent<NetSetup>().playerPosition)
+        if (Yggdrasil.LocalTurn == SkyNet.GlobalTurn)//board.GameTurn == GameObject.FindGameObjectWithTag("LocalMultiplayer").GetComponent<NetSetup>().playerPosition)
         {
             this.board.NetNextTurn();
-            roll.enabled = true;
+            //roll.enabled = true;
+            //Yggdrasil.NetNextTurn();
+            Yggdrasil.Rolled = false;
             endTurn.enabled = false;
         }
     }

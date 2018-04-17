@@ -33,23 +33,22 @@ public class NetBehaviour : NetworkBehaviour{
                 transform.position = netBoard.Tiles[18].transform.position;
                 break;
         }
-        Debug.Log("Pos: "+ Position + "Turn: "+ sky.GlobalTurn );
         
-        if(this.GetComponentInParent<NetSetup>().gameObject.tag.Equals("LocalMultiplayer"))
-            local = this.GetComponentInParent<NetSetup>();
+        //if(this.GetComponentInParent<NetSetup>().gameObject.tag.Equals("LocalMultiplayer"))
+            //local = this.GetComponentInParent<NetSetup>();
 
 
-        if (local != null && local.playerPosition == sky.GlobalTurn)
-            GameObject.FindGameObjectWithTag("GameBoard").GetComponent<NetGame>().roll.enabled = true;
-        else
-            GameObject.FindGameObjectWithTag("GameBoard").GetComponent<NetGame>().roll.enabled = false;
+        //if (local != null && local.playerPosition == sky.GlobalTurn)
+            //GameObject.FindGameObjectWithTag("GameBoard").GetComponent<NetGame>().roll.enabled = true;
+        //else
+            //GameObject.FindGameObjectWithTag("GameBoard").GetComponent<NetGame>().roll.enabled = false;
 
         menu = GameObject.FindGameObjectWithTag("MainMenu").GetComponent<Canvas>();
         menu.enabled = false;
 
 
-        debugPos = Position;
-        dbc = this.gameObject.GetComponent<Renderer>().material.color;
+        //debugPos = Position;
+        //dbc = this.gameObject.GetComponent<Renderer>().material.color;
 	}
 
 	// Update is called once per frame
