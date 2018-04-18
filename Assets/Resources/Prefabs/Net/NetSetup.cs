@@ -14,10 +14,18 @@ public class NetSetup : NetworkBehaviour {
     [SyncVar]
     public int numberOfPlayers = 0;
 
+    [SyncVar]
+    public string playerName = "";
     //public bool rolled = false;
 
+    private NetBoard parent;
+    private NetTile tile;
+
+    public NetPlayer[] TeamPlayers;
+    
     void Start()
     {
+        parent = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<NetBoard>();
         if (isLocalPlayer)
         {
             NetBehaviour[] cons = GetComponentsInChildren<NetBehaviour>();
@@ -29,9 +37,9 @@ public class NetSetup : NetworkBehaviour {
             Debug.Log("Setting tag");
 
             //Disable non-player pawns here
-            NetBoard netBoard = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<NetBoard>();
-            netBoard.AssignPlayers();
-
+            
+            parent.AssignPlayers();
+            //parent = netBoard;
             //Grow the world tree for each player
             GameObject WorldTree = Instantiate(Resources.Load("Prefabs/WorldTree")) as GameObject;
             WorldTree.transform.position = new Vector3(110,35,114);
@@ -53,7 +61,8 @@ public class NetSetup : NetworkBehaviour {
             //ClientScene.RegisterPrefab(SkyNet);
             NetworkServer.Spawn(SkyNet);
         }
-        
+
+        TeamPlayers = new NetPlayer[5];
         BoxCollider[] models = this.GetComponentsInChildren<BoxCollider>();
         for (int i = 0; i < models.Length / 5; i++)
         {
@@ -74,10 +83,14 @@ public class NetSetup : NetworkBehaviour {
                     int pawn = j + (i * 5);
                     models[pawn].GetComponent<NetPlayer>().parent = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<NetBoard>();
                     models[pawn].gameObject.transform.position = new Vector3(0, 0, 0);
+                    models[pawn].GetComponentInChildren<TextMesh>().text = playerName;
+                    models[pawn].GetComponentInChildren<TextMesh>().color = playerColor;
+
+                    TeamPlayers[i] = models[pawn].GetComponent<NetPlayer>();
+                    //Debug.Log("TeamPlayer i = " + TeamPlayers[i]);
                 }
             }
         }
-
         //Color for each pawn depends on what was chosen at the lobby
         Renderer[] rend = this.GetComponentsInChildren<Renderer>();
         foreach (Renderer r in rend) {
@@ -85,9 +98,11 @@ public class NetSetup : NetworkBehaviour {
             
         }
 
-        
+        //NetBoard netBoard1 = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<NetBoard>();
+        //parent.AssignCamps(numberOfPlayers);
     }
     
+    //Handles next turn. Commands can only be send by objects you have authority over... hence, function to call a function
     public void NextTurn()
     {
         Debug.Log("Next Turn...");
@@ -101,5 +116,17 @@ public class NetSetup : NetworkBehaviour {
         sky.GlobalTurn++;
         if (sky.GlobalTurn > sky.NumberOfPlayers)
             sky.GlobalTurn = 1;
+    }
+
+    public NetTile GetOccupiedTile()
+    {
+        foreach (NetTile tile in this.parent.Tiles)
+            if (tile.gameObject.transform.position == this.gameObject.transform.position + new Vector3(0, 0, Board.ExpectedTileSize(parent.gameObject, parent.GetWidthInTiles, parent.GetHeightInTiles).magnitude / 3))
+                return tile;
+        return null;
+    }
+    public NetBoard GetParent()
+    {
+        return this.parent;
     }
 }

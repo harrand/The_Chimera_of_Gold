@@ -3,7 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Yggdrasil : MonoBehaviour {
-
+    /*
+     * Under the leaves of Yggdrasil, you find peace and eternity 
+     * Through your veins flow the blood before blood; the sap of the entity that holds the world aloft.
+     * Your body is no longer simply flesh, but the substance of life and the line between existence and nonexistence. 
+     * They may not bow before you, but time will take them, as it has all others. 
+     * You simply continue on your path, under the shade of the world tree. 
+     */
     private NetBoard parent;
     public int LocalTurn;
     public bool Rolled;
@@ -67,7 +73,7 @@ public class Yggdrasil : MonoBehaviour {
         this.HandleTakeovers(player);
         // Disable the dice so the same roll cannot be used twice.
         this.parent.GetDice.gameObject.SetActive(false);
-        if (moveTarget == this.parent.GetGoalTile().transform.position)
+        if (moveTarget == this.parent.GetNetGoalTile().transform.position)
             this.OnPlayerGoalEvent(player);
         this.parent.gameObject.GetComponent<NetGame>().endTurn.enabled = true;
     }
@@ -87,23 +93,40 @@ public class Yggdrasil : MonoBehaviour {
     public void HandleTakeovers(NetPlayer player)
     {
         Debug.Log("You have landed on another pawn. Move it to the origin");
-        /*
-        Camp friendlyCamp = player.GetCamp();
-        foreach (Camp camp in this.parent.Camps)
+
+        //Camp friendlyCamp = player.GetCamp();
+        NetSetup friendlyCamp = player.GetComponentInParent<NetSetup>();
+
+        GameObject[] others = GameObject.FindGameObjectsWithTag("Multiplayer");
+        NetSetup[] otherCamps = new NetSetup[others.Length];
+        for(int i = 0; i < others.Length; i++)
         {
-            if (camp == friendlyCamp)
-                continue;
-            foreach (Player enemy in camp.TeamPlayers)
+            otherCamps[i] = others[i].GetComponent<NetSetup>();
+        }
+        //Debug.Log("NOOOOOO :" + parent.NetCamps[0]);
+        foreach (NetSetup camp in otherCamps)
+        {
+            //if (camp == friendlyCamp)
+            //continue;
+
+            for (int i = 0; i < 5; i++)
+            {
+                //Debug.Log("Tp = " + camp);
+                NetPlayer enemy = camp.TeamPlayers[i];
+
                 if (enemy != null && enemy.GetOccupiedTile() == player.GetOccupiedTile()) // Player landed on another player and enemy should be sent back to their camp.
                 {
-                    enemy.transform.position = camp.GetOccupiedTile().gameObject.transform.position + Player.POSITION_OFFSET;
+                    Debug.Log("Touching");
+                    enemy.transform.position = camp.GetOccupiedTile().gameObject.transform.position + NetPlayer.POSITION_OFFSET;
                 }
-        }
-        */
+            }
+            //Debug.Log("Currently in progress... TODO");
+    }
+        
     }
     // Update is called once per frame
     void Update () {
-        Debug.Log("Global turn = " + SkyNet.GlobalTurn);
+        //Debug.Log("Global turn = " + SkyNet.GlobalTurn);
 		if(SkyNet.GlobalTurn == LocalTurn && !Rolled)
         {
             NetGame.roll.enabled = true;

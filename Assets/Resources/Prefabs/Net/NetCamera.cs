@@ -42,7 +42,7 @@ public class NetCamera : CameraControl {
         }
         else
         {
-            current = null;
+            //current = null;   //current should be set to your player pawn at the start when nothing is clicked. null makes camera unsure until something is clicked...
             tileSel = false;
             //Debug.Log("Other/back");
         }
@@ -54,24 +54,29 @@ public class NetCamera : CameraControl {
     void LateUpdate()
     {
         GameObject boardObject = GameObject.FindGameObjectWithTag("GameBoard");
-        Debug.Log(boardObject);
+
         if (current == null)
         {
             NetPlayer[] nets = GameObject.FindGameObjectWithTag("LocalMultiplayer").GetComponentsInChildren<NetPlayer>();
-            Debug.Log(nets);
+
             foreach (NetPlayer n in nets)
             {
-                if(n.isActiveAndEnabled)
+                if(n.gameObject.activeSelf)
                 {
                     current = n.gameObject.transform;
+                    SetCameraPosition(current);
                     Debug.Log(current);
+                    Debug.Log("Current = " + current);
                     break;
                 }
             }
 
         }
-        current = GetLastClicked();
-        Debug.Log("Current = " + current);
+        else
+        {
+            current = GetLastClicked();
+        }
+       
         if (current != null && Input.GetKey(KeyCode.LeftShift) && playerSel && tileSel)
         {
             //offset from tile

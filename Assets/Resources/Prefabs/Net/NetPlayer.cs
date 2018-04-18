@@ -65,4 +65,5 @@ public class NetPlayer : NetworkBehaviour {
                 return obst;
         return null;
     }
+
 }

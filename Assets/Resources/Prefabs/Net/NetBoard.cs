@@ -14,6 +14,7 @@ public class NetBoard : Board {
     public NetPlayer[] NetPlayers { get; private set; }
     new public Dice GetDice { get; private set; }
     new public Yggdrasil Event { get; private set; }
+    public NetSetup[] NetCamps { get; private set; }
 
     //[SyncVar]
     //public int GameTurn = 1;
@@ -78,12 +79,28 @@ public class NetBoard : Board {
     /**Can't put this in Create because the tags aren't set until after that function runs which causes errors and this is the awful fix ...I'm so sorry*/
     public void AssignPlayers()
     {
-        //Assign Clickable Players for each client. (They can click their own pawns)
+        //Assign Clickable Players for each client. (They can only click their own pawns)
         GameObject go = GameObject.FindGameObjectWithTag("LocalMultiplayer");
         GetComponent<NetBoard>().NetPlayers = go.GetComponentsInChildren<NetPlayer>();
 
-        Debug.Log(GetComponent<NetBoard>().NetPlayers);
+        //Debug.Log(GetComponent<NetBoard>().NetPlayers);
     }
+    /*
+    * Cheap, dirty way of setting up the net version of the camps... since Actual camps don't exist, The netSetup Script in each parent will have to act a permanent placeholder (I cry myself to sleep)
+    *Doesn't contain your own 'camp'
+    */
+    public void AssignCamps(int numberOfPlayers)
+    {
+        this.NetCamps = new NetSetup[numberOfPlayers - 1];
+        GameObject[] others = GameObject.FindGameObjectsWithTag("Multiplayer");
+        
+        for (int i = 0; i < (numberOfPlayers - 1); i++)
+        {
+            Debug.Log("others" + others.Length);
+            NetCamps[i] = others[i].GetComponent<NetSetup>();
+        }
+    }
+
     /**
      * This removes all of the Tiles that do not actually belong to the game board. 
      * This transforms a grid of Tiles to the actual Chimera of Gold game board.
@@ -170,6 +187,10 @@ public class NetBoard : Board {
             if (t.PositionTileSpace == positionTileSpace)
                 return t;
         return null;
+    }
+    public NetTile GetNetGoalTile()
+    {
+        return this.GetNetTileByTileSpace(new Vector2(10, 18));
     }
     new public uint GetWidthInTiles { get; private set; }
     new public uint GetHeightInTiles { get; private set; }
