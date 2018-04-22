@@ -486,7 +486,7 @@ public class Board : MonoBehaviour
             }
         }
         Tile tileDestination = this.CampTurn.ai.MovementTo(aiPlayer.GetOccupiedTile(), roll);
-        aiPlayer.gameObject.transform.position = tileDestination.gameObject.transform.position + Player.POSITION_OFFSET;
+        aiPlayer.origin = tileDestination.gameObject.transform.position + Player.POSITION_OFFSET;
         if(aiPlayer.GetOccupiedTile() == this.GetGoalTile())
         {
             this.GetComponent<InputController>().LastClickedTile = this.GetGoalTile();

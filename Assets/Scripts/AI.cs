@@ -16,7 +16,7 @@ public class DecisionTree : MonoBehaviour
     public bool HardMode { get; private set; }
     int value;
 
-	/**
+    /**
     * This is to initialize the board member and store the board object.
     * @author Zibo Zhang and Yutian Xue
     * @param board - the whole board object of the game.
