@@ -43,7 +43,7 @@ public class Player :  NetworkBehaviour
     }
     public void Move()
     {
-        this.gameObject.transform.position = Vector3.Lerp(current, origin, Time.deltaTime * 1.5f);
+        this.gameObject.transform.position = Vector3.Lerp(current, origin, Time.deltaTime * 2.0f);
         current = this.gameObject.transform.position;
     }
     /**

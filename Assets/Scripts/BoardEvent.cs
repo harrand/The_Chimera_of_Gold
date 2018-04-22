@@ -70,6 +70,7 @@ public class BoardEvent
 		if (moveTarget == this.parent.GetGoalTile().transform.position)
 			this.OnPlayerGoalEvent(player);
         this.parent.gameObject.GetComponent<Game>().endTurn.enabled = true;
+        
 	}
 
     /**
@@ -174,8 +175,10 @@ public class BoardEvent
 			foreach(Player enemy in camp.TeamPlayers)
 				if(enemy != null && enemy.GetOccupiedTile() == player.GetOccupiedTile()) // Player landed on another player and enemy should be sent back to their camp.
 				{
+                    //Debug.Log("Touching");
                     //enemy.transform.position = camp.GetOccupiedTile().gameObject.transform.position + Player.POSITION_OFFSET;
-                    OnPlayerMove(enemy, camp.GetOccupiedTile().gameObject.transform.position + Player.POSITION_OFFSET);
+                    //OnPlayerMove(enemy, camp.GetOccupiedTile().gameObject.transform.position + Player.POSITION_OFFSET);
+                    enemy.origin = camp.GetOccupiedTile().gameObject.transform.position + Player.POSITION_OFFSET;
                 }
 		}
 	}
