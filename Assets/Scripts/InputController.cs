@@ -35,7 +35,8 @@ public class InputController : MonoBehaviour
         this.SelectedPlayer = null;
         this.SelectedObstacle = null;
 	}
-	
+
+    Player selected = null;
 	void Update ()
     {
         if (Input.GetMouseButtonDown(0))
@@ -66,6 +67,11 @@ public class InputController : MonoBehaviour
             }
             else
 				new PlayerControl(this.LastClickedPlayer).HighlightPossibleMoves(board.GetDice.NumberFaceUp(), Color.green, Color.blue, Color.red);
+        }
+        if(LastClickedPlayer != null && boardScript.CampTurn == LastClickedPlayer.GetCamp())
+        {
+            selected = LastClickedPlayer;
+            new PlayerControl(this.selected).HighlightPossibleMoves(boardScript.GetDice.NumberFaceUp(), Color.green, Color.blue, Color.red);
         }
     }
 
