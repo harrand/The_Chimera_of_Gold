@@ -55,7 +55,8 @@ public class Game : MonoBehaviour
 	{
 		yield return new WaitUntil(()=>this.board.GetDice.GetComponent<Rigidbody>().velocity.magnitude < 0.01f);
 		InputController input = this.board.GetComponent<InputController>();
-		if (input.LastClickedPlayer.HasControlledObstacle())
+        roll.gameObject.transform.GetChild(0).GetComponent<Text>().text = "You rolled a " + this.board.GetDice.NumberFaceUp();
+        if (input.LastClickedPlayer.HasControlledObstacle())
 		{
 			foreach (Tile tile in this.board.Tiles)
 			{
@@ -133,6 +134,7 @@ public class Game : MonoBehaviour
 
     public void BoardNextTurn()
     {
+        roll.gameObject.transform.GetChild(0).GetComponent<Text>().text = "Roll the Die";
         this.board.NextTurn();
         roll.enabled = true;
         endTurn.enabled = false;
