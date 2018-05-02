@@ -461,11 +461,6 @@ public class Board : MonoBehaviour
         Camp aiCamp = this.CampTurn;
         foreach(Obstacle obstacle in this.Obstacles)
         {
-            Debug.Log("debug info:");
-            Debug.Log("obstacle = " + obstacle.name);
-            Debug.Log("obstacle occupado tile = " + obstacle.GetOccupiedTile().name);
-            Debug.Log("aiplayer = " + aiPlayer.name);
-            Debug.Log("aiplayer tile = " + aiPlayer.GetOccupiedTile().gameObject.name);
             if(obstacle.GetOccupiedTile().DistanceFrom(aiPlayer.GetOccupiedTile()) < roll)
             {
                 int index = Array.IndexOf(aiCamp.TeamPlayers, aiPlayer);

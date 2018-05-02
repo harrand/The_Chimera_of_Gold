@@ -36,6 +36,7 @@ public class Game : MonoBehaviour
 		// Create a normal Board with Input attached. Both Board and InputController are attached to the root GameObject (this).
 		this.board = Board.Create(this.gameObject, tileWidth, tileHeight);
 		this.board.gameObject.AddComponent<InputController>();
+        this.board.GetDice.gameObject.SetActive(false);
         this.endTurn.enabled = false;
         /*if(isServer)
         {
