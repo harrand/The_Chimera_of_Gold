@@ -151,12 +151,11 @@ public class InputController : MonoBehaviour
      */
     private Player GetMousedPlayer()
 	{
-		foreach(Camp camp in this.boardScript.Camps)
-		{
-			foreach(Player player in camp.TeamPlayers)
-				if(player != null && player.gameObject == this.GetMousedGameObject())
-					return player;
-		}
+		
+		foreach(Player player in boardScript.CampTurn.TeamPlayers)
+			if(player != null && player.gameObject == this.GetMousedGameObject())
+				return player;
+		
 		return null;
 	}
 
