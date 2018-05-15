@@ -71,7 +71,7 @@ public class InputController : MonoBehaviour
         if(LastClickedPlayer != null && boardScript.CampTurn == LastClickedPlayer.GetCamp())
         {
             selected = LastClickedPlayer;
-            GameObject.FindGameObjectWithTag("Overview").transform.position = selected.transform.position + (Vector3.up * 15);
+            GameObject.FindGameObjectWithTag("Overview").transform.position = selected.transform.position + (Vector3.up * 5);
            if(this.boardScript.GetDice.GetComponent<Rigidbody>().velocity.magnitude < 0.01f)
                 new PlayerControl(this.selected).HighlightPossibleMoves(boardScript.GetDice.NumberFaceUp(), Color.green, Color.blue, Color.red);
         }

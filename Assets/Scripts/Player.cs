@@ -11,7 +11,7 @@ using UnityEngine.Networking;
 public class Player :  NetworkBehaviour
 
 {
-	public static Vector3 POSITION_OFFSET = new Vector3(0, 0.6f, 0);
+	public static Vector3 POSITION_OFFSET = new Vector3(0, 10.5f, 0);
 	private Board parent;
     //Aswin- Soz, plaster to get a smooth pawn movement transition
     public Vector3 origin, current;
@@ -26,7 +26,7 @@ public class Player :  NetworkBehaviour
     public static Player Create(Board parent, Tile tilePosition, uint playerId)
     {
         Debug.Log(playerId);
-        GameObject playerObject = Instantiate(Resources.Load("Prefabs/pawn"+ playerId)) as GameObject;
+        GameObject playerObject = Instantiate(Resources.Load("Prefabs/pawn")) as GameObject;
         Player playerScript = playerObject.AddComponent<Player>();
         playerScript.parent = parent;
 		playerObject.transform.position = tilePosition.gameObject.transform.position + Player.POSITION_OFFSET;
